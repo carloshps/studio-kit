@@ -1,0 +1,51 @@
+name: Deploy kit-site
+
+# Push na main → regenera o registry, sincroniza com a VPS e rebuilda o container.
+# Disparo manual disponível em Actions › Deploy kit-site › Run workflow.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-kit-site
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # build-registry.mjs só usa builtins do Node — não precisa de pnpm install.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Regenerar registry a partir do MANIFEST
+        run: node scripts/build-registry.mjs
+
+      - name: Configurar SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          ssh-keyscan -p 22 "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Sincronizar código com a VPS
+        run: |
+          rsync -az --delete \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='**/node_modules' \
+            --exclude='dist' \
+            --exclude='**/dist' \
+            -e "ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes" \
+            ./ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/kit-site/source/"
+
+      - name: Rebuild e restart na VPS
+        run: |
+          ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            'cd /opt/kit-site && docker compose up -d --build && docker image prune -f'
