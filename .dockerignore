@@ -1,0 +1,15 @@
+**/node_modules
+**/.turbo
+**/.next
+**/dist
+**/.astro
+**/out
+
+# Não excluir registry/ — é copiado para o runner
+!registry/
+
+# Dev/CI local
+.git
+.gitignore
+*.md
+!AGENTS.md

@@ -38,6 +38,8 @@ templates/
 | # | Decisão | Motivo | Revisitar quando |
 |---|---------|--------|-----------------|
 | 1 | **Tailwind v3** (não v4) | Todo o preset, tokens e sintaxe `rgb(var(--x) / <alpha>)` foram escritos para v3. A v4 muda a sintaxe de configuração, o modelo de plugins e o jeito de registrar tokens. Migrar sem propósito violaria a regra 5 (nada sem propósito). | Quando um recurso específico da v4 for necessário para um projeto ou cliente — por exemplo, `@theme` inline, engine Oxide ou performance de build crítica. Nesse ponto fazer a migração completa: reescrever `tailwind-preset`, `tokens.css` e todos os `tailwind.config.mjs`. |
+| 2 | **Docker build context = raiz do monorepo** | `COPY ../../` é inválido no Docker — o daemon não sobe fora do contexto. O `Dockerfile` fica em `apps/kit-site/` mas o build roda a partir da raiz: `docker build -f apps/kit-site/Dockerfile -t kit-site .` | Não há razão para mudar, salvo se o kit-site virar um repositório independente. |
+| 3 | **`astro-base` é standalone** | O template não usa `workspace:*` — tem seu próprio `package.json`, `node_modules` e `components.json`. Assim um cliente pode clonar somente essa pasta sem o monorepo inteiro. Instala componentes via `npx shadcn add URL` apontando para o registry em produção. | Se o template crescer a ponto de precisar de um CI próprio, considerar mover para repositório separado. |
 
 ## Tokens da marca (imutáveis — só alterar com decisão explícita)
 

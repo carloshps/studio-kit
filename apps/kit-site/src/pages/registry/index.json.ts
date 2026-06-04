@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { readdirSync } from "fs";
 import { join } from "path";
 
-const REGISTRY_DIR = join(process.cwd(), "..", "..", "registry");
+const REGISTRY_DIR = process.env.REGISTRY_DIR ?? join(process.cwd(), "..", "..", "registry");
 
 export const GET: APIRoute = () => {
   const files = readdirSync(REGISTRY_DIR)

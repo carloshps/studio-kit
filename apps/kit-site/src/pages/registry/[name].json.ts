@@ -2,7 +2,9 @@ import type { APIRoute } from "astro";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 
-const REGISTRY_DIR = join(process.cwd(), "..", "..", "registry");
+// Dev: cwd = apps/kit-site/ → ../../registry = studio-kit/registry/
+// Prod (Docker WORKDIR /app): REGISTRY_DIR env var = /app/registry
+const REGISTRY_DIR = process.env.REGISTRY_DIR ?? join(process.cwd(), "..", "..", "registry");
 
 export const GET: APIRoute = ({ params }) => {
   const name = params.name;

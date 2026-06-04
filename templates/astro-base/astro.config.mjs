@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+import tailwind from "@astrojs/tailwind";
 
 // Modos de deploy:
 //   static (default) → `astro build` gera /dist estático → Hospedagem Business
@@ -15,6 +16,9 @@ import react from "@astrojs/react";
 export default defineConfig({
   output: "static",           // trocar para "server" ao fazer app SSR
   // adapter: node({ mode: "standalone" }),
-  integrations: [react()],
+  integrations: [
+    react(),
+    tailwind({ applyBaseStyles: false }), // base styles via tokens.css + global.css
+  ],
   site: "https://seudominio.com.br", // atualizar por projeto
 });

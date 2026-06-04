@@ -1,16 +1,33 @@
 ---
+/**
+ * Ponto de partida do projeto.
+ *
+ * Para instalar componentes do Studio Kit, rode no terminal:
+ *   npx shadcn@latest add "https://kit.carloshps.com.br/registry/hero.json"
+ *   npx shadcn@latest add "https://kit.carloshps.com.br/registry/button.json"
+ *   ... (lista completa em https://kit.carloshps.com.br/docs)
+ *
+ * Após instalar, descomente os imports abaixo e use os componentes.
+ */
+
+// import { Hero } from "@/components/blocks/hero";
+// import { CtaSection } from "@/components/blocks/cta-section";
+
 import Base from "../layouts/Base.astro";
 ---
 
 <Base title="Nome do Projeto" description="Descreva o projeto aqui.">
 
-  <!-- Hero -->
-  <section class="flex flex-col items-center justify-center text-center px-6 py-32 bg-background shadow-hero">
+  <!--
+    Hero padrão em HTML puro — funciona sem nenhuma dependência extra.
+    Substitua por <Hero client:load ... /> após instalar o bloco via registry.
+  -->
+  <section class="flex flex-col items-center justify-center text-center px-6 py-32">
     <span class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium bg-accent/20 border border-accent/30 text-foreground/90 mb-6">
       Eyebrow — tagline curta
     </span>
-    <h1 class="max-w-2xl text-4xl md:text-5xl font-extrabold leading-tight text-foreground/92">
-      Título principal com <span class="text-primary">destaque cyan</span>
+    <h1 class="max-w-2xl text-4xl md:text-5xl font-extrabold leading-tight text-foreground/90">
+      Título com <span class="text-primary">destaque</span>
     </h1>
     <p class="mt-5 max-w-lg text-base text-foreground/50 leading-relaxed">
       Subtítulo que explica o valor em uma linha.
