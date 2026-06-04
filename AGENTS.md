@@ -33,6 +33,33 @@ templates/
 - **Gerenciador:** pnpm workspaces
 - **Registry:** shadcn self-hosted em `kit.carloshps.com.br` (VPS, Docker + Caddy)
 
+## Deploy (pipeline atual)
+
+Push na `main` → GitHub Actions (`.github/workflows/deploy.yml`):
+1. `node scripts/build-registry.mjs` — regenera `registry/` a partir do MANIFEST
+2. `rsync` — sincroniza o código para `/opt/kit-site/source/` na VPS (`72.60.138.174`)
+3. `docker compose up -d --build` — rebuilda e reinicia o container
+
+O registry fica disponível em `https://kit.carloshps.com.br` (Caddy + Let's Encrypt, porta 4322 internamente).
+
+**Secrets necessários no repositório GitHub:** `VPS_SSH_KEY`, `VPS_HOST`, `VPS_USER`.
+
+## Como adicionar um componente ao registry
+
+1. Escreva o `.tsx` em `packages/ui/src/components/` (base) ou `packages/ui/src/blocks/` (bloco)
+2. Adicione a entrada no objeto `MANIFEST` em `scripts/build-registry.mjs`:
+   ```js
+   "meu-componente": {
+     type: "registry:ui",          // ou registry:block
+     srcPath: "components/meu-componente.tsx",
+     installPath: "components/ui/meu-componente.tsx",
+     dependencies: [],             // pacotes npm que o componente importa
+     registryDeps: ["utils"],      // outros itens do registry de que depende
+   }
+   ```
+3. `pnpm build:registry` — gera `registry/meu-componente.json`
+4. Commit + push — deploy automático em ~2 min
+
 ## Decisões arquiteturais
 
 | # | Decisão | Motivo | Revisitar quando |
@@ -40,6 +67,7 @@ templates/
 | 1 | **Tailwind v3** (não v4) | Todo o preset, tokens e sintaxe `rgb(var(--x) / <alpha>)` foram escritos para v3. A v4 muda a sintaxe de configuração, o modelo de plugins e o jeito de registrar tokens. Migrar sem propósito violaria a regra 5 (nada sem propósito). | Quando um recurso específico da v4 for necessário para um projeto ou cliente — por exemplo, `@theme` inline, engine Oxide ou performance de build crítica. Nesse ponto fazer a migração completa: reescrever `tailwind-preset`, `tokens.css` e todos os `tailwind.config.mjs`. |
 | 2 | **Docker build context = raiz do monorepo** | `COPY ../../` é inválido no Docker — o daemon não sobe fora do contexto. O `Dockerfile` fica em `apps/kit-site/` mas o build roda a partir da raiz: `docker build -f apps/kit-site/Dockerfile -t kit-site .` | Não há razão para mudar, salvo se o kit-site virar um repositório independente. |
 | 3 | **`astro-base` é standalone** | O template não usa `workspace:*` — tem seu próprio `package.json`, `node_modules` e `components.json`. Assim um cliente pode clonar somente essa pasta sem o monorepo inteiro. Instala componentes via `npx shadcn add URL` apontando para o registry em produção. | Se o template crescer a ponto de precisar de um CI próprio, considerar mover para repositório separado. |
+| 4 | **Git-push deploy via GitHub Actions** | Deploy manual (tar + scp + docker) era frágil e dependia da máquina local. O CI regenera o registry a partir do MANIFEST (fonte da verdade) antes de sincronizar, garantindo que a VPS nunca fique com JSON desatualizado. | Se a VPS mudar para um provedor com deploy nativo (Railway, Fly.io), o workflow pode ser simplificado. |
 
 ## Tokens da marca (imutáveis — só alterar com decisão explícita)
 
