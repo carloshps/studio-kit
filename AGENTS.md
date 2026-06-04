@@ -28,10 +28,16 @@ templates/
 
 - **Framework:** Astro (kit-site + astro-base)
 - **Componentes:** shadcn/ui (Tailwind + Radix)
-- **Estilo:** Tailwind CSS v4
+- **Estilo:** Tailwind CSS v3 (3.4.x)
 - **Linguagem:** TypeScript
 - **Gerenciador:** pnpm workspaces
 - **Registry:** shadcn self-hosted em `kit.carloshps.com.br` (VPS, Docker + Caddy)
+
+## Decisões arquiteturais
+
+| # | Decisão | Motivo | Revisitar quando |
+|---|---------|--------|-----------------|
+| 1 | **Tailwind v3** (não v4) | Todo o preset, tokens e sintaxe `rgb(var(--x) / <alpha>)` foram escritos para v3. A v4 muda a sintaxe de configuração, o modelo de plugins e o jeito de registrar tokens. Migrar sem propósito violaria a regra 5 (nada sem propósito). | Quando um recurso específico da v4 for necessário para um projeto ou cliente — por exemplo, `@theme` inline, engine Oxide ou performance de build crítica. Nesse ponto fazer a migração completa: reescrever `tailwind-preset`, `tokens.css` e todos os `tailwind.config.mjs`. |
 
 ## Tokens da marca (imutáveis — só alterar com decisão explícita)
 
