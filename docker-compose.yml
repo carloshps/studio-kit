@@ -1,0 +1,13 @@
+services:
+  kit-site:
+    build:
+      context: .
+      dockerfile: apps/kit-site/Dockerfile
+    image: kit-site
+    restart: unless-stopped
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "4321"
+      REGISTRY_DIR: "/app/registry"
+    ports:
+      - "4322:4321"   # Caddy faz proxy de kit.carloshps.com.br → 4322

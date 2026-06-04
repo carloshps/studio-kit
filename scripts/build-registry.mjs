@@ -25,7 +25,7 @@ const baseUrlArg = args.indexOf("--base-url");
 const BASE_URL =
   baseUrlArg !== -1 ? args[baseUrlArg + 1] : "https://kit.carloshps.com.br";
 
-const registryUrl = (name) => `${BASE_URL}/registry/${name}`;
+const registryUrl = (name) => `${BASE_URL}/registry/${name}.json`;
 
 // Reescreve imports relativos para paths shadcn padrão.
 // Necessário para que `npx shadcn add` saiba reescrever os imports no projeto alvo.

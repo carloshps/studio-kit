@@ -4,8 +4,8 @@
   "type": "registry:block",
   "registryDependencies": [
     "utils",
-    "https://kit.carloshps.com.br/registry/button",
-    "https://kit.carloshps.com.br/registry/input"
+    "https://kit.carloshps.com.br/registry/button.json",
+    "https://kit.carloshps.com.br/registry/input.json"
   ],
   "dependencies": [],
   "devDependencies": [],
