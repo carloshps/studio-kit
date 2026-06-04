@@ -1,0 +1,44 @@
+/*
+ * Tokens da marca — ajuste aqui para cada cliente.
+ * Dark é o padrão. Para light, adicione classe .light no <html>.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* ─── Dark (padrão do Studio) ────────────────────────────────── */
+:root {
+  --background:           8 20 36;
+  --background-secondary: 3 12 23;
+  --card:                 8 20 36;
+  --foreground:           232 244 251;
+  --primary:              0 173 207;
+  --primary-foreground:   232 244 251;
+  --muted:                8 20 36;
+  --muted-foreground:     232 244 251;
+  --accent:               0 173 207;
+  --accent-foreground:    232 244 251;
+  --border:               0 173 207;
+  --ring:                 0 173 207;
+  --radius:               0.5rem;
+}
+
+/* ─── Light (override por cliente) ───────────────────────────── */
+.light,
+[data-theme="light"] {
+  --background:           248 250 252;
+  --background-secondary: 241 245 249;
+  --card:                 255 255 255;
+  --foreground:           8 20 36;
+  --muted:                241 245 249;
+  --muted-foreground:     8 20 36;
+  --primary:              0 173 207;
+  --primary-foreground:   255 255 255;
+}
+
+/* ─── Base ────────────────────────────────────────────────────── */
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground) / 0.92);
+  font-family: 'Manrope', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}

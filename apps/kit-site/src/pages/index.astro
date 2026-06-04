@@ -1,0 +1,96 @@
+---
+import Base from "../layouts/Base.astro";
+import { Hero } from "@studio/ui/hero";
+import { MetricBlock } from "@studio/ui/metric-block";
+import { PricingCard } from "@studio/ui/pricing-card";
+import { CtaSection } from "@studio/ui/cta-section";
+import { Faq } from "@studio/ui/faq";
+import { Testimonial } from "@studio/ui/testimonial";
+---
+
+<Base title="Showroom">
+  <!-- Hero -->
+  <Hero
+    client:load
+    eyebrow="Studio Kit v0.1"
+    title="Design system do"
+    titleHighlight="CarlosHPS Studio"
+    subtitle="Componentes prontos na identidade do Studio. Clone, ajuste os tokens do cliente, publique."
+    primaryCta={{ label: "Ver componentes", href: "#componentes" }}
+    secondaryCta={{ label: "Docs", href: "/docs" }}
+  />
+
+  <!-- Métricas -->
+  <section id="componentes" class="py-16 px-6">
+    <div class="mx-auto max-w-5xl">
+      <h2 class="text-2xl font-bold text-foreground/90 mb-8">Blocos</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <MetricBlock client:load value="7" label="Blocos" description="Hero, CTA, FAQ, Métricas, Pricing, Lead Form, Testimonial" />
+        <MetricBlock client:load value="5" label="Componentes base" description="Button, Card, Badge, Input, Label" />
+        <MetricBlock client:load value="2" label="Temas" description="Dark (principal) e Light" />
+        <MetricBlock client:load value="1" label="Fonte" description="Manrope — única família, nunca misturar" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="py-16 px-6 bg-background-secondary/60">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-2xl font-bold text-foreground/90 mb-8 text-center">PricingCard</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        <PricingCard
+          client:load
+          name="Site Institucional"
+          price="R$ 2.800"
+          features={["Até 5 páginas", "Design autoral", "Responsivo", "SEO base"]}
+          cta={{ label: "Quero este", href: "#" }}
+        />
+        <PricingCard
+          client:load
+          name="Presença Completa"
+          price="R$ 4.900"
+          badge="Mais escolhido"
+          highlight
+          features={["Site + Landing page", "Design system da marca", "Integrações", "Suporte 30 dias"]}
+          cta={{ label: "Começar agora", href: "#" }}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="py-16 px-6">
+    <div class="mx-auto max-w-5xl">
+      <h2 class="text-2xl font-bold text-foreground/90 mb-8">Testimonial</h2>
+      <Testimonial
+        client:load
+        items={[
+          { quote: "Resultado acima do esperado. O site transmite exatamente o que a gente queria.", author: "Ana Paula", role: "Médica esteta" },
+          { quote: "Processo claro, entrega no prazo e um visual que diferencia de verdade.", author: "Bruno Melo", role: "Terapeuta holístico" },
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <Faq
+    client:load
+    items={[
+      { question: "Como usar o Studio Kit num projeto novo?", answer: "Clone o template astro-base, ajuste os tokens do cliente em tokens.css e publique. Os componentes já vêm na cara do Studio." },
+      { question: "Posso usar em projetos de clientes?", answer: "Sim. O Studio Kit é o sistema base — você ajusta os tokens de marca por cliente e os componentes herdam automaticamente." },
+      { question: "Como atualizar um componente?", answer: "Rode npx shadcn add @studio/<nome> no projeto. O arquivo é copiado — você é o dono do código." },
+    ]}
+  />
+
+  <!-- CTA -->
+  <div class="px-6 pb-24">
+    <div class="mx-auto max-w-3xl">
+      <CtaSection
+        client:load
+        title="Pronto para começar?"
+        subtitle="Clone o template, ajuste para o cliente e publique em minutos."
+        cta={{ label: "Ver template", href: "https://github.com/CarlosHPS/studio-kit" }}
+      />
+    </div>
+  </div>
+</Base>

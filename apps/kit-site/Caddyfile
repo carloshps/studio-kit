@@ -1,0 +1,4 @@
+kit.carloshps.com.br {
+  reverse_proxy localhost:4321
+  encode gzip
+}

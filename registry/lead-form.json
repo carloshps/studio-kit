@@ -1,0 +1,12 @@
+{
+  "name": "lead-form",
+  "type": "registry:block",
+  "registryDependencies": ["button", "input"],
+  "dependencies": [],
+  "files": [
+    {
+      "name": "blocks/lead-form.tsx",
+      "content": "https://kit.carloshps.com.br/registry/lead-form.tsx"
+    }
+  ]
+}

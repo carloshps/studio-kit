@@ -1,0 +1,12 @@
+{
+  "name": "hero",
+  "type": "registry:block",
+  "registryDependencies": ["button", "badge"],
+  "dependencies": [],
+  "files": [
+    {
+      "name": "blocks/hero.tsx",
+      "content": "https://kit.carloshps.com.br/registry/hero.tsx"
+    }
+  ]
+}

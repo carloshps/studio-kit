@@ -1,0 +1,84 @@
+/*
+ * Studio Kit — Design Tokens
+ * Fonte da verdade: marca/design-guide.md
+ * Dark é o tema principal. Light é override via classe .light ou [data-theme="light"].
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* ─── Dark (padrão) ─────────────────────────────────────────── */
+:root {
+  /* Fundos */
+  --background:          8 20 36;      /* #081424 — navy profundo */
+  --background-secondary: 3 12 23;    /* #030C17 — navy mais escuro */
+  --card:                8 20 36;      /* rgba(8,20,36,0.92) com alpha */
+
+  /* Texto */
+  --foreground:          232 244 251;  /* rgba(232,244,251,0.92) */
+  --foreground-muted:    232 244 251;  /* com alpha 0.45 */
+  --foreground-subtle:   232 244 251;  /* com alpha 0.40 */
+
+  /* Acento — cyan #00ADCF */
+  --accent:              0 173 207;
+  --accent-foreground:   232 244 251;
+
+  /* shadcn semantic aliases */
+  --primary:             0 173 207;
+  --primary-foreground:  232 244 251;
+  --secondary:           3 12 23;
+  --secondary-foreground: 232 244 251;
+  --muted:               8 20 36;
+  --muted-foreground:    232 244 251;
+  --border:              0 173 207;    /* usado com alpha 0.18 via Tailwind */
+  --input:               0 173 207;
+  --ring:                0 173 207;
+  --destructive:         239 68 68;
+  --destructive-foreground: 232 244 251;
+
+  /* Radius */
+  --radius: 0.5rem;                    /* moderado — contemporâneo, não arredondado demais */
+
+  /* Alphas de borda (cyan) */
+  --border-alpha:        0.18;
+  --border-card-alpha:   0.25;
+  --border-subtle-alpha: 0.10;
+
+  /* Tipografia */
+  --font-sans: 'Manrope', system-ui, sans-serif;
+}
+
+/* ─── Light (override) ───────────────────────────────────────── */
+.light,
+[data-theme="light"] {
+  --background:          248 250 252;  /* #F8FAFC — branco frio */
+  --background-secondary: 241 245 249; /* #F1F5F9 */
+  --card:                255 255 255;
+
+  --foreground:          8 20 36;      /* navy como texto no light */
+  --foreground-muted:    8 20 36;      /* com alpha 0.55 */
+  --foreground-subtle:   8 20 36;      /* com alpha 0.40 */
+
+  --primary:             0 173 207;    /* cyan permanece em ambos os temas */
+  --primary-foreground:  255 255 255;
+  --secondary:           241 245 249;
+  --secondary-foreground: 8 20 36;
+  --muted:               241 245 249;
+  --muted-foreground:    8 20 36;
+  --border:              0 173 207;
+  --input:               0 173 207;
+  --ring:                0 173 207;
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  border-color: rgb(var(--border) / var(--border-alpha, 0.18));
+}
+
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground) / 0.92);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}

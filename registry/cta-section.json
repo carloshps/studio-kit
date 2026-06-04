@@ -1,0 +1,12 @@
+{
+  "name": "cta-section",
+  "type": "registry:block",
+  "registryDependencies": ["button"],
+  "dependencies": [],
+  "files": [
+    {
+      "name": "blocks/cta-section.tsx",
+      "content": "https://kit.carloshps.com.br/registry/cta-section.tsx"
+    }
+  ]
+}

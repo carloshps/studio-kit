@@ -1,0 +1,13 @@
+{
+  "name": "@studio/tailwind-preset",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": ["src"],
+  "peerDependencies": {
+    "tailwindcss": ">=3.4.0"
+  }
+}

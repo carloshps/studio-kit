@@ -1,0 +1,5 @@
+# Substituir pelo domínio real do cliente
+cliente.seudominio.com.br {
+  reverse_proxy localhost:4321
+  encode gzip
+}

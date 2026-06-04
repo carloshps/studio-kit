@@ -1,0 +1,16 @@
+---
+import "@studio/tokens/css";
+import "../styles/global.css";
+const { title = "Studio Kit" } = Astro.props;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} — Studio Kit</title>
+  </head>
+  <body class="min-h-screen bg-background text-foreground/90 font-sans antialiased">
+    <slot />
+  </body>
+</html>

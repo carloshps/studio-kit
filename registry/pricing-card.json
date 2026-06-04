@@ -1,0 +1,12 @@
+{
+  "name": "pricing-card",
+  "type": "registry:block",
+  "registryDependencies": ["button", "badge"],
+  "dependencies": [],
+  "files": [
+    {
+      "name": "blocks/pricing-card.tsx",
+      "content": "https://kit.carloshps.com.br/registry/pricing-card.tsx"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "testimonial",
+  "type": "registry:block",
+  "registryDependencies": [],
+  "dependencies": [],
+  "files": [
+    {
+      "name": "blocks/testimonial.tsx",
+      "content": "https://kit.carloshps.com.br/registry/testimonial.tsx"
+    }
+  ]
+}

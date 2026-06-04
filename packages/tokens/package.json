@@ -1,0 +1,10 @@
+{
+  "name": "@studio/tokens",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    "./css": "./src/tokens.css",
+    "./json": "./src/tokens.json"
+  },
+  "files": ["src"]
+}

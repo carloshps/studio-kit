@@ -1,0 +1,28 @@
+{
+  "name": "button",
+  "type": "registry:ui",
+  "registryDependencies": [],
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "name": "button.tsx",
+      "content": "https://kit.carloshps.com.br/registry/button.tsx"
+    }
+  ],
+  "tailwind": {
+    "config": {
+      "theme": {
+        "extend": {
+          "colors": {
+            "accent": "rgb(var(--accent) / <alpha-value>)"
+          }
+        }
+      }
+    }
+  }
+}
