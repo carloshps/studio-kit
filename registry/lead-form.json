@@ -1,12 +1,20 @@
 {
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "lead-form",
   "type": "registry:block",
-  "registryDependencies": ["button", "input"],
+  "registryDependencies": [
+    "utils",
+    "https://kit.carloshps.com.br/registry/button",
+    "https://kit.carloshps.com.br/registry/input"
+  ],
   "dependencies": [],
+  "devDependencies": [],
   "files": [
     {
-      "name": "blocks/lead-form.tsx",
-      "content": "https://kit.carloshps.com.br/registry/lead-form.tsx"
+      "path": "components/blocks/lead-form.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\nimport { Button } from '@/components/ui/button';\nimport { Input } from '@/components/ui/input';\n\nexport interface LeadFormProps {\n  title?: string;\n  subtitle?: string;\n  apiEndpoint: string;\n  ctaLabel?: string;\n  successMessage?: string;\n  className?: string;\n}\n\nexport function LeadForm({\n  title,\n  subtitle,\n  apiEndpoint,\n  ctaLabel = \"Quero começar\",\n  successMessage = \"Recebemos seu contato. Retorno em breve.\",\n  className,\n}: LeadFormProps) {\n  const [status, setStatus] = React.useState<\"idle\" | \"loading\" | \"success\" | \"error\">(\"idle\");\n  const [error, setError] = React.useState(\"\");\n\n  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {\n    e.preventDefault();\n    setStatus(\"loading\");\n    setError(\"\");\n\n    const form = e.currentTarget;\n    const data = Object.fromEntries(new FormData(form));\n\n    try {\n      const res = await fetch(apiEndpoint, {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify(data),\n      });\n      if (!res.ok) throw new Error();\n      setStatus(\"success\");\n    } catch {\n      setStatus(\"error\");\n      setError(\"Erro ao enviar. Tente novamente ou fale pelo WhatsApp.\");\n    }\n  }\n\n  return (\n    <div className={cn(\"rounded-lg border border-border/25 bg-card/90 p-8 shadow-card\", className)}>\n      {title && (\n        <h2 className=\"text-xl font-bold text-foreground/92 mb-1\">{title}</h2>\n      )}\n      {subtitle && (\n        <p className=\"text-sm text-foreground/50 mb-6\">{subtitle}</p>\n      )}\n\n      {status === \"success\" ? (\n        <p className=\"text-sm text-primary font-medium py-4\">{successMessage}</p>\n      ) : (\n        <form onSubmit={handleSubmit} className=\"flex flex-col gap-4\">\n          <Input name=\"name\" placeholder=\"Seu nome\" required autoComplete=\"name\" />\n          <Input name=\"email\" type=\"email\" placeholder=\"E-mail\" required autoComplete=\"email\" />\n          <Input name=\"whatsapp\" placeholder=\"WhatsApp (opcional)\" autoComplete=\"tel\" />\n          <textarea\n            name=\"message\"\n            placeholder=\"Como posso te ajudar?\"\n            rows={3}\n            className={cn(\n              \"flex w-full rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm text-foreground/90 placeholder:text-foreground/40 transition-colors resize-none\",\n              \"focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-accent/40\"\n            )}\n          />\n          {error && <p className=\"text-xs text-destructive\">{error}</p>}\n          <Button type=\"submit\" variant=\"default\" size=\"lg\" disabled={status === \"loading\"}>\n            {status === \"loading\" ? \"Enviando…\" : ctaLabel}\n          </Button>\n        </form>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": ""
     }
   ]
 }

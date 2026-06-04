@@ -1,12 +1,18 @@
 {
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "faq",
   "type": "registry:block",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "dependencies": [],
+  "devDependencies": [],
   "files": [
     {
-      "name": "blocks/faq.tsx",
-      "content": "https://kit.carloshps.com.br/registry/faq.tsx"
+      "path": "components/blocks/faq.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\n\nexport interface FaqItem {\n  question: string;\n  answer: string;\n}\n\nexport interface FaqProps {\n  title?: string;\n  items: FaqItem[];\n  className?: string;\n}\n\nexport function Faq({ title = \"Perguntas frequentes\", items, className }: FaqProps) {\n  const [open, setOpen] = React.useState<number | null>(null);\n\n  return (\n    <section className={cn(\"py-16 px-6\", className)}>\n      <h2 className=\"mb-10 text-2xl md:text-3xl font-bold text-foreground/90 text-center\">\n        {title}\n      </h2>\n      <div className=\"mx-auto max-w-2xl flex flex-col gap-2\">\n        {items.map((item, i) => (\n          <div\n            key={i}\n            className=\"rounded-lg border border-border/18 bg-card/90 overflow-hidden\"\n          >\n            <button\n              className=\"flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-medium text-foreground/90 hover:bg-accent/5 transition-colors\"\n              onClick={() => setOpen(open === i ? null : i)}\n              aria-expanded={open === i}\n            >\n              {item.question}\n              <svg\n                className={cn(\n                  \"h-4 w-4 shrink-0 text-primary transition-transform\",\n                  open === i && \"rotate-180\"\n                )}\n                fill=\"none\"\n                viewBox=\"0 0 24 24\"\n                stroke=\"currentColor\"\n                strokeWidth={2}\n                aria-hidden\n              >\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" d=\"M19 9l-7 7-7-7\" />\n              </svg>\n            </button>\n            {open === i && (\n              <div className=\"px-5 pb-4 text-sm text-foreground/55 leading-relaxed\">\n                {item.answer}\n              </div>\n            )}\n          </div>\n        ))}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:block",
+      "target": ""
     }
   ]
 }

@@ -1,12 +1,18 @@
 {
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "testimonial",
   "type": "registry:block",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "dependencies": [],
+  "devDependencies": [],
   "files": [
     {
-      "name": "blocks/testimonial.tsx",
-      "content": "https://kit.carloshps.com.br/registry/testimonial.tsx"
+      "path": "components/blocks/testimonial.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\n\nexport interface TestimonialItem {\n  quote: string;\n  author: string;\n  role?: string;\n  avatar?: string;\n}\n\nexport interface TestimonialProps {\n  items: TestimonialItem[];\n  className?: string;\n}\n\nexport function Testimonial({ items, className }: TestimonialProps) {\n  return (\n    <div className={cn(\"grid gap-4 sm:grid-cols-2 lg:grid-cols-3\", className)}>\n      {items.map((item, i) => (\n        <figure\n          key={i}\n          className=\"flex flex-col gap-4 rounded-lg border border-border/25 bg-card/90 p-6 shadow-card\"\n        >\n          <blockquote className=\"text-sm text-foreground/70 leading-relaxed\">\n            &ldquo;{item.quote}&rdquo;\n          </blockquote>\n          <figcaption className=\"flex items-center gap-3 mt-auto\">\n            {item.avatar ? (\n              <img\n                src={item.avatar}\n                alt={item.author}\n                className=\"h-9 w-9 rounded-full object-cover ring-2 ring-accent/40\"\n              />\n            ) : (\n              <div\n                className=\"h-9 w-9 rounded-full bg-gradient-avatar ring-2 ring-accent/40 flex items-center justify-center text-xs font-bold text-foreground/70\"\n                aria-hidden\n              >\n                {item.author[0]}\n              </div>\n            )}\n            <div>\n              <div className=\"text-sm font-semibold text-foreground/90\">{item.author}</div>\n              {item.role && (\n                <div className=\"text-xs text-foreground/45\">{item.role}</div>\n              )}\n            </div>\n          </figcaption>\n        </figure>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": ""
     }
   ]
 }

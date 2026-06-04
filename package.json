@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "pnpm --filter kit-site dev",
     "build": "pnpm --filter @studio/tokens build && pnpm --filter @studio/tailwind-preset build && pnpm --filter @studio/ui build",
+    "build:registry": "node scripts/build-registry.mjs",
+    "build:registry:dev": "node scripts/build-registry.mjs --base-url http://localhost:4321",
     "typecheck": "pnpm -r typecheck"
   },
   "packageManager": "pnpm@9.0.0"

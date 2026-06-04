@@ -1,12 +1,19 @@
 {
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "cta-section",
   "type": "registry:block",
-  "registryDependencies": ["button"],
+  "registryDependencies": [
+    "utils",
+    "https://kit.carloshps.com.br/registry/button"
+  ],
   "dependencies": [],
+  "devDependencies": [],
   "files": [
     {
-      "name": "blocks/cta-section.tsx",
-      "content": "https://kit.carloshps.com.br/registry/cta-section.tsx"
+      "path": "components/blocks/cta-section.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\nimport { Button } from '@/components/ui/button';\n\nexport interface CtaSectionProps {\n  title: string;\n  subtitle?: string;\n  cta: { label: string; href: string };\n  secondaryCta?: { label: string; href: string };\n  className?: string;\n}\n\nexport function CtaSection({ title, subtitle, cta, secondaryCta, className }: CtaSectionProps) {\n  return (\n    <section\n      className={cn(\n        \"relative overflow-hidden rounded-lg border border-accent/25 bg-gradient-result px-8 py-16 text-center shadow-hero\",\n        className\n      )}\n    >\n      <h2 className=\"text-2xl md:text-3xl font-bold text-foreground/92\">{title}</h2>\n      {subtitle && (\n        <p className=\"mt-3 text-base text-foreground/50 max-w-lg mx-auto\">{subtitle}</p>\n      )}\n      <div className=\"mt-8 flex flex-wrap items-center justify-center gap-4\">\n        <Button asChild variant=\"primary\" size=\"lg\">\n          <a href={cta.href}>{cta.label}</a>\n        </Button>\n        {secondaryCta && (\n          <Button asChild variant=\"outline\" size=\"lg\">\n            <a href={secondaryCta.href}>{secondaryCta.label}</a>\n          </Button>\n        )}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:block",
+      "target": ""
     }
   ]
 }

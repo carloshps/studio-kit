@@ -1,28 +1,21 @@
 {
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "button",
   "type": "registry:ui",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "dependencies": [
     "@radix-ui/react-slot",
-    "class-variance-authority",
-    "clsx",
-    "tailwind-merge"
+    "class-variance-authority"
   ],
+  "devDependencies": [],
   "files": [
     {
-      "name": "button.tsx",
-      "content": "https://kit.carloshps.com.br/registry/button.tsx"
+      "path": "components/ui/button.tsx",
+      "content": "import * as React from \"react\";\nimport { Slot } from \"@radix-ui/react-slot\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from '@/lib/utils';\n\nconst buttonVariants = cva(\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-50\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"bg-accent/20 border border-accent/40 text-foreground/90 hover:bg-accent/30 hover:border-accent/60\",\n        primary:\n          \"bg-primary text-primary-foreground hover:bg-primary/90\",\n        ghost:\n          \"hover:bg-accent/10 hover:text-foreground\",\n        outline:\n          \"border border-border/25 bg-transparent hover:bg-accent/10 hover:border-accent/40\",\n        link:\n          \"text-primary underline-offset-4 hover:underline p-0 h-auto\",\n      },\n      size: {\n        default: \"h-10 px-5 py-2\",\n        sm:      \"h-8 px-4 text-xs\",\n        lg:      \"h-12 px-7 text-base\",\n        icon:    \"h-10 w-10\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n);\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean;\n}\n\nconst Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n  ({ className, variant, size, asChild = false, ...props }, ref) => {\n    const Comp = asChild ? Slot : \"button\";\n    return (\n      <Comp\n        className={cn(buttonVariants({ variant, size, className }))}\n        ref={ref}\n        {...props}\n      />\n    );\n  }\n);\nButton.displayName = \"Button\";\n\nexport { Button, buttonVariants };\n",
+      "type": "registry:ui",
+      "target": ""
     }
-  ],
-  "tailwind": {
-    "config": {
-      "theme": {
-        "extend": {
-          "colors": {
-            "accent": "rgb(var(--accent) / <alpha-value>)"
-          }
-        }
-      }
-    }
-  }
+  ]
 }

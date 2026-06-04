@@ -1,12 +1,18 @@
 {
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "metric-block",
   "type": "registry:block",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "dependencies": [],
+  "devDependencies": [],
   "files": [
     {
-      "name": "blocks/metric-block.tsx",
-      "content": "https://kit.carloshps.com.br/registry/metric-block.tsx"
+      "path": "components/blocks/metric-block.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\n\nexport interface MetricBlockProps {\n  value: string;\n  label: string;\n  description?: string;\n  className?: string;\n}\n\nexport function MetricBlock({ value, label, description, className }: MetricBlockProps) {\n  return (\n    <div\n      className={cn(\n        \"flex flex-col gap-1 rounded-lg border border-border/25 bg-card/90 p-6 shadow-metric\",\n        className\n      )}\n    >\n      <span\n        className=\"text-4xl font-extrabold text-primary\"\n        style={{ textShadow: \"0 0 16px rgba(0,173,207,0.40)\" }}\n      >\n        {value}\n      </span>\n      <span className=\"text-sm font-semibold text-foreground/90\">{label}</span>\n      {description && (\n        <span className=\"text-xs text-foreground/45 leading-snug\">{description}</span>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": ""
     }
   ]
 }
