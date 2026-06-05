@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "footer",
+  "type": "registry:block",
+  "registryDependencies": [
+    "utils"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "components/blocks/footer.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\n\nexport interface FooterColumn {\n  title: string;\n  links: { label: string; href: string }[];\n}\n\nexport interface FooterProps {\n  brand: {\n    name: string;\n    tagline?: string;\n  };\n  columns?: FooterColumn[];\n  legal?: string;\n  className?: string;\n}\n\nexport function Footer({ brand, columns = [], legal, className }: FooterProps) {\n  const year = new Date().getFullYear();\n\n  return (\n    <footer className={cn(\"border-t border-border/10 bg-background-secondary\", className)}>\n      <div className=\"mx-auto max-w-6xl px-6 py-14\">\n        <div className=\"flex flex-wrap gap-10\">\n          <div className=\"w-full md:flex-1 min-w-[180px]\">\n            <span className=\"text-base font-bold text-foreground/90\">{brand.name}</span>\n            {brand.tagline && (\n              <p className=\"mt-2 max-w-xs text-sm text-foreground/45 leading-relaxed\">\n                {brand.tagline}\n              </p>\n            )}\n          </div>\n          {columns.map((col) => (\n            <div key={col.title} className=\"min-w-[120px]\">\n              <p className=\"mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/40\">\n                {col.title}\n              </p>\n              <ul className=\"flex flex-col gap-2\">\n                {col.links.map((link) => (\n                  <li key={link.href}>\n                    <a\n                      href={link.href}\n                      className=\"text-sm text-foreground/55 hover:text-foreground/90 transition-colors\"\n                    >\n                      {link.label}\n                    </a>\n                  </li>\n                ))}\n              </ul>\n            </div>\n          ))}\n        </div>\n\n        <div className=\"mt-12 border-t border-border/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-foreground/35\">\n          <span>© {year} {brand.name}</span>\n          {legal && <span>{legal}</span>}\n        </div>\n      </div>\n    </footer>\n  );\n}\n",
+      "type": "registry:block",
+      "target": ""
+    }
+  ]
+}

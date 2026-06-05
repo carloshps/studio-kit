@@ -35,7 +35,10 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\.\/components\/button['"]/g, "from '@/components/ui/button'")
     .replace(/from ['"]\.\.\/components\/badge['"]/g, "from '@/components/ui/badge'")
     .replace(/from ['"]\.\.\/components\/card['"]/g, "from '@/components/ui/card'")
-    .replace(/from ['"]\.\.\/components\/input['"]/g, "from '@/components/ui/input'");
+    .replace(/from ['"]\.\.\/components\/input['"]/g, "from '@/components/ui/input'")
+    .replace(/from ['"]\.\.\/components\/navbar['"]/g, "from '@/components/ui/navbar'")
+    .replace(/from ['"]\.\.\/components\/dialog['"]/g, "from '@/components/ui/dialog'")
+    .replace(/from ['"]\.\.\/components\/tabs['"]/g, "from '@/components/ui/tabs'");
 }
 
 function readSrc(relPath) {
@@ -90,6 +93,27 @@ const MANIFEST = {
     dependencies: [],
     registryDeps: ["utils"],
   },
+  navbar: {
+    type: "registry:ui",
+    srcPath: "components/navbar.tsx",
+    installPath: "components/ui/navbar.tsx",
+    dependencies: [],
+    registryDeps: ["utils", "button"],
+  },
+  dialog: {
+    type: "registry:ui",
+    srcPath: "components/dialog.tsx",
+    installPath: "components/ui/dialog.tsx",
+    dependencies: ["@radix-ui/react-dialog"],
+    registryDeps: ["utils"],
+  },
+  tabs: {
+    type: "registry:ui",
+    srcPath: "components/tabs.tsx",
+    installPath: "components/ui/tabs.tsx",
+    dependencies: ["@radix-ui/react-tabs"],
+    registryDeps: ["utils"],
+  },
 
   // ── Blocos ────────────────────────────────────────────────────────
   hero: {
@@ -138,6 +162,13 @@ const MANIFEST = {
     type: "registry:block",
     srcPath: "blocks/testimonial.tsx",
     installPath: "components/blocks/testimonial.tsx",
+    dependencies: [],
+    registryDeps: ["utils"],
+  },
+  footer: {
+    type: "registry:block",
+    srcPath: "blocks/footer.tsx",
+    installPath: "components/blocks/footer.tsx",
     dependencies: [],
     registryDeps: ["utils"],
   },

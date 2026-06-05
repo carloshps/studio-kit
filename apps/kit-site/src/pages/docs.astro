@@ -4,18 +4,27 @@ import Base from "../layouts/Base.astro";
 const REGISTRY_BASE = "https://kit.carloshps.com.br/registry";
 
 const components = [
-  { name: "utils",        label: "Utils",        type: "lib",   desc: "cn() — clsx + tailwind-merge" },
-  { name: "button",       label: "Button",       type: "ui",    desc: "Botão com variantes: default, outline, ghost, link" },
-  { name: "badge",        label: "Badge",        type: "ui",    desc: "Etiqueta inline com variantes de cor" },
-  { name: "card",         label: "Card",         type: "ui",    desc: "Container com Header, Content, Footer" },
-  { name: "input",        label: "Input",        type: "ui",    desc: "Campo de texto base" },
-  { name: "hero",         label: "Hero",         type: "block", desc: "Seção hero com eyebrow, título, subtítulo e CTAs" },
-  { name: "metric-block", label: "MetricBlock",  type: "block", desc: "Bloco de métrica com valor, label e descrição" },
-  { name: "pricing-card", label: "PricingCard",  type: "block", desc: "Card de plano com lista de features e CTA" },
-  { name: "faq",          label: "FAQ",          type: "block", desc: "Seção de perguntas e respostas expansível" },
-  { name: "cta-section",  label: "CtaSection",   type: "block", desc: "Seção de call-to-action com título e botão" },
-  { name: "lead-form",    label: "LeadForm",     type: "block", desc: "Formulário de captura de lead" },
-  { name: "testimonial",  label: "Testimonial",  type: "block", desc: "Carrossel de depoimentos" },
+  { name: "utils",           label: "Utils",          type: "lib",   desc: "cn() — clsx + tailwind-merge" },
+  { name: "button",          label: "Button",          type: "ui",    desc: "Botão com variantes: default, primary, outline, ghost, link" },
+  { name: "badge",           label: "Badge",           type: "ui",    desc: "Etiqueta inline com variantes de cor" },
+  { name: "card",            label: "Card",            type: "ui",    desc: "Container com Header, Content, Footer" },
+  { name: "input",           label: "Input",           type: "ui",    desc: "Campo de texto base" },
+  { name: "navbar",          label: "Navbar",          type: "ui",    desc: "Header sticky com logo, links de navegação, CTA e menu mobile (hamburger)" },
+  { name: "dialog",          label: "Dialog",          type: "ui",    desc: "Modal acessível (foco trapeado, Esc para fechar) — Trigger, Content, Header, Title, Description, Footer" },
+  { name: "tabs",            label: "Tabs",            type: "ui",    desc: "Navegação em abas com teclado — Tabs, TabsList, TabsTrigger, TabsContent" },
+  { name: "hero",            label: "Hero",            type: "block", desc: "Seção hero com eyebrow, título, subtítulo e CTAs" },
+  { name: "metric-block",    label: "MetricBlock",     type: "block", desc: "Bloco de métrica com valor, label e descrição" },
+  { name: "pricing-card",    label: "PricingCard",     type: "block", desc: "Card de plano com lista de features e CTA" },
+  { name: "faq",             label: "FAQ",             type: "block", desc: "Seção de perguntas e respostas expansível" },
+  { name: "cta-section",     label: "CtaSection",      type: "block", desc: "Seção de call-to-action com título e botão" },
+  { name: "lead-form",       label: "LeadForm",        type: "block", desc: "Formulário de captura de lead" },
+  { name: "testimonial",     label: "Testimonial",     type: "block", desc: "Carrossel de depoimentos" },
+  { name: "footer",          label: "Footer",          type: "block", desc: "Rodapé com marca, colunas de links e copyright" },
+];
+
+const staticItems = [
+  { name: "tokens",          label: "Design Tokens",   type: "file",  desc: "CSS custom properties da marca (dark/light). Instala em src/styles/tokens.css — edite para re-branding por cliente." },
+  { name: "tailwind-preset", label: "Tailwind Preset", type: "file",  desc: "Preset Tailwind do Studio — cores, sombras e fontes mapeados aos tokens CSS. Instala como studio-preset.js." },
 ];
 
 const uiComponents = components.filter(c => c.type === "ui" || c.type === "lib");
@@ -49,19 +58,24 @@ const blockComponents = components.filter(c => c.type === "block");
         <div class="space-y-3">
           <div>
             <p class="text-xs text-foreground/40 mb-1 font-mono">1. Clonar o template</p>
-            <pre class="bg-background-secondary/80 border border-border/10 rounded-lg px-4 py-3 text-sm font-mono text-foreground/80 overflow-x-auto"><code>npx degit CarlosHPS/studio-kit/templates/astro-base meu-projeto
+            <pre class="bg-background-secondary/80 border border-border/10 rounded-lg px-4 py-3 text-sm font-mono text-foreground/80 overflow-x-auto"><code>npx degit carloshps/studio-kit/templates/astro-base meu-projeto
 cd meu-projeto
 pnpm install</code></pre>
           </div>
 
           <div>
-            <p class="text-xs text-foreground/40 mb-1 font-mono">2. Inicializar shadcn (já vem pré-configurado no template)</p>
-            <pre class="bg-background-secondary/80 border border-border/10 rounded-lg px-4 py-3 text-sm font-mono text-foreground/80 overflow-x-auto"><code>npx shadcn@latest init</code></pre>
+            <p class="text-xs text-foreground/40 mb-1 font-mono">2. Instalar um componente</p>
+            <pre class="bg-background-secondary/80 border border-border/10 rounded-lg px-4 py-3 text-sm font-mono text-foreground/80 overflow-x-auto"><code>npx shadcn@latest add "{REGISTRY_BASE}/button.json" --yes --overwrite</code></pre>
+            <p class="text-xs text-foreground/40 mt-2">Use <code class="font-mono">--overwrite</code> se o projeto já tiver um <code class="font-mono">utils.ts</code>.</p>
           </div>
 
           <div>
-            <p class="text-xs text-foreground/40 mb-1 font-mono">3. Instalar um componente</p>
-            <pre class="bg-background-secondary/80 border border-border/10 rounded-lg px-4 py-3 text-sm font-mono text-foreground/80 overflow-x-auto"><code>npx shadcn@latest add "{REGISTRY_BASE}/button.json"</code></pre>
+            <p class="text-xs text-foreground/40 mb-1 font-mono">3. Adaptar a marca (re-branding)</p>
+            <pre class="bg-background-secondary/80 border border-border/10 rounded-lg px-4 py-3 text-sm font-mono text-foreground/80 overflow-x-auto"><code># Edite src/styles/tokens.css — o arquivo tem um guia comentado em 4 passos:
+# 1. Tipografia (Google Fonts import + --font-sans)
+# 2. Cor de acento (--primary, --accent, --border, --ring)
+# 3. Paleta de fundo (--background, --background-secondary)
+# 4. Radius dos cantos (--radius)</code></pre>
           </div>
         </div>
       </section>
@@ -133,22 +147,30 @@ pnpm install</code></pre>
         </div>
       </section>
 
-      <!-- Tokens -->
+      <!-- Arquivos estáticos -->
       <section class="mb-12">
-        <h2 class="text-xl font-bold text-foreground/90 mb-4">Customizar tokens por cliente</h2>
+        <h2 class="text-xl font-bold text-foreground/90 mb-6">Arquivos estáticos</h2>
         <p class="text-sm text-foreground/60 mb-4">
-          Edite <code class="bg-accent/10 px-1 rounded font-mono text-xs text-primary">src/styles/tokens.css</code> para substituir a identidade. Os componentes herdam automaticamente via CSS variables.
+          O template já inclui estes arquivos. Útil para projetos que não usam o template base.
         </p>
-        <pre class="bg-background-secondary/80 border border-border/10 rounded-lg px-4 py-3 text-sm font-mono text-foreground/80 overflow-x-auto"><code>{`:root {
-  --background:    10 10 20;    /* fundo do cliente */
-  --primary:       255 80 100;  /* cor de destaque */
-  --accent:        255 80 100;
-  /* ... demais tokens */
-}`}</code></pre>
+        <div class="space-y-3">
+          {staticItems.map(c => (
+            <div class="border border-border/10 rounded-lg px-4 py-4 bg-background-secondary/40">
+              <div class="flex items-start justify-between gap-4 mb-2">
+                <div>
+                  <span class="text-sm font-semibold text-foreground/90">{c.label}</span>
+                  <span class="ml-2 text-xs text-foreground/40 font-mono">registry:{c.type}</span>
+                </div>
+              </div>
+              <p class="text-xs text-foreground/50 mb-3">{c.desc}</p>
+              <pre class="bg-background/60 border border-border/10 rounded px-3 py-2 text-xs font-mono text-foreground/70 overflow-x-auto"><code>npx shadcn@latest add "{REGISTRY_BASE}/{c.name}.json" --yes --overwrite</code></pre>
+            </div>
+          ))}
+        </div>
       </section>
 
       <!-- Tema light -->
-      <section class="mb-12">
+      <section>
         <h2 class="text-xl font-bold text-foreground/90 mb-4">Tema light</h2>
         <p class="text-sm text-foreground/60 mb-4">
           O tema padrão é dark. Para ativar o tema light, adicione a classe <code class="bg-accent/10 px-1 rounded font-mono text-xs text-primary">.light</code> no elemento <code class="bg-accent/10 px-1 rounded font-mono text-xs text-primary">&lt;html&gt;</code> (ou use <code class="bg-accent/10 px-1 rounded font-mono text-xs text-primary">data-theme="light"</code>):
@@ -157,15 +179,6 @@ pnpm install</code></pre>
         <p class="text-xs text-foreground/40 mt-3">
           Os overrides light estão em <code class="font-mono">src/styles/tokens.css</code> — ajuste conforme a identidade do cliente.
         </p>
-      </section>
-
-      <!-- Registry index -->
-      <section>
-        <h2 class="text-xl font-bold text-foreground/90 mb-4">Registry index</h2>
-        <p class="text-sm text-foreground/60 mb-3">
-          Lista todos os itens disponíveis em JSON:
-        </p>
-        <pre class="bg-background-secondary/80 border border-border/10 rounded-lg px-4 py-3 text-sm font-mono text-foreground/80 overflow-x-auto"><code>GET {REGISTRY_BASE}/index.json</code></pre>
       </section>
 
     </div>
