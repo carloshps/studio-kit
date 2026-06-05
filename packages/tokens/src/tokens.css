@@ -2,6 +2,39 @@
  * Studio Kit — Design Tokens
  * Fonte da verdade: marca/design-guide.md
  * Dark é o tema principal. Light é override via classe .light ou [data-theme="light"].
+ *
+ * ─────────────────────────────────────────────────────────────────
+ * RE-BRANDING POR CLIENTE — quais variáveis trocar
+ * ─────────────────────────────────────────────────────────────────
+ *
+ * [OBRIGATÓRIO] Cor de acento — identidade visual do cliente
+ *   --primary / --accent / --border / --ring / --input
+ *   Valor: RGB separado por espaço. Ex: 255 87 51 (laranja #FF5733)
+ *   Também ajuste --primary-foreground para garantir contraste.
+ *
+ * [OBRIGATÓRIO] Tipografia — personalidade da marca
+ *   @import → URL da fonte no Google Fonts (ou self-hosted)
+ *   --font-sans → nome da família principal
+ *   --font-display → (opcional) família display/heading diferente
+ *
+ * [OPCIONAL] Fundo base — tom da marca
+ *   --background / --background-secondary / --card
+ *   Dark profundo (navy padrão): 8 20 36
+ *   Dark grafite:                30 30 35
+ *   Light branco frio:           248 250 252
+ *   Light bege:                  250 247 242
+ *
+ * [OPCIONAL] Personalidade dos cantos
+ *   --radius: 0rem (rígido) → 0.5rem (Studio default) → 1rem (amigável)
+ *
+ * [NÃO ALTERAR SEM NECESSIDADE]
+ *   --foreground / --foreground-muted / --foreground-subtle
+ *   --secondary / --muted / --destructive
+ *   --border-alpha / --border-card-alpha / --border-subtle-alpha
+ *   Estes derivam do fundo e do acento; raramente precisam de ajuste.
+ *
+ * Template de cliente → templates/astro-base/src/styles/tokens.css
+ * ─────────────────────────────────────────────────────────────────
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
@@ -18,13 +51,13 @@
   --foreground-muted:    232 244 251;  /* com alpha 0.45 */
   --foreground-subtle:   232 244 251;  /* com alpha 0.40 */
 
-  /* Acento — cyan #00ADCF */
+  /* Acento — cyan #00ADCF — TROCAR AQUI para a cor do cliente */
   --accent:              0 173 207;
   --accent-foreground:   232 244 251;
 
   /* shadcn semantic aliases */
-  --primary:             0 173 207;
-  --primary-foreground:  232 244 251;
+  --primary:             0 173 207;    /* ← cor principal do cliente */
+  --primary-foreground:  232 244 251;  /* ← branco ou preto, conforme contraste */
   --secondary:           3 12 23;
   --secondary-foreground: 232 244 251;
   --muted:               8 20 36;
@@ -35,15 +68,15 @@
   --destructive:         239 68 68;
   --destructive-foreground: 232 244 251;
 
-  /* Radius */
+  /* Radius — TROCAR para personalidade do cliente */
   --radius: 0.5rem;                    /* moderado — contemporâneo, não arredondado demais */
 
-  /* Alphas de borda (cyan) */
+  /* Alphas de borda — não alterar */
   --border-alpha:        0.18;
   --border-card-alpha:   0.25;
   --border-subtle-alpha: 0.10;
 
-  /* Tipografia */
+  /* Tipografia — TROCAR @import + --font-sans para a fonte do cliente */
   --font-sans: 'Manrope', system-ui, sans-serif;
 }
 

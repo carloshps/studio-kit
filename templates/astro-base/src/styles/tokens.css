@@ -1,44 +1,111 @@
 /*
- * Tokens da marca — ajuste aqui para cada cliente.
- * Dark é o padrão. Para light, adicione classe .light no <html>.
+ * ╔══════════════════════════════════════════════════════════════╗
+ * ║              GUIA DE RE-BRANDING POR CLIENTE                 ║
+ * ╠══════════════════════════════════════════════════════════════╣
+ * ║  Este arquivo é o único lugar para adaptar a marca.          ║
+ * ║  Siga os 4 passos abaixo — nada mais precisa mudar.          ║
+ * ╚══════════════════════════════════════════════════════════════╝
+ *
+ * PASSO 1 — TIPOGRAFIA
+ *   Troque a URL do @import pelo par de fontes do cliente.
+ *   Depois atualize --font-sans (e --font-display se usar duas).
+ *   Referência: https://fonts.google.com
+ *
+ *   Exemplos prontos:
+ *   · Elegante/editorial : Plus Jakarta Sans + DM Serif Display
+ *   · Saúde/bem-estar    : Inter + Lora
+ *   · Corporativo        : Inter + Inter (apenas uma família)
+ *   · Criativo/branding  : Syne + Fraunces
+ *
+ * PASSO 2 — COR DE ACENTO (brand color)
+ *   Troque os valores de --primary / --accent pelo RGB da cor do cliente.
+ *   Use sempre RGB separado por espaço (ex: 255 87 51), não hex.
+ *   Conversor: https://www.rapidtables.com/convert/color/hex-to-rgb.html
+ *
+ *   Esta cor aparece em: CTAs, links, bordas, rings, ícones ativos.
+ *   Ajuste --primary-foreground para garantir contraste (branco ou preto).
+ *
+ * PASSO 3 — PALETA DE FUNDO (dark ou light como padrão)
+ *   · Padrão dark  → mantenha o :root como está, cliente terá tema escuro.
+ *   · Padrão light → mova os valores do bloco .light para o :root
+ *                    e ajuste as cores de fundo para a identidade do cliente.
+ *
+ *   Para marca com fundo bege/off-white: --background: 250 247 242
+ *   Para marca com fundo grafite:        --background: 30 30 35
+ *   Para marca com fundo branco puro:    --background: 255 255 255
+ *
+ * PASSO 4 — PERSONALIDADE DOS CANTOS (--radius)
+ *   · 0rem      → marca rígida, técnica, institucional
+ *   · 0.25rem   → contemporânea, sóbria
+ *   · 0.5rem    → padrão Studio — equilibrado (manter se em dúvida)
+ *   · 0.75rem   → amigável, digital-first
+ *   · 1rem+     → jovem, leve, wellness
+ *
+ * ─────────────────────────────────────────────────────────────────
+ * NÃO ALTERE sem necessidade:
+ *   --foreground, --muted, --card, --destructive
+ *   Eles são derivados do fundo e do acento e raramente precisam mudar.
+ * ─────────────────────────────────────────────────────────────────
  */
 
+/* PASSO 1 → troque esta URL pela fonte do cliente */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
 /* ─── Dark (padrão do Studio) ────────────────────────────────── */
 :root {
-  --background:           8 20 36;
-  --background-secondary: 3 12 23;
-  --card:                 8 20 36;
-  --foreground:           232 244 251;
-  --primary:              0 173 207;
-  --primary-foreground:   232 244 251;
+  /* PASSO 3 → fundo da marca (valores RGB separados por espaço) */
+  --background:           8 20 36;     /* navy profundo — trocar para o fundo do cliente */
+  --background-secondary: 3 12 23;     /* variante mais escura do fundo */
+  --card:                 8 20 36;     /* mesmo fundo, usado em cards com alpha */
+
+  /* Texto — raramente muda; deriva do fundo escolhido */
+  --foreground:           232 244 251; /* quase branco frio */
   --muted:                8 20 36;
   --muted-foreground:     232 244 251;
-  --accent:               0 173 207;
+
+  /* PASSO 2 → cor de acento do cliente (substitua o cyan #00ADCF) */
+  --primary:              0 173 207;   /* → ex: 255 87 51 para laranja vibrante */
+  --primary-foreground:   232 244 251; /* → branco (232 244 251) ou preto (8 8 8) */
+  --accent:               0 173 207;   /* mantenha igual ao --primary */
   --accent-foreground:    232 244 251;
-  --border:               0 173 207;
+  --border:               0 173 207;   /* usado com alpha 0.18 via Tailwind */
   --ring:                 0 173 207;
+
+  /* PASSO 4 → personalidade dos cantos */
   --radius:               0.5rem;
+
+  /* PASSO 1 → fonte principal */
+  --font-sans: 'Manrope', system-ui, sans-serif;
+
+  /* Semânticos — não alterar */
+  --destructive:          239 68 68;
+  --destructive-foreground: 232 244 251;
 }
 
 /* ─── Light (override por cliente) ───────────────────────────── */
+/*
+ * Se o cliente quiser tema claro como padrão:
+ *   1. Mova estes valores para o :root acima.
+ *   2. Mova os valores atuais do :root para cá (serão o tema dark opcional).
+ */
 .light,
 [data-theme="light"] {
-  --background:           248 250 252;
+  --background:           248 250 252; /* → ajuste para o fundo claro do cliente */
   --background-secondary: 241 245 249;
   --card:                 255 255 255;
   --foreground:           8 20 36;
   --muted:                241 245 249;
   --muted-foreground:     8 20 36;
-  --primary:              0 173 207;
+  --primary:              0 173 207;   /* → mesma cor de acento do dark */
   --primary-foreground:   255 255 255;
+  --border:               0 173 207;
+  --ring:                 0 173 207;
 }
 
 /* ─── Base ────────────────────────────────────────────────────── */
 body {
   background-color: rgb(var(--background));
   color: rgb(var(--foreground) / 0.92);
-  font-family: 'Manrope', system-ui, sans-serif;
+  font-family: var(--font-sans, 'Manrope', system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
 }
