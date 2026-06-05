@@ -9,7 +9,7 @@
  *   node scripts/build-registry.mjs --base-url http://localhost:4321   (dev local)
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -143,8 +143,60 @@ const MANIFEST = {
   },
 };
 
+// Itens de arquivo estático — gerados das fontes em packages/
+// Não são componentes .tsx, então ficam fora do MANIFEST de componentes.
+const STATIC_ITEMS = {
+  tokens: {
+    type: "registry:file",
+    description:
+      "Studio Kit design tokens — CSS custom properties (dark/light). Copy to src/styles/tokens.css and import in global.css.",
+    srcPath: join(ROOT, "packages", "tokens", "src", "tokens.css"),
+    installPath: "styles/tokens.css",
+  },
+  "tailwind-preset": {
+    type: "registry:file",
+    description:
+      "Studio Kit Tailwind preset — colors, shadows, fonts and background images mapped to CSS tokens.",
+    srcPath: join(ROOT, "packages", "tailwind-preset", "src", "index.js"),
+    installPath: "studio-preset.js",
+  },
+};
+
 mkdirSync(REGISTRY_OUT, { recursive: true });
 
+// ── Gerar itens estáticos (tokens + tailwind-preset) ─────────────────────
+for (const [name, meta] of Object.entries(STATIC_ITEMS)) {
+  const content = readFileSync(meta.srcPath, "utf-8");
+  const json = {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name,
+    type: meta.type,
+    description: meta.description,
+    registryDependencies: [],
+    dependencies: [],
+    devDependencies: [],
+    files: [
+      {
+        path: meta.installPath,
+        type: meta.type,
+        content,
+      },
+    ],
+  };
+  writeFileSync(
+    join(REGISTRY_OUT, `${name}.json`),
+    JSON.stringify(json, null, 2) + "\n"
+  );
+  console.log(`✓ ${name}.json  (from source)`);
+}
+
+// ── Sincronizar preset no template (evita duplicação manual) ─────────────
+const PRESET_SRC = join(ROOT, "packages", "tailwind-preset", "src", "index.js");
+const PRESET_DEST = join(ROOT, "templates", "astro-base", "studio-preset.js");
+copyFileSync(PRESET_SRC, PRESET_DEST);
+console.log(`✓ templates/astro-base/studio-preset.js  (synced from source)`);
+
+// ── Gerar componentes do MANIFEST ─────────────────────────────────────────
 let count = 0;
 for (const [name, meta] of Object.entries(MANIFEST)) {
   const content = readSrc(meta.srcPath);
