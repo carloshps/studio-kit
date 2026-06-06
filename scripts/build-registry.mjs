@@ -53,7 +53,8 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\/tooltip['"]/g, "from '@/components/ui/tooltip'")
     .replace(/from ['"]\.\.\/components\/breadcrumb['"]/g, "from '@/components/ui/breadcrumb'")
     .replace(/from ['"]\.\.\/components\/pagination['"]/g, "from '@/components/ui/pagination'")
-    .replace(/from ['"]\.\.\/components\/dropdown['"]/g, "from '@/components/ui/dropdown'");
+    .replace(/from ['"]\.\.\/components\/dropdown['"]/g, "from '@/components/ui/dropdown'")
+    .replace(/from ['"]\.\.\/components\/drawer['"]/g, "from '@/components/ui/drawer'");
 }
 
 function readSrc(relPath) {
@@ -204,6 +205,13 @@ const MANIFEST = {
     srcPath: "components/dropdown.tsx",
     installPath: "components/ui/dropdown.tsx",
     dependencies: ["@radix-ui/react-dropdown-menu"],
+    registryDeps: ["utils"],
+  },
+  drawer: {
+    type: "registry:ui",
+    srcPath: "components/drawer.tsx",
+    installPath: "components/ui/drawer.tsx",
+    dependencies: ["@radix-ui/react-dialog"],
     registryDeps: ["utils"],
   },
   alert: {

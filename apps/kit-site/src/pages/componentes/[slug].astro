@@ -162,7 +162,16 @@ const components: ComponentDef[] = [
       { name: "modal",        type: "boolean", default: "true",      desc: "Se true, bloqueia interação com o fundo" },
     ],
   },
-  { slug: "drawer",     name: "Drawer",     category: "Navegação", hasDemo: false, description: "Painel lateral deslizante via Radix Dialog (Sheet)." },
+  {
+    slug: "drawer", name: "Drawer", category: "Navegação", hasDemo: true,
+    description: "Painel lateral deslizante via Radix Dialog. Composto por Drawer, DrawerTrigger, DrawerClose, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle e DrawerDescription. Suporta as laterais right, left, top e bottom.",
+    radix: "Radix Dialog",
+    props: [
+      { name: "side",        type: "'right'|'left'|'top'|'bottom'", default: "right",  desc: "Lado de onde o painel desliza" },
+      { name: "open",        type: "boolean",                       desc: "Estado aberto (controlado)" },
+      { name: "onOpenChange", type: "(open: boolean) => void",      desc: "Callback ao abrir/fechar" },
+    ],
+  },
   {
     slug: "pagination", name: "Pagination", category: "Navegação", hasDemo: true,
     description: "Controles de paginação com prev/next e numeração. Composto por Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext e PaginationEllipsis.",
@@ -593,6 +602,51 @@ if (!component) {
                 </nav>
               </div>
             </div>
+          </div>
+        )}
+
+        <!-- DRAWER demo -->
+        {component.slug === "drawer" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview interativo</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex items-center justify-center min-h-[160px]">
+              <button
+                id="drawer-open-btn"
+                class="inline-flex items-center gap-2 rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:border-accent/40 hover:text-foreground/95 focus:outline-none focus:ring-2 focus:ring-ring/30"
+              >
+                Abrir Drawer
+                <svg class="h-4 w-4 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></svg>
+              </button>
+            </div>
+            <!-- Overlay -->
+            <div id="drawer-overlay" class="hidden fixed inset-0 z-50 bg-background/60 backdrop-blur-sm"></div>
+            <!-- Panel -->
+            <div
+              id="drawer-panel"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="drawer-title"
+              class="fixed inset-y-0 right-0 z-50 h-full w-3/4 max-w-sm translate-x-full border-l border-border/15 bg-background p-6 shadow-2xl transition-transform duration-300 ease-in-out flex flex-col gap-6"
+            >
+              <div class="flex flex-col gap-1.5">
+                <h2 id="drawer-title" class="text-lg font-semibold text-foreground/90">Painel lateral</h2>
+                <p class="text-sm text-foreground/50">Conteúdo do drawer. Pode incluir formulários, listas, navegação ou qualquer layout.</p>
+              </div>
+              <div class="rounded-lg border border-border/10 bg-card/30 p-4 space-y-3">
+                <div class="h-3 rounded bg-foreground/10 w-3/4"></div>
+                <div class="h-3 rounded bg-foreground/8 w-full"></div>
+                <div class="h-3 rounded bg-foreground/8 w-5/6"></div>
+                <div class="h-3 rounded bg-foreground/6 w-2/3"></div>
+              </div>
+              <div class="mt-auto flex flex-col gap-2">
+                <button id="drawer-confirm-btn" class="inline-flex h-10 w-full items-center justify-center rounded-lg bg-primary/90 px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary">Confirmar</button>
+                <button id="drawer-cancel-btn" class="inline-flex h-10 w-full items-center justify-center rounded-lg border border-border/18 bg-transparent px-4 text-sm font-medium text-foreground/60 transition-colors hover:border-accent/40 hover:text-foreground/85">Cancelar</button>
+              </div>
+              <button id="drawer-close-btn" class="absolute right-4 top-4 rounded-sm opacity-40 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring/40">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <p class="text-xs text-foreground/30 mt-3">Demo interativa — abre painel lateral com overlay. Em produção usa Radix Dialog com animação CSS, foco gerenciado e acessibilidade completa.</p>
           </div>
         )}
 
@@ -1443,6 +1497,32 @@ if (!component) {
         selectChevron?.classList.remove("rotate-180");
       }
     });
+
+    // Drawer demo interactivity
+    const drawerOpenBtn  = document.getElementById("drawer-open-btn");
+    const drawerPanel    = document.getElementById("drawer-panel");
+    const drawerOverlay  = document.getElementById("drawer-overlay");
+    const drawerCloseBtn = document.getElementById("drawer-close-btn");
+    const drawerCancelBtn = document.getElementById("drawer-cancel-btn");
+    const drawerConfirmBtn = document.getElementById("drawer-confirm-btn");
+
+    const openDrawer = () => {
+      drawerOverlay?.classList.remove("hidden");
+      drawerPanel?.classList.remove("translate-x-full");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeDrawer = () => {
+      drawerPanel?.classList.add("translate-x-full");
+      setTimeout(() => drawerOverlay?.classList.add("hidden"), 300);
+      document.body.style.overflow = "";
+    };
+
+    drawerOpenBtn?.addEventListener("click", openDrawer);
+    drawerCloseBtn?.addEventListener("click", closeDrawer);
+    drawerCancelBtn?.addEventListener("click", closeDrawer);
+    drawerConfirmBtn?.addEventListener("click", closeDrawer);
+    drawerOverlay?.addEventListener("click", closeDrawer);
 
     // Dropdown demo interactivity
     const ddTrigger  = document.getElementById("dropdown-trigger");
