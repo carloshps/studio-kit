@@ -154,7 +154,13 @@ const components: ComponentDef[] = [
   },
   { slug: "dropdown",   name: "Dropdown",   category: "Navegação", hasDemo: false, description: "Menu flutuante via Radix Dropdown Menu." },
   { slug: "drawer",     name: "Drawer",     category: "Navegação", hasDemo: false, description: "Painel lateral deslizante via Radix Dialog (Sheet)." },
-  { slug: "pagination", name: "Pagination", category: "Navegação", hasDemo: false, description: "Controles de paginação com prev/next e numeração." },
+  {
+    slug: "pagination", name: "Pagination", category: "Navegação", hasDemo: true,
+    description: "Controles de paginação com prev/next e numeração. Composto por Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext e PaginationEllipsis.",
+    props: [
+      { name: "isActive", type: "boolean", default: "false", desc: "Marca o PaginationLink como página atual" },
+    ],
+  },
 
   /* ── Feedback ────────────────────────────────────────────── */
   {
@@ -575,6 +581,74 @@ if (!component) {
                       <span role="link" aria-disabled="true" aria-current="page" class="text-foreground/85 font-medium">Breadcrumb</span>
                     </li>
                   </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- PAGINATION demo -->
+        {component.slug === "pagination" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex justify-center" id="pagination-demo">
+                <nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center">
+                  <ul class="flex flex-row items-center gap-1">
+                    <li>
+                      <a data-pg-prev href="#" aria-label="Ir para página anterior" class="inline-flex h-9 items-center justify-center gap-1 rounded-lg border border-transparent px-3 text-sm font-medium text-foreground/55 transition-colors hover:border-border/20 hover:bg-card/50 hover:text-foreground/85">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                        <span>Anterior</span>
+                      </a>
+                    </li>
+                    {[1,2,3,4,5].map(n => (
+                      <li>
+                        <a
+                          data-pg={n}
+                          href="#"
+                          aria-current={n === 3 ? "page" : undefined}
+                          class={`inline-flex h-9 min-w-9 items-center justify-center rounded-lg border text-sm font-medium transition-colors ${n === 3 ? "border-primary/40 bg-primary/10 text-primary pointer-events-none" : "border-transparent text-foreground/55 hover:border-border/20 hover:bg-card/50 hover:text-foreground/85"}`}
+                        >
+                          {n}
+                        </a>
+                      </li>
+                    ))}
+                    <li>
+                      <a data-pg-next href="#" aria-label="Ir para próxima página" class="inline-flex h-9 items-center justify-center gap-1 rounded-lg border border-transparent px-3 text-sm font-medium text-foreground/55 transition-colors hover:border-border/20 hover:bg-card/50 hover:text-foreground/85">
+                        <span>Próxima</span>
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <p class="text-xs text-foreground/30 mt-3">Demo interativa — clique para navegar entre páginas.</p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Com ellipsis</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex justify-center">
+                <nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center">
+                  <ul class="flex flex-row items-center gap-1">
+                    <li>
+                      <a href="#" aria-label="Ir para página anterior" class="inline-flex h-9 items-center justify-center gap-1 rounded-lg border border-transparent px-3 text-sm font-medium text-foreground/55 transition-colors hover:border-border/20 hover:bg-card/50 hover:text-foreground/85">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                        <span>Anterior</span>
+                      </a>
+                    </li>
+                    <li><a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-transparent text-sm font-medium text-foreground/55 transition-colors hover:border-border/20 hover:bg-card/50 hover:text-foreground/85">1</a></li>
+                    <li><span aria-hidden="true" class="flex h-9 w-9 items-center justify-center text-foreground/30"><svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></span></li>
+                    <li><a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-transparent text-sm font-medium text-foreground/55 transition-colors hover:border-border/20 hover:bg-card/50 hover:text-foreground/85">4</a></li>
+                    <li><a href="#" aria-current="page" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-primary/40 bg-primary/10 text-primary pointer-events-none text-sm font-medium">5</a></li>
+                    <li><a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-transparent text-sm font-medium text-foreground/55 transition-colors hover:border-border/20 hover:bg-card/50 hover:text-foreground/85">6</a></li>
+                    <li><span aria-hidden="true" class="flex h-9 w-9 items-center justify-center text-foreground/30"><svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></span></li>
+                    <li><a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-transparent text-sm font-medium text-foreground/55 transition-colors hover:border-border/20 hover:bg-card/50 hover:text-foreground/85">12</a></li>
+                    <li>
+                      <a href="#" aria-label="Ir para próxima página" class="inline-flex h-9 items-center justify-center gap-1 rounded-lg border border-transparent px-3 text-sm font-medium text-foreground/55 transition-colors hover:border-border/20 hover:bg-card/50 hover:text-foreground/85">
+                        <span>Próxima</span>
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      </a>
+                    </li>
+                  </ul>
                 </nav>
               </div>
             </div>
@@ -1312,6 +1386,50 @@ if (!component) {
         selectChevron?.classList.remove("rotate-180");
       }
     });
+
+    // Pagination demo interactivity
+    const pgDemo = document.getElementById("pagination-demo");
+    if (pgDemo) {
+      const totalPages = 5;
+      let currentPage = 3;
+
+      const updatePagination = () => {
+        pgDemo.querySelectorAll("[data-pg]").forEach(link => {
+          const n = Number(link.dataset.pg);
+          const active = n === currentPage;
+          link.setAttribute("aria-current", active ? "page" : "false");
+          link.className = `inline-flex h-9 min-w-9 items-center justify-center rounded-lg border text-sm font-medium transition-colors ${
+            active
+              ? "border-primary/40 bg-primary/10 text-primary pointer-events-none"
+              : "border-transparent text-foreground/55 hover:border-border/20 hover:bg-card/50 hover:text-foreground/85"
+          }`;
+        });
+        const prevLink = pgDemo.querySelector("[data-pg-prev]");
+        const nextLink = pgDemo.querySelector("[data-pg-next]");
+        if (prevLink) prevLink.style.opacity = currentPage === 1 ? "0.3" : "1";
+        if (nextLink) nextLink.style.opacity = currentPage === totalPages ? "0.3" : "1";
+      };
+
+      pgDemo.querySelectorAll("[data-pg]").forEach(link => {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          currentPage = Number(link.dataset.pg);
+          updatePagination();
+        });
+      });
+
+      pgDemo.querySelector("[data-pg-prev]")?.addEventListener("click", e => {
+        e.preventDefault();
+        if (currentPage > 1) { currentPage--; updatePagination(); }
+      });
+
+      pgDemo.querySelector("[data-pg-next]")?.addEventListener("click", e => {
+        e.preventDefault();
+        if (currentPage < totalPages) { currentPage++; updatePagination(); }
+      });
+
+      updatePagination();
+    }
 
     // Toast demo
     const toastViewport = document.getElementById("toast-viewport");

@@ -51,7 +51,8 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\/alert['"]/g, "from '@/components/ui/alert'")
     .replace(/from ['"]\.\/skeleton['"]/g, "from '@/components/ui/skeleton'")
     .replace(/from ['"]\.\/tooltip['"]/g, "from '@/components/ui/tooltip'")
-    .replace(/from ['"]\.\.\/components\/breadcrumb['"]/g, "from '@/components/ui/breadcrumb'");
+    .replace(/from ['"]\.\.\/components\/breadcrumb['"]/g, "from '@/components/ui/breadcrumb'")
+    .replace(/from ['"]\.\.\/components\/pagination['"]/g, "from '@/components/ui/pagination'");
 }
 
 function readSrc(relPath) {
@@ -187,6 +188,13 @@ const MANIFEST = {
     type: "registry:ui",
     srcPath: "components/breadcrumb.tsx",
     installPath: "components/ui/breadcrumb.tsx",
+    dependencies: [],
+    registryDeps: ["utils"],
+  },
+  pagination: {
+    type: "registry:ui",
+    srcPath: "components/pagination.tsx",
+    installPath: "components/ui/pagination.tsx",
     dependencies: [],
     registryDeps: ["utils"],
   },
