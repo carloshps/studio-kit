@@ -35,6 +35,9 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\.\/components\/button['"]/g, "from '@/components/ui/button'")
     .replace(/from ['"]\.\.\/components\/badge['"]/g, "from '@/components/ui/badge'")
     .replace(/from ['"]\.\.\/components\/card['"]/g, "from '@/components/ui/card'")
+    .replace(/from ['"]\.\.\/components\/avatar['"]/g, "from '@/components/ui/avatar'")
+    .replace(/from ['"]\.\.\/components\/table['"]/g, "from '@/components/ui/table'")
+    .replace(/from ['"]\.\.\/components\/accordion['"]/g, "from '@/components/ui/accordion'")
     .replace(/from ['"]\.\.\/components\/input['"]/g, "from '@/components/ui/input'")
     .replace(/from ['"]\.\.\/components\/label['"]/g, "from '@/components/ui/label'")
     .replace(/from ['"]\.\.\/components\/textarea['"]/g, "from '@/components/ui/textarea'")
@@ -89,6 +92,27 @@ const MANIFEST = {
     srcPath: "components/card.tsx",
     installPath: "components/ui/card.tsx",
     dependencies: [],
+    registryDeps: ["utils"],
+  },
+  avatar: {
+    type: "registry:ui",
+    srcPath: "components/avatar.tsx",
+    installPath: "components/ui/avatar.tsx",
+    dependencies: ["@radix-ui/react-avatar"],
+    registryDeps: ["utils"],
+  },
+  table: {
+    type: "registry:ui",
+    srcPath: "components/table.tsx",
+    installPath: "components/ui/table.tsx",
+    dependencies: [],
+    registryDeps: ["utils"],
+  },
+  accordion: {
+    type: "registry:ui",
+    srcPath: "components/accordion.tsx",
+    installPath: "components/ui/accordion.tsx",
+    dependencies: ["@radix-ui/react-accordion"],
     registryDeps: ["utils"],
   },
   input: {

@@ -43,9 +43,33 @@ const components: ComponentDef[] = [
       { name: "className", type: "string", desc: "Classes adicionais passadas ao container" },
     ],
   },
-  { slug: "avatar",    name: "Avatar",    category: "Data Display",  hasDemo: false, description: "Imagem de perfil com fallback para iniciais." },
-  { slug: "table",     name: "Table",     category: "Data Display",  hasDemo: false, description: "Tabela responsiva com header, body e footer semânticos." },
-  { slug: "accordion", name: "Accordion", category: "Data Display",  hasDemo: false, description: "Lista expansível via Radix Accordion — acessível por teclado." },
+  {
+    slug: "avatar", name: "Avatar", category: "Data Display", hasDemo: true,
+    description: "Imagem de perfil com fallback automático para iniciais via Radix Avatar.",
+    radix: "Radix Avatar",
+    props: [
+      { name: "src",       type: "string",  desc: "URL da imagem (passada ao AvatarImage)" },
+      { name: "alt",       type: "string",  desc: "Texto alternativo da imagem" },
+      { name: "className", type: "string",  desc: "Classes adicionais no container (tamanho, forma)" },
+    ],
+  },
+  {
+    slug: "table", name: "Table", category: "Data Display", hasDemo: true,
+    description: "Tabela responsiva com header, body e footer semânticos. Composta por Table, TableHeader, TableBody, TableRow, TableHead e TableCell.",
+    props: [
+      { name: "className", type: "string", desc: "Classes adicionais no elemento table" },
+    ],
+  },
+  {
+    slug: "accordion", name: "Accordion", category: "Data Display", hasDemo: true,
+    description: "Lista expansível acessível via Radix Accordion. Composta por Accordion, AccordionItem, AccordionTrigger e AccordionContent.",
+    radix: "Radix Accordion",
+    props: [
+      { name: "type",         type: "'single' | 'multiple'", default: "single", desc: "Permite um ou múltiplos itens abertos" },
+      { name: "collapsible",  type: "boolean", default: "false", desc: "Permite fechar o item ativo (type=single)" },
+      { name: "defaultValue", type: "string",  desc: "Item aberto por padrão (não controlado)" },
+    ],
+  },
 
   /* ── Data Input ──────────────────────────────────────────── */
   {
@@ -591,6 +615,135 @@ if (!component) {
           </div>
         )}
 
+        <!-- AVATAR demo -->
+        {component.slug === "avatar" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Tamanhos &amp; fallback</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap items-end gap-6">
+                <!-- com imagem -->
+                <div class="flex flex-col items-center gap-2">
+                  <div class="relative h-16 w-16 overflow-hidden rounded-full ring-2 ring-primary/20">
+                    <img src="https://i.pravatar.cc/64" alt="Avatar" class="h-full w-full object-cover" loading="lazy" />
+                  </div>
+                  <span class="text-xs text-foreground/30">xl</span>
+                </div>
+                <!-- fallback iniciais -->
+                <div class="flex flex-col items-center gap-2">
+                  <div class="flex h-12 w-12 items-center justify-center rounded-full bg-accent/20 ring-2 ring-primary/10">
+                    <span class="text-sm font-semibold text-foreground/70">CH</span>
+                  </div>
+                  <span class="text-xs text-foreground/30">lg</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 ring-2 ring-primary/10">
+                    <span class="text-xs font-semibold text-primary/80">AB</span>
+                  </div>
+                  <span class="text-xs text-foreground/30">md</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-full bg-accent/20">
+                    <span class="text-xs font-semibold text-foreground/60">MR</span>
+                  </div>
+                  <span class="text-xs text-foreground/30">sm</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Grupo empilhado</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+                <div class="flex -space-x-3">
+                  {["CH","AB","MR","LF"].map((init, i) => (
+                    <div
+                      class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-background bg-accent/20 text-xs font-semibold text-foreground/70"
+                      style={`z-index:${4-i}`}
+                    >
+                      {init}
+                    </div>
+                  ))}
+                  <div class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-background bg-card/80 text-xs font-medium text-foreground/40" style="z-index:0">
+                    +8
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- TABLE demo -->
+        {component.slug === "table" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Tabela responsiva</p>
+            <div class="rounded-xl border border-border/10 overflow-hidden">
+              <div class="w-full overflow-x-auto">
+                <table class="w-full caption-bottom text-sm">
+                  <thead class="[&_tr]:border-b [&_tr]:border-border/10">
+                    <tr>
+                      <th class="h-10 px-4 text-left text-xs font-semibold uppercase tracking-widest text-foreground/30">Cliente</th>
+                      <th class="h-10 px-4 text-left text-xs font-semibold uppercase tracking-widest text-foreground/30">Projeto</th>
+                      <th class="h-10 px-4 text-left text-xs font-semibold uppercase tracking-widest text-foreground/30 hidden sm:table-cell">Entrega</th>
+                      <th class="h-10 px-4 text-left text-xs font-semibold uppercase tracking-widest text-foreground/30">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="[&_tr:last-child]:border-0">
+                    {[
+                      { cliente: "Dra. Ana Lima",    projeto: "Site Clínica",      entrega: "Jun 2026", status: "Ativo",     color: "green" },
+                      { cliente: "Studio Beleza",    projeto: "Presença Contínua", entrega: "Jul 2026", status: "Em pauta",  color: "yellow" },
+                      { cliente: "Dr. Bruno Matos",  projeto: "Landing Page",      entrega: "Ago 2026", status: "Proposta",  color: "blue" },
+                    ].map(row => (
+                      <tr class="border-b border-border/8 transition-colors hover:bg-card/40">
+                        <td class="px-4 py-3 text-sm font-medium text-foreground/80">{row.cliente}</td>
+                        <td class="px-4 py-3 text-sm text-foreground/55">{row.projeto}</td>
+                        <td class="px-4 py-3 text-sm text-foreground/40 hidden sm:table-cell">{row.entrega}</td>
+                        <td class="px-4 py-3">
+                          <span class={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                            row.color === "green"  ? "bg-green-500/12 text-green-400/80 border border-green-500/20"  :
+                            row.color === "yellow" ? "bg-yellow-500/12 text-yellow-400/80 border border-yellow-500/20" :
+                            "bg-blue-500/12 text-blue-400/80 border border-blue-500/20"
+                          }`}>
+                            {row.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- ACCORDION demo -->
+        {component.slug === "accordion" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Interativo</p>
+            <div id="accordion-demo" class="rounded-xl border border-border/10 bg-card/30 divide-y divide-border/10">
+              {[
+                { id: "a", q: "O que está incluído no projeto?", a: "Diagnóstico inicial, estratégia, desenvolvimento, revisões e entrega do projeto publicado com suporte por 30 dias." },
+                { id: "b", q: "Qual o prazo médio de entrega?", a: "Projetos de site completo levam entre 3 e 6 semanas dependendo da complexidade e aprovações." },
+                { id: "c", q: "Como funciona a Presença Contínua?", a: "É uma assinatura mensal que garante atualização, manutenção, relatórios e suporte contínuo para o seu site." },
+              ].map(item => (
+                <div data-accordion-item={item.id} class="accordion-item">
+                  <button
+                    data-accordion-trigger={item.id}
+                    aria-expanded="false"
+                    class="flex w-full items-center justify-between py-4 px-5 text-sm font-medium text-foreground/80 hover:text-foreground/95 transition-colors text-left focus-visible:outline-none"
+                  >
+                    {item.q}
+                    <svg data-chevron={item.id} class="h-4 w-4 shrink-0 text-foreground/40 transition-transform duration-200 ml-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </button>
+                  <div data-accordion-content={item.id} class="hidden px-5 pb-4 text-sm text-foreground/55 leading-relaxed">
+                    {item.a}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p class="text-xs text-foreground/30 mt-3">Demo interativa — clique para expandir. Em produção usa Radix Accordion com animação CSS e acessibilidade completa.</p>
+          </div>
+        )}
+
         <!-- SELECT demo -->
         {component.slug === "select" && (
           <div>
@@ -723,6 +876,26 @@ if (!component) {
         panels.forEach(panel => {
           panel.classList.toggle("hidden", panel.dataset.tabPanel !== target);
         });
+      });
+    });
+
+    // Accordion demo interactivity
+    document.querySelectorAll("[data-accordion-trigger]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id      = btn.dataset.accordionTrigger;
+        const content = document.querySelector(`[data-accordion-content="${id}"]`);
+        const chevron = document.querySelector(`[data-chevron="${id}"]`);
+        const isOpen  = !content.classList.contains("hidden");
+        // fecha todos
+        document.querySelectorAll("[data-accordion-content]").forEach(c => c.classList.add("hidden"));
+        document.querySelectorAll("[data-accordion-trigger]").forEach(b => b.setAttribute("aria-expanded", "false"));
+        document.querySelectorAll("[data-chevron]").forEach(ch => ch.classList.remove("rotate-180"));
+        // abre o clicado (se estava fechado)
+        if (!isOpen) {
+          content.classList.remove("hidden");
+          btn.setAttribute("aria-expanded", "true");
+          chevron?.classList.add("rotate-180");
+        }
       });
     });
 
