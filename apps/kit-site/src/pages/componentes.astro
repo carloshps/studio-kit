@@ -1,0 +1,111 @@
+---
+import StyleguideLayout from "../layouts/StyleguideLayout.astro";
+---
+
+<StyleguideLayout title="Componentes">
+  <div class="px-8 py-12 max-w-container mx-auto space-y-12">
+
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-foreground/30 mb-2">Design System</p>
+      <h1 class="text-h1 text-foreground/90 mb-3">Componentes</h1>
+      <p class="text-body text-foreground/50 max-w-xl">
+        Biblioteca de componentes categorizados. Cada item inclui preview, variantes, props e comando de instalação via registry.
+      </p>
+    </div>
+
+    <div class="space-y-10">
+      {[
+        {
+          cat: "Ações",
+          desc: "Disparam ações ou comunicam estado.",
+          items: [
+            { name: "Button",  href: "/componentes/button", done: true,  desc: "5 variantes, 3 tamanhos, asChild" },
+            { name: "Badge",   href: "/componentes/badge",  done: true,  desc: "Labels inline para status e categoria" },
+          ],
+        },
+        {
+          cat: "Data Display",
+          desc: "Estruturam e exibem conteúdo.",
+          items: [
+            { name: "Card",      href: "/componentes/card",      done: true,  desc: "Container com header, content e footer" },
+            { name: "Avatar",    href: "/componentes/avatar",    done: false, desc: "Imagem de perfil com fallback" },
+            { name: "Table",     href: "/componentes/table",     done: false, desc: "Tabela responsiva semântica" },
+            { name: "Accordion", href: "/componentes/accordion", done: false, desc: "Lista expansível via Radix" },
+          ],
+        },
+        {
+          cat: "Data Input",
+          desc: "Capturam dados do usuário.",
+          items: [
+            { name: "Input",    href: "/componentes/input",    done: true,  desc: "Campo de texto token-aware" },
+            { name: "Label",    href: "/componentes/label",    done: false, desc: "Label acessível via Radix" },
+            { name: "Checkbox", href: "/componentes/checkbox", done: false, desc: "Caixa com estado indeterminado" },
+            { name: "Radio",    href: "/componentes/radio",    done: false, desc: "Opções exclusivas via Radix" },
+            { name: "Select",   href: "/componentes/select",   done: false, desc: "Dropdown acessível via Radix" },
+            { name: "Textarea", href: "/componentes/textarea", done: false, desc: "Campo multilinhas" },
+          ],
+        },
+        {
+          cat: "Navegação",
+          desc: "Movimentam o usuário pela interface.",
+          items: [
+            { name: "Navbar",     href: "/componentes/navbar",      done: true,  desc: "Header responsivo com hamburger" },
+            { name: "Tabs",       href: "/componentes/tabs",        done: true,  desc: "Abas via Radix Tabs" },
+            { name: "Breadcrumb", href: "/componentes/breadcrumb",  done: false, desc: "Trilha de navegação hierárquica" },
+            { name: "Dropdown",   href: "/componentes/dropdown",    done: false, desc: "Menu flutuante via Radix" },
+            { name: "Drawer",     href: "/componentes/drawer",      done: false, desc: "Painel lateral deslizante" },
+            { name: "Pagination", href: "/componentes/pagination",  done: false, desc: "Controles de paginação" },
+          ],
+        },
+        {
+          cat: "Feedback",
+          desc: "Comunicam resultado de ações ao usuário.",
+          items: [
+            { name: "Alert",    href: "/componentes/alert",    done: false, desc: "Mensagem inline com variantes" },
+            { name: "Toast",    href: "/componentes/toast",    done: false, desc: "Notificação temporária" },
+            { name: "Tooltip",  href: "/componentes/tooltip",  done: false, desc: "Dica flutuante ao hover" },
+            { name: "Dialog",   href: "/componentes/dialog",   done: true,  desc: "Modal acessível via Radix" },
+            { name: "Skeleton", href: "/componentes/skeleton", done: false, desc: "Placeholder de carregamento" },
+          ],
+        },
+      ].map(group => (
+        <div>
+          <div class="flex items-baseline gap-3 mb-4">
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/30">{group.cat}</p>
+            <p class="text-xs text-foreground/25">{group.desc}</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            {group.items.map(item => (
+              <a
+                href={item.href}
+                class="group flex items-center gap-3 rounded-xl border border-border/10 bg-card/40 px-4 py-3 hover:border-primary/25 hover:bg-primary/4 transition-colors"
+              >
+                <!-- Status indicator -->
+                <span class={`w-1.5 h-1.5 rounded-full shrink-0 ${item.done ? 'bg-primary' : 'bg-foreground/15'}`}></span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-semibold text-foreground/70 group-hover:text-primary transition-colors">{item.name}</p>
+                  <p class="text-xs text-foreground/35 truncate">{item.desc}</p>
+                </div>
+                {!item.done && (
+                  <span class="text-[9px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded-full bg-foreground/8 text-foreground/30 shrink-0">
+                    em breve
+                  </span>
+                )}
+                <svg class="shrink-0 text-foreground/15 group-hover:text-primary/50 transition-colors" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2.5 7h9M7.5 3l4 4-4 4"/>
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Legenda -->
+    <div class="flex items-center gap-5 pt-2 text-xs text-foreground/30">
+      <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary"></span>Disponível com demo</span>
+      <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-foreground/15"></span>Em construção</span>
+    </div>
+
+  </div>
+</StyleguideLayout>

@@ -7,15 +7,17 @@
     "./card":        "./src/components/card.tsx",
     "./badge":       "./src/components/badge.tsx",
     "./input":       "./src/components/input.tsx",
-    "./label":       "./src/components/label.tsx",
-    "./separator":   "./src/components/separator.tsx",
+    "./navbar":      "./src/components/navbar.tsx",
+    "./dialog":      "./src/components/dialog.tsx",
+    "./tabs":        "./src/components/tabs.tsx",
     "./hero":        "./src/blocks/hero.tsx",
     "./cta-section": "./src/blocks/cta-section.tsx",
     "./metric-block":"./src/blocks/metric-block.tsx",
     "./pricing-card":"./src/blocks/pricing-card.tsx",
     "./lead-form":   "./src/blocks/lead-form.tsx",
     "./faq":         "./src/blocks/faq.tsx",
-    "./testimonial": "./src/blocks/testimonial.tsx"
+    "./testimonial": "./src/blocks/testimonial.tsx",
+    "./footer":      "./src/blocks/footer.tsx"
   },
   "files": ["src"],
   "peerDependencies": {

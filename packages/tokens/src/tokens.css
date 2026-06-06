@@ -76,6 +76,12 @@
   --border-card-alpha:   0.25;
   --border-subtle-alpha: 0.10;
 
+  /* Sombras — theme-aware (override no .light). Consumidas pelo preset via var(). */
+  --shadow-hero:   0 0 0 1px rgba(0,173,207,0.06), 0 24px 64px rgba(0,5,14,0.55), inset 0 1px 0 rgba(0,173,207,0.08);
+  --shadow-card:   0 8px 32px rgba(0,5,14,0.50), 0 0 0 1px rgba(0,173,207,0.06);
+  --shadow-metric: 0 8px 24px rgba(0,5,14,0.45);
+  --shadow-glow:   0 0 16px rgba(0,173,207,0.40);
+
   /* Tipografia — TROCAR @import + --font-sans para a fonte do cliente */
   --font-sans: 'Manrope', system-ui, sans-serif;
 }
@@ -97,9 +103,18 @@
   --secondary-foreground: 8 20 36;
   --muted:               241 245 249;
   --muted-foreground:    8 20 36;
-  --border:              0 173 207;
-  --input:               0 173 207;
+
+  /* No light, bordas em navy neutro (cyan puro fica berrante sobre branco);
+     o foco/ring continua cyan para manter a identidade do acento. */
+  --border:              8 20 36;
+  --input:               8 20 36;
   --ring:                0 173 207;
+
+  /* Sombras suaves para o tema claro — navy bem leve em vez do preto do dark */
+  --shadow-hero:   0 0 0 1px rgba(8,20,36,0.04), 0 20px 48px rgba(8,20,36,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+  --shadow-card:   0 4px 16px rgba(8,20,36,0.08), 0 0 0 1px rgba(8,20,36,0.05);
+  --shadow-metric: 0 4px 12px rgba(8,20,36,0.06);
+  --shadow-glow:   0 0 16px rgba(0,173,207,0.30);
 }
 
 /* ─── Base ───────────────────────────────────────────────────── */

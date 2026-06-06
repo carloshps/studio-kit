@@ -1,0 +1,545 @@
+---
+import StyleguideLayout from "../../layouts/StyleguideLayout.astro";
+
+export function getStaticPaths() {
+  return components.map(c => ({ params: { slug: c.slug } }));
+}
+
+interface ComponentDef {
+  slug: string
+  name: string
+  description: string
+  category: string
+  hasDemo: boolean
+  radix?: string
+  props?: { name: string; type: string; default?: string; desc: string }[]
+}
+
+const components: ComponentDef[] = [
+  /* ── Ações ──────────────────────────────────────────────── */
+  {
+    slug: "button", name: "Button", category: "Ações", hasDemo: true,
+    description: "Dispara ações. 5 variantes (primary, default, ghost, outline, link) e 3 tamanhos. Suporte a asChild via Radix Slot.",
+    props: [
+      { name: "variant",  type: "'primary'|'default'|'ghost'|'outline'|'link'",  default: "default",  desc: "Estilo visual" },
+      { name: "size",     type: "'sm'|'default'|'lg'|'icon'",                    default: "default",  desc: "Tamanho" },
+      { name: "asChild",  type: "boolean",                                        default: "false",    desc: "Passa props para o filho (Radix Slot)" },
+      { name: "disabled", type: "boolean",                                        default: "false",    desc: "Estado desabilitado" },
+    ],
+  },
+  {
+    slug: "badge", name: "Badge", category: "Ações", hasDemo: true,
+    description: "Label inline para status, categoria ou destaque. 3 variantes.",
+    props: [
+      { name: "variant", type: "'default'|'accent'|'outline'", default: "default", desc: "Estilo visual" },
+    ],
+  },
+
+  /* ── Data Display ────────────────────────────────────────── */
+  {
+    slug: "card", name: "Card", category: "Data Display", hasDemo: true,
+    description: "Container de conteúdo com borda, fundo e sombra. Composto por Card, CardHeader, CardTitle, CardDescription, CardContent e CardFooter.",
+    props: [
+      { name: "className", type: "string", desc: "Classes adicionais passadas ao container" },
+    ],
+  },
+  { slug: "avatar",    name: "Avatar",    category: "Data Display",  hasDemo: false, description: "Imagem de perfil com fallback para iniciais." },
+  { slug: "table",     name: "Table",     category: "Data Display",  hasDemo: false, description: "Tabela responsiva com header, body e footer semânticos." },
+  { slug: "accordion", name: "Accordion", category: "Data Display",  hasDemo: false, description: "Lista expansível via Radix Accordion — acessível por teclado." },
+
+  /* ── Data Input ──────────────────────────────────────────── */
+  {
+    slug: "input", name: "Input", category: "Data Input", hasDemo: true,
+    description: "Campo de texto base. Suporta todos os tipos HTML. Estilização token-aware com ring no foco.",
+    props: [
+      { name: "type",        type: "string",  default: "text",  desc: "Tipo HTML do input" },
+      { name: "disabled",    type: "boolean", default: "false", desc: "Estado desabilitado" },
+      { name: "placeholder", type: "string",                    desc: "Texto de placeholder" },
+    ],
+  },
+  { slug: "label",    name: "Label",    category: "Data Input", hasDemo: false, description: "Label acessível com associação implícita via Radix Label." },
+  { slug: "checkbox", name: "Checkbox", category: "Data Input", hasDemo: false, description: "Caixa de seleção com estado indeterminado via Radix Checkbox." },
+  { slug: "radio",    name: "Radio",    category: "Data Input", hasDemo: false, description: "Grupo de opções exclusivas via Radix Radio Group." },
+  { slug: "select",   name: "Select",   category: "Data Input", hasDemo: false, description: "Dropdown de seleção acessível via Radix Select." },
+  { slug: "textarea", name: "Textarea", category: "Data Input", hasDemo: false, description: "Campo de texto multilinhas com mesma estilização do Input." },
+
+  /* ── Navegação ───────────────────────────────────────────── */
+  {
+    slug: "navbar", name: "Navbar", category: "Navegação", hasDemo: true,
+    description: "Cabeçalho responsivo com logo, links e CTA. Menu hamburger automático no mobile.",
+    props: [
+      { name: "logo",  type: "ReactNode",                     desc: "Conteúdo do logo (texto, imagem ou SVG)" },
+      { name: "links", type: "{ label: string; href: string }[]", default: "[]", desc: "Links de navegação" },
+      { name: "cta",   type: "{ label: string; href: string }", desc: "Botão primário de ação (opcional)" },
+    ],
+  },
+  {
+    slug: "tabs", name: "Tabs", category: "Navegação", hasDemo: true,
+    description: "Abas de navegação via Radix Tabs. Composto por Tabs, TabsList, TabsTrigger e TabsContent.",
+    radix: "Radix Tabs",
+  },
+  { slug: "breadcrumb", name: "Breadcrumb", category: "Navegação", hasDemo: false, description: "Trilha de navegação hierárquica com separadores." },
+  { slug: "dropdown",   name: "Dropdown",   category: "Navegação", hasDemo: false, description: "Menu flutuante via Radix Dropdown Menu." },
+  { slug: "drawer",     name: "Drawer",     category: "Navegação", hasDemo: false, description: "Painel lateral deslizante via Radix Dialog (Sheet)." },
+  { slug: "pagination", name: "Pagination", category: "Navegação", hasDemo: false, description: "Controles de paginação com prev/next e numeração." },
+
+  /* ── Feedback ────────────────────────────────────────────── */
+  { slug: "alert",    name: "Alert",    category: "Feedback", hasDemo: false, description: "Mensagem inline com ícone e variantes info/success/warning/destructive." },
+  { slug: "toast",    name: "Toast",    category: "Feedback", hasDemo: false, description: "Notificação temporária via Radix Toast." },
+  { slug: "tooltip",  name: "Tooltip",  category: "Feedback", hasDemo: false, description: "Dica flutuante ao hover via Radix Tooltip." },
+  {
+    slug: "dialog", name: "Dialog", category: "Feedback", hasDemo: true,
+    description: "Modal acessível via Radix Dialog. Composto por Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle e DialogDescription.",
+    radix: "Radix Dialog",
+  },
+  { slug: "skeleton", name: "Skeleton", category: "Feedback", hasDemo: false, description: "Placeholder animado para conteúdo carregando." },
+];
+
+const { slug } = Astro.params;
+const component = components.find(c => c.slug === slug);
+
+if (!component) {
+  return Astro.redirect("/componentes");
+}
+---
+
+<StyleguideLayout title={component.name}>
+  <div class="px-8 py-12 max-w-container mx-auto space-y-12">
+
+    <!-- Cabeçalho -->
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-foreground/30 mb-2">{component.category}</p>
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 class="text-h1 text-foreground/90 mb-2">{component.name}</h1>
+          <p class="text-body text-foreground/50 max-w-2xl">{component.description}</p>
+        </div>
+        {!component.hasDemo && (
+          <span class="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary/80 shrink-0">
+            Em construção
+          </span>
+        )}
+      </div>
+
+      <!-- Install command -->
+      <div class="mt-4 flex items-center gap-2 rounded-lg border border-border/10 bg-card/40 px-4 py-2.5 w-fit">
+        <svg class="text-foreground/25 shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+        </svg>
+        <code class="text-xs font-mono text-foreground/55">
+          npx shadcn add @studio/{component.slug}
+        </code>
+        <button
+          id="copy-btn"
+          aria-label="Copiar comando"
+          class="ml-1 p-1 rounded text-foreground/30 hover:text-primary transition-colors"
+        >
+          <svg id="icon-copy" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <svg id="icon-check" class="hidden" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </button>
+      </div>
+
+      {component.radix && (
+        <p class="mt-2 text-xs text-foreground/30">
+          Baseado em <span class="font-medium text-foreground/50">{component.radix}</span> — acessível por teclado e leitores de tela.
+        </p>
+      )}
+    </div>
+
+    <!-- ── Demos ─────────────────────────────────────────────────────── -->
+    {component.hasDemo && (
+
+      <div class="space-y-8">
+
+        <!-- BUTTON demo -->
+        {component.slug === "button" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Variantes</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap gap-3 items-center">
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors h-10 px-5 py-2 bg-primary text-primary-foreground hover:bg-primary/90">
+                  Primary
+                </button>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors h-10 px-5 py-2 bg-accent/20 border border-accent/40 text-foreground/90 hover:bg-accent/30">
+                  Default
+                </button>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors h-10 px-5 py-2 border border-border/25 bg-transparent hover:bg-accent/10 text-foreground/70">
+                  Outline
+                </button>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors h-10 px-5 py-2 hover:bg-accent/10 text-foreground/70">
+                  Ghost
+                </button>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors text-primary underline-offset-4 hover:underline p-0 h-auto">
+                  Link
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Tamanhos</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap gap-3 items-center">
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-medium transition-colors h-8 px-4 text-xs bg-primary text-primary-foreground">
+                  Small
+                </button>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors h-10 px-5 bg-primary text-primary-foreground">
+                  Default
+                </button>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-base font-medium transition-colors h-12 px-7 bg-primary text-primary-foreground">
+                  Large
+                </button>
+                <button class="inline-flex items-center justify-center rounded-lg text-sm font-medium transition-colors h-10 w-10 bg-accent/20 border border-accent/40 text-foreground/90">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Estado desabilitado</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap gap-3 items-center">
+                <button disabled class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium h-10 px-5 bg-primary text-primary-foreground disabled:pointer-events-none disabled:opacity-50">
+                  Primary
+                </button>
+                <button disabled class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium h-10 px-5 bg-accent/20 border border-accent/40 text-foreground/90 disabled:pointer-events-none disabled:opacity-50">
+                  Default
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- BADGE demo -->
+        {component.slug === "badge" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Variantes</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap gap-3 items-center">
+              <div class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium bg-card/80 border border-border/20 text-foreground/90">
+                Default
+              </div>
+              <div class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium bg-accent/20 border border-accent/30 text-foreground/90">
+                Accent
+              </div>
+              <div class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium border border-border/25 text-foreground/70">
+                Outline
+              </div>
+            </div>
+            <div class="mt-4 rounded-xl border border-border/10 bg-card/30 p-8">
+              <p class="text-caption text-foreground/30 mb-4">Exemplos de uso</p>
+              <div class="flex flex-wrap gap-2">
+                <div class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium bg-green-500/15 border border-green-500/25 text-green-400/80">Ativo</div>
+                <div class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium bg-yellow-500/15 border border-yellow-500/25 text-yellow-400/80">Pendente</div>
+                <div class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium bg-red-500/15 border border-red-500/25 text-red-400/80">Cancelado</div>
+                <div class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium bg-accent/20 border border-accent/30 text-foreground/90">Novo</div>
+                <div class="inline-flex items-center rounded-full px-3 py-0.5 text-xs font-medium bg-card/80 border border-border/20 text-foreground/90">v1.0.0</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- CARD demo -->
+        {component.slug === "card" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Card básico</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex justify-center">
+                <div class="rounded-lg border border-border/25 bg-card/90 shadow-card w-full max-w-sm">
+                  <div class="flex flex-col gap-1.5 p-6">
+                    <h3 class="text-lg font-semibold leading-tight text-foreground/90">Título do card</h3>
+                    <p class="text-sm text-foreground/45">Descrição breve do conteúdo ou contexto.</p>
+                  </div>
+                  <div class="p-6 pt-0">
+                    <p class="text-sm text-foreground/60">
+                      Conteúdo principal do card. Pode incluir qualquer elemento — texto, imagem, lista ou componentes aninhados.
+                    </p>
+                  </div>
+                  <div class="flex items-center p-6 pt-0 gap-2">
+                    <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors h-9 px-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                      Ação principal
+                    </button>
+                    <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors h-9 px-4 border border-border/25 bg-transparent text-foreground/60 hover:bg-accent/10">
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Grid de cards</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {["Consultoria", "Diagnóstico", "Acompanhamento"].map((title, i) => (
+                    <div class="rounded-lg border border-border/25 bg-card/90 shadow-card p-5">
+                      <div class="w-8 h-8 rounded-lg bg-primary/15 flex items-center justify-center mb-3 text-primary">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d={["M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5", "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z", "M3 3h18v18H3z"][i]}/>
+                        </svg>
+                      </div>
+                      <p class="text-sm font-semibold text-foreground/80 mb-1">{title}</p>
+                      <p class="text-xs text-foreground/40">Descrição breve do serviço oferecido.</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- INPUT demo -->
+        {component.slug === "input" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Estados</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-col gap-4 max-w-sm">
+                <div class="space-y-1.5">
+                  <label class="text-xs font-medium text-foreground/60">Normal</label>
+                  <input
+                    type="text"
+                    placeholder="nome@exemplo.com.br"
+                    class="flex h-10 w-full rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm text-foreground/90 placeholder:text-foreground/40 transition-colors focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-accent/40"
+                  />
+                </div>
+                <div class="space-y-1.5">
+                  <label class="text-xs font-medium text-foreground/60">Com valor</label>
+                  <input
+                    type="text"
+                    value="carlos@carloshps.com.br"
+                    class="flex h-10 w-full rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm text-foreground/90 placeholder:text-foreground/40 transition-colors focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-accent/40"
+                  />
+                </div>
+                <div class="space-y-1.5">
+                  <label class="text-xs font-medium text-foreground/60">Desabilitado</label>
+                  <input
+                    type="text"
+                    disabled
+                    value="Não editável"
+                    class="flex h-10 w-full rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm text-foreground/90 placeholder:text-foreground/40 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
+                <div class="space-y-1.5">
+                  <label class="text-xs font-medium text-foreground/60">Senha</label>
+                  <input
+                    type="password"
+                    value="senhaexemplo"
+                    class="flex h-10 w-full rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm text-foreground/90 placeholder:text-foreground/40 transition-colors focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-accent/40"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- NAVBAR demo -->
+        {component.slug === "navbar" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview</p>
+            <div class="rounded-xl border border-border/10 overflow-hidden">
+              <header class="w-full border-b border-border/10 bg-background/80 backdrop-blur-md">
+                <div class="mx-auto flex h-16 max-w-full items-center justify-between px-6">
+                  <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <rect x="1" y="1" width="4" height="4" rx="0.5" fill="white"/>
+                        <rect x="7" y="1" width="4" height="4" rx="0.5" fill="white" opacity="0.6"/>
+                        <rect x="1" y="7" width="4" height="4" rx="0.5" fill="white" opacity="0.6"/>
+                        <rect x="7" y="7" width="4" height="4" rx="0.5" fill="white" opacity="0.3"/>
+                      </svg>
+                    </span>
+                    <span class="text-sm font-bold text-foreground/90">MarcaCliente</span>
+                  </div>
+                  <nav class="hidden md:flex items-center gap-6">
+                    <a href="#" class="text-sm text-foreground/60 hover:text-foreground/90 transition-colors">Serviços</a>
+                    <a href="#" class="text-sm text-foreground/60 hover:text-foreground/90 transition-colors">Sobre</a>
+                    <a href="#" class="text-sm text-foreground/60 hover:text-foreground/90 transition-colors">Cases</a>
+                  </nav>
+                  <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium h-8 px-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                    Falar no WhatsApp
+                  </button>
+                </div>
+              </header>
+              <div class="bg-background/30 px-6 py-4">
+                <p class="text-xs text-foreground/30 text-center">↑ Navbar — sticky, com backdrop blur e hamburger automático no mobile</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- TABS demo -->
+        {component.slug === "tabs" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+              <div>
+                <div class="inline-flex items-center gap-1 rounded-lg border border-border/15 bg-background/60 p-1 mb-4">
+                  <button data-tab-trigger="overview" class="tab-trigger inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-1.5 text-sm font-medium transition-colors bg-background text-foreground/90 shadow-sm">
+                    Visão Geral
+                  </button>
+                  <button data-tab-trigger="code" class="tab-trigger inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-1.5 text-sm font-medium transition-colors text-foreground/50">
+                    Código
+                  </button>
+                  <button data-tab-trigger="props" class="tab-trigger inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-1.5 text-sm font-medium transition-colors text-foreground/50">
+                    Props
+                  </button>
+                </div>
+                <div data-tab-panel="overview" class="rounded-lg border border-border/10 bg-background/20 p-5">
+                  <p class="text-sm text-foreground/50">Visão geral do componente. O Tabs organiza conteúdo em seções paralelas navegáveis por teclado e acessíveis via ARIA.</p>
+                </div>
+                <div data-tab-panel="code" class="hidden rounded-lg border border-border/10 bg-background/20 p-5">
+                  <pre class="text-xs font-mono text-foreground/45 leading-relaxed overflow-x-auto whitespace-pre">{`<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Visão Geral</TabsTrigger>
+    <TabsTrigger value="code">Código</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">
+    Conteúdo da aba 1
+  </TabsContent>
+  <TabsContent value="code">
+    Conteúdo da aba 2
+  </TabsContent>
+</Tabs>`}</pre>
+                </div>
+                <div data-tab-panel="props" class="hidden rounded-lg border border-border/10 bg-background/20 p-5">
+                  <div class="space-y-2 text-xs text-foreground/50">
+                    <p><code class="font-mono text-primary/70">defaultValue</code> — aba ativa no carregamento (modo não controlado)</p>
+                    <p><code class="font-mono text-primary/70">value</code> — aba ativa (modo controlado)</p>
+                    <p><code class="font-mono text-primary/70">onValueChange</code> — callback ao trocar de aba</p>
+                    <p><code class="font-mono text-primary/70">orientation</code> — <span class="text-foreground/35">"horizontal" | "vertical"</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- DIALOG demo -->
+        {component.slug === "dialog" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex justify-center">
+              <div class="relative w-full max-w-md rounded-xl border border-border/15 bg-background shadow-hero p-6">
+                <div class="mb-4">
+                  <h2 class="text-lg font-semibold text-foreground/90 mb-1">Confirmar ação</h2>
+                  <p class="text-sm text-foreground/45">Esta ação não pode ser desfeita. Deseja continuar?</p>
+                </div>
+                <div class="flex gap-2 justify-end">
+                  <button class="inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium h-9 px-4 border border-border/25 bg-transparent text-foreground/60 hover:bg-accent/10">
+                    Cancelar
+                  </button>
+                  <button class="inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium h-9 px-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                    Confirmar
+                  </button>
+                </div>
+                <button class="absolute top-4 right-4 text-foreground/30 hover:text-foreground/60 transition-colors">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M1 1l12 12M13 1L1 13"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30 text-center mt-3">Modal estático — em produção usa DialogTrigger + estado Radix</p>
+          </div>
+        )}
+
+      </div>
+    )}
+
+    <!-- Em construção -->
+    {!component.hasDemo && (
+      <div class="rounded-2xl border border-border/10 bg-card/20 px-8 py-12 text-center">
+        <div class="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center mx-auto mb-4 text-primary/40">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <p class="text-sm font-semibold text-foreground/50 mb-2">Em construção — Fase 4</p>
+        <p class="text-xs text-foreground/30 max-w-xs mx-auto">
+          Demo e documentação chegam na próxima sprint. O componente já está planejado e será instalável via registry.
+        </p>
+      </div>
+    )}
+
+    <!-- Props table -->
+    {component.props && component.props.length > 0 && (
+      <div>
+        <h2 class="text-h3 text-foreground/80 mb-4">Props</h2>
+        <div class="rounded-xl border border-border/10 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-border/10 bg-card/40">
+                <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-widest text-foreground/30 w-32">Prop</th>
+                <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-widest text-foreground/30">Tipo</th>
+                <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-widest text-foreground/30 w-28 hidden sm:table-cell">Default</th>
+                <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-widest text-foreground/30">Descrição</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border/10">
+              {component.props.map(prop => (
+                <tr class="hover:bg-card/20 transition-colors">
+                  <td class="px-4 py-3">
+                    <code class="text-xs font-mono font-semibold text-primary/80">{prop.name}</code>
+                  </td>
+                  <td class="px-4 py-3">
+                    <code class="text-xs font-mono text-foreground/40">{prop.type}</code>
+                  </td>
+                  <td class="px-4 py-3 hidden sm:table-cell">
+                    {prop.default
+                      ? <code class="text-xs font-mono text-foreground/35">{prop.default}</code>
+                      : <span class="text-xs text-foreground/20">—</span>
+                    }
+                  </td>
+                  <td class="px-4 py-3 text-xs text-foreground/45">{prop.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )}
+
+  </div>
+
+  <script define:vars={{ slug: component.slug }}>
+    // Copy button
+    const btn = document.getElementById("copy-btn");
+    const iconCopy = document.getElementById("icon-copy");
+    const iconCheck = document.getElementById("icon-check");
+
+    btn?.addEventListener("click", () => {
+      navigator.clipboard.writeText(`npx shadcn add @studio/${slug}`).then(() => {
+        iconCopy?.classList.add("hidden");
+        iconCheck?.classList.remove("hidden");
+        setTimeout(() => {
+          iconCopy?.classList.remove("hidden");
+          iconCheck?.classList.add("hidden");
+        }, 1800);
+      });
+    });
+
+    // Tabs demo interactivity
+    const triggers = document.querySelectorAll("[data-tab-trigger]");
+    const panels   = document.querySelectorAll("[data-tab-panel]");
+
+    triggers.forEach(trigger => {
+      trigger.addEventListener("click", () => {
+        const target = trigger.dataset.tabTrigger;
+
+        triggers.forEach(t => {
+          const isActive = t.dataset.tabTrigger === target;
+          t.classList.toggle("bg-background",    isActive);
+          t.classList.toggle("text-foreground/90", isActive);
+          t.classList.toggle("shadow-sm",          isActive);
+          t.classList.toggle("text-foreground/50", !isActive);
+        });
+
+        panels.forEach(panel => {
+          panel.classList.toggle("hidden", panel.dataset.tabPanel !== target);
+        });
+      });
+    });
+  </script>
+</StyleguideLayout>

@@ -1,96 +1,235 @@
 ---
 import Base from "../layouts/Base.astro";
-import { Hero } from "@studio/ui/hero";
-import { MetricBlock } from "@studio/ui/metric-block";
-import { PricingCard } from "@studio/ui/pricing-card";
-import { CtaSection } from "@studio/ui/cta-section";
-import { Faq } from "@studio/ui/faq";
-import { Testimonial } from "@studio/ui/testimonial";
 ---
 
-<Base title="Showroom">
-  <!-- Hero -->
-  <Hero
-    client:load
-    eyebrow="Studio Kit v0.1"
-    title="Design system do"
-    titleHighlight="CarlosHPS Studio"
-    subtitle="Componentes prontos na identidade do Studio. Clone, ajuste os tokens do cliente, publique."
-    primaryCta={{ label: "Ver componentes", href: "#componentes" }}
-    secondaryCta={{ label: "Docs", href: "/docs" }}
-  />
+<Base title="Studio Kit">
 
-  <!-- Métricas -->
-  <section id="componentes" class="py-16 px-6">
-    <div class="mx-auto max-w-5xl">
-      <h2 class="text-2xl font-bold text-foreground/90 mb-8">Blocos</h2>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <MetricBlock client:load value="7" label="Blocos" description="Hero, CTA, FAQ, Métricas, Pricing, Lead Form, Testimonial" />
-        <MetricBlock client:load value="5" label="Componentes base" description="Button, Card, Badge, Input, Label" />
-        <MetricBlock client:load value="2" label="Temas" description="Dark (principal) e Light" />
-        <MetricBlock client:load value="1" label="Fonte" description="Manrope — única família, nunca misturar" />
+  <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
+  <section class="relative overflow-hidden px-6 pt-24 pb-20 sm:pt-32 sm:pb-28">
+    <!-- Glow de fundo -->
+    <div class="pointer-events-none absolute inset-0 flex items-start justify-center">
+      <div class="h-[600px] w-[900px] -translate-y-1/3 rounded-full bg-primary/5 blur-[120px]"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-container text-center">
+      <!-- Eyebrow -->
+      <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+        Studio Kit v0.1
+      </span>
+
+      <!-- Headline -->
+      <h1 class="text-display text-foreground/90 mb-6 max-w-3xl mx-auto">
+        Design system do<br>
+        <span class="text-primary">CarlosHPS Studio</span>
+      </h1>
+
+      <!-- Subtítulo -->
+      <p class="text-body-lg text-foreground/50 max-w-xl mx-auto mb-10">
+        Componentes, blocos e tokens prontos na identidade do Studio.
+        Clone, ajuste para o cliente, publique.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="/fundamentos"
+          class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+        >
+          Explorar sistema
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.5 7h9M7.5 3l4 4-4 4"/>
+          </svg>
+        </a>
+        <a
+          href="https://github.com/CarlosHPS/studio-kit"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg border border-border/15 px-6 py-3 text-sm font-semibold text-foreground/70 transition-colors hover:border-primary/30 hover:text-foreground/90"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section class="py-16 px-6 bg-background-secondary/60">
-    <div class="mx-auto max-w-4xl">
-      <h2 class="text-2xl font-bold text-foreground/90 mb-8 text-center">PricingCard</h2>
-      <div class="grid gap-6 md:grid-cols-2">
-        <PricingCard
-          client:load
-          name="Site Institucional"
-          price="R$ 2.800"
-          features={["Até 5 páginas", "Design autoral", "Responsivo", "SEO base"]}
-          cta={{ label: "Quero este", href: "#" }}
-        />
-        <PricingCard
-          client:load
-          name="Presença Completa"
-          price="R$ 4.900"
-          badge="Mais escolhido"
-          highlight
-          features={["Site + Landing page", "Design system da marca", "Integrações", "Suporte 30 dias"]}
-          cta={{ label: "Começar agora", href: "#" }}
-        />
+  <!-- ─── Métricas ──────────────────────────────────────────────────────── -->
+  <section class="px-6 pb-20">
+    <div class="mx-auto max-w-container">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl border border-border/10 overflow-hidden bg-border/10">
+        {[
+          { value: "30+", label: "Componentes" },
+          { value: "10",  label: "Blocos" },
+          { value: "2",   label: "Temas" },
+          { value: "1",   label: "Fonte — Manrope" },
+        ].map(m => (
+          <div class="bg-background px-6 py-8 text-center">
+            <p class="text-h2 text-primary font-extrabold mb-1">{m.value}</p>
+            <p class="text-caption text-foreground/40">{m.label}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Testimonial -->
-  <section class="py-16 px-6">
-    <div class="mx-auto max-w-5xl">
-      <h2 class="text-2xl font-bold text-foreground/90 mb-8">Testimonial</h2>
-      <Testimonial
-        client:load
-        items={[
-          { quote: "Resultado acima do esperado. O site transmite exatamente o que a gente queria.", author: "Ana Paula", role: "Médica esteta" },
-          { quote: "Processo claro, entrega no prazo e um visual que diferencia de verdade.", author: "Bruno Melo", role: "Terapeuta holístico" },
-        ]}
-      />
+  <!-- ─── O que tem ─────────────────────────────────────────────────────── -->
+  <section class="px-6 pb-20">
+    <div class="mx-auto max-w-container">
+      <div class="mb-12 text-center">
+        <p class="text-xs font-semibold uppercase tracking-widest text-foreground/30 mb-3">O que inclui</p>
+        <h2 class="text-h2 text-foreground/90">Tudo que você precisa para entregar rápido</h2>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-3">
+        {[
+          {
+            icon: `<path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>`,
+            title: "Tokens semânticos",
+            desc: "CSS variables para cor, tipografia, sombra e radius. Dark por padrão, light em uma classe.",
+            href: "/fundamentos",
+          },
+          {
+            icon: `<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>`,
+            title: "Componentes categorizados",
+            desc: "Button, Input, Card, Alert, Tabs, Dialog e mais — organizados como daisyUI.",
+            href: "/componentes",
+          },
+          {
+            icon: `<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>`,
+            title: "Blocos prontos",
+            desc: "Hero, Pricing, FAQ, CTA, Testimonial, Lead Form — instale via registry com um comando.",
+            href: "/blocos",
+          },
+        ].map(card => (
+          <a
+            href={card.href}
+            class="group rounded-2xl border border-border/10 bg-card/50 p-6 hover:border-primary/25 hover:bg-primary/4 transition-colors"
+          >
+            <div class="mb-4 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={card.icon}></svg>
+            </div>
+            <p class="text-sm font-semibold text-foreground/80 group-hover:text-primary transition-colors mb-2">{card.title}</p>
+            <p class="text-xs text-foreground/40 leading-relaxed">{card.desc}</p>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <Faq
-    client:load
-    items={[
-      { question: "Como usar o Studio Kit num projeto novo?", answer: "Clone o template astro-base, ajuste os tokens do cliente em tokens.css e publique. Os componentes já vêm na cara do Studio." },
-      { question: "Posso usar em projetos de clientes?", answer: "Sim. O Studio Kit é o sistema base — você ajusta os tokens de marca por cliente e os componentes herdam automaticamente." },
-      { question: "Como atualizar um componente?", answer: "Rode npx shadcn add @studio/<nome> no projeto. O arquivo é copiado — você é o dono do código." },
-    ]}
-  />
+  <!-- ─── Como usar (3 passos) ─────────────────────────────────────────── -->
+  <section class="px-6 pb-20">
+    <div class="mx-auto max-w-container">
+      <div class="rounded-2xl border border-border/10 bg-card/30 px-8 py-12">
+        <div class="mb-12 text-center">
+          <p class="text-xs font-semibold uppercase tracking-widest text-foreground/30 mb-3">Fluxo</p>
+          <h2 class="text-h2 text-foreground/90">Pronto em 3 passos</h2>
+        </div>
 
-  <!-- CTA -->
-  <div class="px-6 pb-24">
-    <div class="mx-auto max-w-3xl">
-      <CtaSection
-        client:load
-        title="Pronto para começar?"
-        subtitle="Clone o template, ajuste para o cliente e publique em minutos."
-        cta={{ label: "Ver template", href: "https://github.com/CarlosHPS/studio-kit" }}
-      />
+        <div class="grid gap-8 sm:grid-cols-3">
+          {[
+            {
+              step: "01",
+              title: "Clone o template",
+              desc: "Use o astro-base como ponto de partida. Já vem com Tailwind, tokens e a estrutura de pastas certa.",
+              code: "npx degit CarlosHPS/studio-kit/templates/astro-base",
+            },
+            {
+              step: "02",
+              title: "Ajuste os tokens",
+              desc: "Edite `tokens.css` com as cores e tipografia do cliente. Todos os componentes herdam automaticamente.",
+              code: "# tokens.css → --primary: 0 173 207",
+            },
+            {
+              step: "03",
+              title: "Publique",
+              desc: "Faça deploy em Vercel, Netlify ou qualquer host estático. Build limpo, zero dependências pesadas.",
+              code: "pnpm build && pnpm preview",
+            },
+          ].map(s => (
+            <div class="flex flex-col gap-3">
+              <span class="text-[10px] font-black uppercase tracking-widest text-primary/60">{s.step}</span>
+              <p class="text-sm font-semibold text-foreground/80">{s.title}</p>
+              <p class="text-xs text-foreground/40 leading-relaxed">{s.desc}</p>
+              <code class="mt-auto text-[11px] font-mono text-foreground/40 bg-background border border-border/10 rounded-lg px-3 py-2 block break-all">
+                {s.code}
+              </code>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ─── FAQ ──────────────────────────────────────────────────────────── -->
+  <section class="px-6 pb-20">
+    <div class="mx-auto max-w-2xl">
+      <div class="mb-12 text-center">
+        <p class="text-xs font-semibold uppercase tracking-widest text-foreground/30 mb-3">FAQ</p>
+        <h2 class="text-h2 text-foreground/90">Perguntas frequentes</h2>
+      </div>
+
+      <div class="space-y-2">
+        {[
+          {
+            q: "Posso usar em projetos de clientes?",
+            a: "Sim. O Studio Kit é o sistema base — você ajusta os tokens de marca por cliente e os componentes herdam automaticamente. Cada projeto fica com a cara do cliente, não do Studio.",
+          },
+          {
+            q: "Como instalar um componente?",
+            a: "Execute `npx shadcn add @studio/<nome>` no projeto do cliente. O arquivo é copiado para a sua base de código — você é o dono do código, sem lock-in.",
+          },
+          {
+            q: "Preciso usar Astro?",
+            a: "O template padrão é Astro, mas os componentes shadcn/ui funcionam em qualquer projeto React/Next.js. Os tokens CSS funcionam em qualquer framework.",
+          },
+          {
+            q: "Como manter os componentes atualizados?",
+            a: "Re-execute o comando de instalação para sobrescrever com a versão mais recente do registry. Como você tem o código, pode aceitar ou rejeitar mudanças manualmente.",
+          },
+        ].map(item => (
+          <details class="group rounded-xl border border-border/10 bg-card/40 transition-colors open:border-primary/20 open:bg-primary/3">
+            <summary class="flex cursor-pointer list-none items-center justify-between px-5 py-4 text-sm font-medium text-foreground/70 hover:text-foreground/90 transition-colors">
+              {item.q}
+              <svg class="shrink-0 text-foreground/30 transition-transform group-open:rotate-45" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M7 2v10M2 7h10"/>
+              </svg>
+            </summary>
+            <p class="px-5 pb-5 text-xs text-foreground/40 leading-relaxed">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA final ─────────────────────────────────────────────────────── -->
+  <section class="px-6 pb-24">
+    <div class="mx-auto max-w-container">
+      <div class="rounded-2xl border border-primary/15 bg-primary/5 px-8 py-14 text-center shadow-hero">
+        <h2 class="text-h1 text-foreground/90 mb-4">Pronto para começar?</h2>
+        <p class="text-body text-foreground/50 max-w-md mx-auto mb-8">
+          Clone o template, ajuste os tokens do cliente e publique em minutos.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="/fundamentos"
+            class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            Explorar sistema
+          </a>
+          <a
+            href="https://github.com/CarlosHPS/studio-kit"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg border border-border/15 px-6 py-3 text-sm font-semibold text-foreground/60 transition-colors hover:border-primary/30 hover:text-foreground/80"
+          >
+            Ver no GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </Base>
