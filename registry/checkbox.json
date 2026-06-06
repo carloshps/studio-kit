@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "utils"
+  ],
+  "dependencies": [
+    "@radix-ui/react-checkbox"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/checkbox.tsx",
+      "content": "import * as React from \"react\";\nimport * as CheckboxPrimitive from \"@radix-ui/react-checkbox\";\nimport { cn } from '@/lib/utils';\n\nconst Checkbox = React.forwardRef<\n  React.ElementRef<typeof CheckboxPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>\n>(({ className, ...props }, ref) => (\n  <CheckboxPrimitive.Root\n    ref={ref}\n    className={cn(\n      \"peer h-4 w-4 shrink-0 rounded border border-border/30 bg-background/60 transition-colors\",\n      \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-1 focus-visible:ring-offset-background\",\n      \"disabled:cursor-not-allowed disabled:opacity-50\",\n      \"data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground\",\n      className\n    )}\n    {...props}\n  >\n    <CheckboxPrimitive.Indicator className=\"flex items-center justify-center text-current\">\n      <svg width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"3\" strokeLinecap=\"round\" strokeLinejoin=\"round\">\n        <polyline points=\"20 6 9 17 4 12\" />\n      </svg>\n    </CheckboxPrimitive.Indicator>\n  </CheckboxPrimitive.Root>\n));\nCheckbox.displayName = CheckboxPrimitive.Root.displayName;\n\nexport { Checkbox };\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

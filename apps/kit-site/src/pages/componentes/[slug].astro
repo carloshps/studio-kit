@@ -57,11 +57,54 @@ const components: ComponentDef[] = [
       { name: "placeholder", type: "string",                    desc: "Texto de placeholder" },
     ],
   },
-  { slug: "label",    name: "Label",    category: "Data Input", hasDemo: false, description: "Label acessível com associação implícita via Radix Label." },
-  { slug: "checkbox", name: "Checkbox", category: "Data Input", hasDemo: false, description: "Caixa de seleção com estado indeterminado via Radix Checkbox." },
-  { slug: "radio",    name: "Radio",    category: "Data Input", hasDemo: false, description: "Grupo de opções exclusivas via Radix Radio Group." },
-  { slug: "select",   name: "Select",   category: "Data Input", hasDemo: false, description: "Dropdown de seleção acessível via Radix Select." },
-  { slug: "textarea", name: "Textarea", category: "Data Input", hasDemo: false, description: "Campo de texto multilinhas com mesma estilização do Input." },
+  {
+    slug: "label", name: "Label", category: "Data Input", hasDemo: true,
+    description: "Label acessível com associação implícita via Radix Label. Use htmlFor para vincular ao campo.",
+    radix: "Radix Label",
+    props: [
+      { name: "htmlFor", type: "string", desc: "ID do campo associado" },
+    ],
+  },
+  {
+    slug: "checkbox", name: "Checkbox", category: "Data Input", hasDemo: true,
+    description: "Caixa de seleção acessível via Radix Checkbox. Suporta estado controlado e indeterminado.",
+    radix: "Radix Checkbox",
+    props: [
+      { name: "checked",        type: "boolean | 'indeterminate'", desc: "Estado (modo controlado)" },
+      { name: "defaultChecked", type: "boolean", default: "false", desc: "Estado inicial (não controlado)" },
+      { name: "onCheckedChange", type: "(checked) => void", desc: "Callback ao alternar" },
+      { name: "disabled",       type: "boolean", default: "false", desc: "Estado desabilitado" },
+    ],
+  },
+  {
+    slug: "radio", name: "Radio", category: "Data Input", hasDemo: true,
+    description: "Grupo de opções exclusivas via Radix Radio Group. Composto por RadioGroup e RadioGroupItem.",
+    radix: "Radix Radio Group",
+    props: [
+      { name: "value",        type: "string", desc: "Opção selecionada (modo controlado)" },
+      { name: "defaultValue", type: "string", desc: "Opção inicial (não controlado)" },
+      { name: "onValueChange", type: "(value) => void", desc: "Callback ao trocar opção" },
+    ],
+  },
+  {
+    slug: "select", name: "Select", category: "Data Input", hasDemo: true,
+    description: "Dropdown de seleção acessível via Radix Select. Composto por Select, SelectTrigger, SelectValue, SelectContent e SelectItem.",
+    radix: "Radix Select",
+    props: [
+      { name: "value",        type: "string", desc: "Valor selecionado (modo controlado)" },
+      { name: "defaultValue", type: "string", desc: "Valor inicial (não controlado)" },
+      { name: "onValueChange", type: "(value) => void", desc: "Callback ao selecionar" },
+    ],
+  },
+  {
+    slug: "textarea", name: "Textarea", category: "Data Input", hasDemo: true,
+    description: "Campo de texto multilinhas com a mesma estilização token-aware do Input.",
+    props: [
+      { name: "rows",        type: "number", desc: "Linhas visíveis" },
+      { name: "disabled",    type: "boolean", default: "false", desc: "Estado desabilitado" },
+      { name: "placeholder", type: "string", desc: "Texto de placeholder" },
+    ],
+  },
 
   /* ── Navegação ───────────────────────────────────────────── */
   {
@@ -445,6 +488,147 @@ if (!component) {
           </div>
         )}
 
+        <!-- LABEL demo -->
+        {component.slug === "label" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Campo com label</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 max-w-sm">
+              <div class="space-y-1.5">
+                <label for="demo-email" class="text-xs font-medium text-foreground/60 leading-none">E-mail</label>
+                <input
+                  id="demo-email"
+                  type="email"
+                  placeholder="nome@exemplo.com.br"
+                  class="flex h-10 w-full rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm text-foreground/90 placeholder:text-foreground/40 transition-colors focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-accent/40"
+                />
+                <p class="text-xs text-foreground/30 pt-1">Clicar no texto foca o campo — associação via <code class="font-mono text-primary/70">htmlFor</code>.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- TEXTAREA demo -->
+        {component.slug === "textarea" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Estados</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-col gap-4 max-w-sm">
+              <div class="space-y-1.5">
+                <label class="text-xs font-medium text-foreground/60">Mensagem</label>
+                <textarea
+                  rows="3"
+                  placeholder="Conte um pouco sobre seu projeto..."
+                  class="flex min-h-[80px] w-full rounded-lg border border-border/18 bg-background/60 px-4 py-2.5 text-sm text-foreground/90 placeholder:text-foreground/40 transition-colors focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-accent/40"
+                ></textarea>
+              </div>
+              <div class="space-y-1.5">
+                <label class="text-xs font-medium text-foreground/60">Desabilitado</label>
+                <textarea
+                  rows="2"
+                  disabled
+                  class="flex min-h-[60px] w-full rounded-lg border border-border/18 bg-background/60 px-4 py-2.5 text-sm text-foreground/90 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                >Não editável</textarea>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- CHECKBOX demo -->
+        {component.slug === "checkbox" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Estados</p>
+            <div id="checkbox-demo" class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-col gap-4 max-w-sm">
+              <label data-checkbox="a" data-checked="true" class="flex items-center gap-3 cursor-pointer select-none group/cb">
+                <span class="cb-box flex h-4 w-4 shrink-0 items-center justify-center rounded border border-primary bg-primary text-primary-foreground transition-colors">
+                  <svg class="cb-mark" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="text-sm text-foreground/80 group-hover/cb:text-foreground/95 transition-colors">Aceito os termos de uso</span>
+              </label>
+              <label data-checkbox="b" data-checked="false" class="flex items-center gap-3 cursor-pointer select-none group/cb">
+                <span class="cb-box flex h-4 w-4 shrink-0 items-center justify-center rounded border border-border/30 bg-background/60 transition-colors">
+                  <svg class="cb-mark hidden" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="text-sm text-foreground/80 group-hover/cb:text-foreground/95 transition-colors">Receber novidades por e-mail</span>
+              </label>
+              <label data-checkbox="c" data-checked="false" data-disabled="true" class="flex items-center gap-3 opacity-50 cursor-not-allowed select-none">
+                <span class="cb-box flex h-4 w-4 shrink-0 items-center justify-center rounded border border-border/30 bg-background/60">
+                  <svg class="cb-mark hidden" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="text-sm text-foreground/80">Desabilitado</span>
+              </label>
+            </div>
+            <p class="text-xs text-foreground/30 mt-3">Demo interativa — clique para alternar. Em produção usa Radix Checkbox com estado controlado.</p>
+          </div>
+        )}
+
+        <!-- RADIO demo -->
+        {component.slug === "radio" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Grupo de opções</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 max-w-sm">
+              <p class="text-xs font-medium text-foreground/40 mb-3">Como prefere ser contactado?</p>
+              <div id="radio-demo" class="grid gap-2.5">
+                <label data-radio-item="whatsapp" data-selected="true" class="flex items-center gap-3 cursor-pointer select-none group/ri">
+                  <span class="ri-circle flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-primary bg-background/60 transition-colors">
+                    <span class="ri-dot h-2 w-2 rounded-full bg-primary transition-transform scale-100"></span>
+                  </span>
+                  <span class="text-sm text-foreground/80 group-hover/ri:text-foreground/95 transition-colors">WhatsApp</span>
+                </label>
+                <label data-radio-item="email" data-selected="false" class="flex items-center gap-3 cursor-pointer select-none group/ri">
+                  <span class="ri-circle flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-border/30 bg-background/60 transition-colors">
+                    <span class="ri-dot h-2 w-2 rounded-full bg-primary transition-transform scale-0"></span>
+                  </span>
+                  <span class="text-sm text-foreground/80 group-hover/ri:text-foreground/95 transition-colors">E-mail</span>
+                </label>
+                <label data-radio-item="telefone" data-selected="false" class="flex items-center gap-3 cursor-pointer select-none group/ri">
+                  <span class="ri-circle flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-border/30 bg-background/60 transition-colors">
+                    <span class="ri-dot h-2 w-2 rounded-full bg-primary transition-transform scale-0"></span>
+                  </span>
+                  <span class="text-sm text-foreground/80 group-hover/ri:text-foreground/95 transition-colors">Telefone</span>
+                </label>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30 mt-3">Demo interativa — clique para selecionar. Em produção usa Radix Radio Group com estado controlado.</p>
+          </div>
+        )}
+
+        <!-- SELECT demo -->
+        {component.slug === "select" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Select interativo</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 max-w-sm">
+              <div class="space-y-1.5 relative">
+                <label class="text-xs font-medium text-foreground/60">Segmento</label>
+                <button
+                  id="select-trigger"
+                  aria-expanded="false"
+                  class="flex h-10 w-full items-center justify-between rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm text-foreground/90 transition-colors hover:border-accent/40 focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-accent/40"
+                >
+                  <span id="select-value">Saúde &amp; bem-estar</span>
+                  <svg id="select-chevron" class="h-4 w-4 opacity-50 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div
+                  id="select-dropdown"
+                  class="hidden absolute z-10 mt-1 w-full rounded-lg border border-border/18 bg-[#0a1929] shadow-card p-1"
+                >
+                  <button data-select-item="Saúde &amp; bem-estar" class="select-item flex w-full items-center rounded-md py-1.5 pl-3 pr-8 text-sm text-foreground/80 hover:bg-accent/15 hover:text-foreground/95 transition-colors relative text-left">
+                    Saúde &amp; bem-estar
+                    <span class="select-check absolute right-2"><svg class="h-3.5 w-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  </button>
+                  <button data-select-item="Estética" class="select-item flex w-full items-center rounded-md py-1.5 pl-3 pr-8 text-sm text-foreground/80 hover:bg-accent/15 hover:text-foreground/95 transition-colors relative text-left">
+                    Estética
+                    <span class="select-check absolute right-2 hidden"><svg class="h-3.5 w-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  </button>
+                  <button data-select-item="Consultório" class="select-item flex w-full items-center rounded-md py-1.5 pl-3 pr-8 text-sm text-foreground/80 hover:bg-accent/15 hover:text-foreground/95 transition-colors relative text-left">
+                    Consultório
+                    <span class="select-check absolute right-2 hidden"><svg class="h-3.5 w-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30 mt-3">Demo interativa — abre e seleciona opções. Em produção usa Radix Select com portal e acessibilidade completa.</p>
+          </div>
+        )}
+
       </div>
     )}
 
@@ -540,6 +724,81 @@ if (!component) {
           panel.classList.toggle("hidden", panel.dataset.tabPanel !== target);
         });
       });
+    });
+
+    // Checkbox demo interactivity
+    document.querySelectorAll("[data-checkbox]").forEach(label => {
+      if (label.dataset.disabled) return;
+      label.addEventListener("click", () => {
+        const isChecked = label.dataset.checked === "true";
+        label.dataset.checked = isChecked ? "false" : "true";
+        const box  = label.querySelector(".cb-box");
+        const mark = label.querySelector(".cb-mark");
+        if (isChecked) {
+          box.classList.remove("bg-primary", "border-primary", "text-primary-foreground");
+          box.classList.add("border-border/30", "bg-background/60");
+          mark.classList.add("hidden");
+        } else {
+          box.classList.add("bg-primary", "border-primary", "text-primary-foreground");
+          box.classList.remove("border-border/30", "bg-background/60");
+          mark.classList.remove("hidden");
+        }
+      });
+    });
+
+    // Radio demo interactivity
+    document.querySelectorAll("[data-radio-item]").forEach(label => {
+      label.addEventListener("click", () => {
+        document.querySelectorAll("[data-radio-item]").forEach(l => {
+          const circle = l.querySelector(".ri-circle");
+          const dot    = l.querySelector(".ri-dot");
+          l.dataset.selected = "false";
+          circle.classList.remove("border-primary");
+          circle.classList.add("border-border/30");
+          dot.classList.remove("scale-100");
+          dot.classList.add("scale-0");
+        });
+        const circle = label.querySelector(".ri-circle");
+        const dot    = label.querySelector(".ri-dot");
+        label.dataset.selected = "true";
+        circle.classList.add("border-primary");
+        circle.classList.remove("border-border/30");
+        dot.classList.add("scale-100");
+        dot.classList.remove("scale-0");
+      });
+    });
+
+    // Select demo interactivity
+    const selectTrigger  = document.getElementById("select-trigger");
+    const selectDropdown = document.getElementById("select-dropdown");
+    const selectValue    = document.getElementById("select-value");
+    const selectChevron  = document.getElementById("select-chevron");
+
+    selectTrigger?.addEventListener("click", () => {
+      const isOpen = selectDropdown.classList.toggle("hidden") === false;
+      selectTrigger.setAttribute("aria-expanded", String(isOpen));
+      selectChevron?.classList.toggle("rotate-180", isOpen);
+    });
+
+    document.querySelectorAll(".select-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const val = item.dataset.selectItem;
+        if (selectValue) selectValue.innerHTML = val;
+        document.querySelectorAll(".select-check").forEach(c => c.classList.add("hidden"));
+        item.querySelector(".select-check")?.classList.remove("hidden");
+        selectDropdown.classList.add("hidden");
+        selectTrigger?.setAttribute("aria-expanded", "false");
+        selectChevron?.classList.remove("rotate-180");
+      });
+    });
+
+    // Fecha select ao clicar fora
+    document.addEventListener("click", e => {
+      if (selectTrigger && !selectTrigger.contains(e.target) && !selectDropdown?.contains(e.target)) {
+        selectDropdown?.classList.add("hidden");
+        selectTrigger.setAttribute("aria-expanded", "false");
+        selectChevron?.classList.remove("rotate-180");
+      }
     });
   </script>
 </StyleguideLayout>

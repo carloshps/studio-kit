@@ -38,11 +38,11 @@ import StyleguideLayout from "../layouts/StyleguideLayout.astro";
           desc: "Capturam dados do usuário.",
           items: [
             { name: "Input",    href: "/componentes/input",    done: true,  desc: "Campo de texto token-aware" },
-            { name: "Label",    href: "/componentes/label",    done: false, desc: "Label acessível via Radix" },
-            { name: "Checkbox", href: "/componentes/checkbox", done: false, desc: "Caixa com estado indeterminado" },
-            { name: "Radio",    href: "/componentes/radio",    done: false, desc: "Opções exclusivas via Radix" },
-            { name: "Select",   href: "/componentes/select",   done: false, desc: "Dropdown acessível via Radix" },
-            { name: "Textarea", href: "/componentes/textarea", done: false, desc: "Campo multilinhas" },
+            { name: "Label",    href: "/componentes/label",    done: true,  desc: "Label acessível via Radix" },
+            { name: "Checkbox", href: "/componentes/checkbox", done: true,  desc: "Caixa com estado indeterminado" },
+            { name: "Radio",    href: "/componentes/radio",    done: true,  desc: "Opções exclusivas via Radix" },
+            { name: "Select",   href: "/componentes/select",   done: true,  desc: "Dropdown acessível via Radix" },
+            { name: "Textarea", href: "/componentes/textarea", done: true,  desc: "Campo multilinhas" },
           ],
         },
         {
@@ -78,20 +78,20 @@ import StyleguideLayout from "../layouts/StyleguideLayout.astro";
             {group.items.map(item => (
               <a
                 href={item.href}
-                class="group flex items-center gap-3 rounded-xl border border-border/10 bg-card/40 px-4 py-3 hover:border-primary/25 hover:bg-primary/4 transition-colors"
+                class="group flex items-center gap-3 rounded-xl border border-border/10 bg-card/40 px-4 py-3 transition-all duration-200 hover:border-primary/40 hover:bg-primary/6 hover:shadow-[0_0_0_1px_rgba(0,173,207,0.08)] hover:-translate-y-px"
               >
                 <!-- Status indicator -->
-                <span class={`w-1.5 h-1.5 rounded-full shrink-0 ${item.done ? 'bg-primary' : 'bg-foreground/15'}`}></span>
+                <span class={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${item.done ? 'bg-primary group-hover:bg-primary' : 'bg-foreground/15'}`}></span>
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-semibold text-foreground/70 group-hover:text-primary transition-colors">{item.name}</p>
-                  <p class="text-xs text-foreground/35 truncate">{item.desc}</p>
+                  <p class="text-sm font-semibold text-foreground/70 group-hover:text-foreground/95 transition-colors">{item.name}</p>
+                  <p class="text-xs text-foreground/35 group-hover:text-foreground/45 transition-colors truncate">{item.desc}</p>
                 </div>
                 {!item.done && (
                   <span class="text-[9px] uppercase tracking-wide font-semibold px-1.5 py-0.5 rounded-full bg-foreground/8 text-foreground/30 shrink-0">
                     em breve
                   </span>
                 )}
-                <svg class="shrink-0 text-foreground/15 group-hover:text-primary/50 transition-colors" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="shrink-0 text-foreground/15 group-hover:text-primary/60 group-hover:translate-x-0.5 transition-all duration-200" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M2.5 7h9M7.5 3l4 4-4 4"/>
                 </svg>
               </a>

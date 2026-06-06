@@ -36,6 +36,11 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\.\/components\/badge['"]/g, "from '@/components/ui/badge'")
     .replace(/from ['"]\.\.\/components\/card['"]/g, "from '@/components/ui/card'")
     .replace(/from ['"]\.\.\/components\/input['"]/g, "from '@/components/ui/input'")
+    .replace(/from ['"]\.\.\/components\/label['"]/g, "from '@/components/ui/label'")
+    .replace(/from ['"]\.\.\/components\/textarea['"]/g, "from '@/components/ui/textarea'")
+    .replace(/from ['"]\.\.\/components\/checkbox['"]/g, "from '@/components/ui/checkbox'")
+    .replace(/from ['"]\.\.\/components\/radio['"]/g, "from '@/components/ui/radio'")
+    .replace(/from ['"]\.\.\/components\/select['"]/g, "from '@/components/ui/select'")
     .replace(/from ['"]\.\.\/components\/navbar['"]/g, "from '@/components/ui/navbar'")
     .replace(/from ['"]\.\.\/components\/dialog['"]/g, "from '@/components/ui/dialog'")
     .replace(/from ['"]\.\.\/components\/tabs['"]/g, "from '@/components/ui/tabs'");
@@ -91,6 +96,41 @@ const MANIFEST = {
     srcPath: "components/input.tsx",
     installPath: "components/ui/input.tsx",
     dependencies: [],
+    registryDeps: ["utils"],
+  },
+  label: {
+    type: "registry:ui",
+    srcPath: "components/label.tsx",
+    installPath: "components/ui/label.tsx",
+    dependencies: ["@radix-ui/react-label"],
+    registryDeps: ["utils"],
+  },
+  textarea: {
+    type: "registry:ui",
+    srcPath: "components/textarea.tsx",
+    installPath: "components/ui/textarea.tsx",
+    dependencies: [],
+    registryDeps: ["utils"],
+  },
+  checkbox: {
+    type: "registry:ui",
+    srcPath: "components/checkbox.tsx",
+    installPath: "components/ui/checkbox.tsx",
+    dependencies: ["@radix-ui/react-checkbox"],
+    registryDeps: ["utils"],
+  },
+  radio: {
+    type: "registry:ui",
+    srcPath: "components/radio.tsx",
+    installPath: "components/ui/radio.tsx",
+    dependencies: ["@radix-ui/react-radio-group"],
+    registryDeps: ["utils"],
+  },
+  select: {
+    type: "registry:ui",
+    srcPath: "components/select.tsx",
+    installPath: "components/ui/select.tsx",
+    dependencies: ["@radix-ui/react-select"],
     registryDeps: ["utils"],
   },
   navbar: {
