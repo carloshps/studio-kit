@@ -1139,12 +1139,12 @@ if (!component) {
               <p class="text-xs text-foreground/30 mb-3">Card loading</p>
               <div class="rounded-xl border border-border/10 bg-card/30 p-8 max-w-sm">
                 <div class="rounded-lg border border-border/25 bg-card/90 p-5 space-y-3">
-                  <div class="animate-pulse rounded-md bg-white/6 h-5 w-3/4"></div>
-                  <div class="animate-pulse rounded-md bg-white/6 h-3 w-full"></div>
-                  <div class="animate-pulse rounded-md bg-white/6 h-3 w-5/6"></div>
-                  <div class="animate-pulse rounded-md bg-white/6 h-3 w-4/6"></div>
+                  <div class="animate-pulse rounded-md bg-foreground/10 h-5 w-3/4"></div>
+                  <div class="animate-pulse rounded-md bg-foreground/10 h-3 w-full"></div>
+                  <div class="animate-pulse rounded-md bg-foreground/10 h-3 w-5/6"></div>
+                  <div class="animate-pulse rounded-md bg-foreground/10 h-3 w-4/6"></div>
                   <div class="pt-2">
-                    <div class="animate-pulse rounded-md bg-white/6 h-9 w-28"></div>
+                    <div class="animate-pulse rounded-md bg-foreground/10 h-9 w-28"></div>
                   </div>
                 </div>
               </div>
@@ -1155,10 +1155,10 @@ if (!component) {
               <div class="rounded-xl border border-border/10 bg-card/30 p-8 max-w-sm space-y-3">
                 {[1,2,3].map(() => (
                   <div class="flex items-center gap-3">
-                    <div class="animate-pulse rounded-full bg-white/6 h-10 w-10 shrink-0"></div>
+                    <div class="animate-pulse rounded-full bg-foreground/10 h-10 w-10 shrink-0"></div>
                     <div class="flex-1 space-y-2">
-                      <div class="animate-pulse rounded-md bg-white/6 h-3 w-2/3"></div>
-                      <div class="animate-pulse rounded-md bg-white/6 h-3 w-1/2"></div>
+                      <div class="animate-pulse rounded-md bg-foreground/10 h-3 w-2/3"></div>
+                      <div class="animate-pulse rounded-md bg-foreground/10 h-3 w-1/2"></div>
                     </div>
                   </div>
                 ))}
@@ -1168,10 +1168,10 @@ if (!component) {
             <div>
               <p class="text-xs text-foreground/30 mb-3">Linhas de texto</p>
               <div class="rounded-xl border border-border/10 bg-card/30 p-8 max-w-md space-y-2">
-                <div class="animate-pulse rounded-md bg-white/6 h-6 w-1/2"></div>
-                <div class="animate-pulse rounded-md bg-white/6 h-4 w-full"></div>
-                <div class="animate-pulse rounded-md bg-white/6 h-4 w-full"></div>
-                <div class="animate-pulse rounded-md bg-white/6 h-4 w-3/4"></div>
+                <div class="animate-pulse rounded-md bg-foreground/10 h-6 w-1/2"></div>
+                <div class="animate-pulse rounded-md bg-foreground/10 h-4 w-full"></div>
+                <div class="animate-pulse rounded-md bg-foreground/10 h-4 w-full"></div>
+                <div class="animate-pulse rounded-md bg-foreground/10 h-4 w-3/4"></div>
               </div>
             </div>
           </div>
@@ -1224,24 +1224,24 @@ if (!component) {
             <div>
               <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Interativo (hover)</p>
               <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap gap-4 items-center">
-                <div class="relative group/tt">
+                <div class="relative group">
                   <button class="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 border border-primary/25 px-4 py-2 text-sm font-medium text-primary/80 hover:bg-primary/15 transition-colors">
                     Copiar link
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                   </button>
-                  <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover/tt:opacity-100 transition-opacity duration-150 z-10">
+                  <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10">
                     <div class="rounded-md border border-border/18 bg-card px-3 py-1.5 text-xs text-foreground/80 shadow-md whitespace-nowrap">
                       Copiar URL para área de transferência
                     </div>
                   </div>
                 </div>
 
-                <div class="relative group/tt">
+                <div class="relative group">
                   <button class="inline-flex items-center gap-1.5 rounded-lg border border-border/25 bg-transparent px-4 py-2 text-sm font-medium text-foreground/60 hover:bg-accent/10 transition-colors">
                     Excluir
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
                   </button>
-                  <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover/tt:opacity-100 transition-opacity duration-150 z-10">
+                  <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10">
                     <div class="rounded-md border border-red-500/30 bg-card px-3 py-1.5 text-xs text-red-300/80 shadow-md whitespace-nowrap">
                       Ação irreversível
                     </div>
