@@ -1,6 +1,7 @@
 ---
 import "@studio/tokens/css";
 import "../styles/global.css";
+import MegaNav from "../components/MegaNav.astro";
 const { title = "Studio Kit" } = Astro.props;
 ---
 <!doctype html>
@@ -22,43 +23,7 @@ const { title = "Studio Kit" } = Astro.props;
   </head>
   <body class="min-h-screen bg-background text-foreground/90 font-sans antialiased">
 
-    <!-- Cabeçalho -->
-    <header class="sticky top-0 z-50 border-b border-border/10 bg-background/80 backdrop-blur-sm px-6 py-4">
-      <div class="mx-auto max-w-5xl flex items-center justify-between">
-        <a href="/" class="text-sm font-bold text-foreground/90 tracking-tight hover:text-primary transition-colors">
-          Studio Kit
-        </a>
-        <nav class="flex items-center gap-6">
-          <a href="/fundamentos" class="text-sm text-foreground/60 hover:text-foreground/90 transition-colors">Fundamentos</a>
-          <a href="/componentes" class="text-sm text-foreground/60 hover:text-foreground/90 transition-colors">Componentes</a>
-          <a href="/blocos" class="text-sm text-foreground/60 hover:text-foreground/90 transition-colors">Blocos</a>
-          <a href="/docs" class="text-sm text-foreground/60 hover:text-foreground/90 transition-colors">Docs</a>
-          <a
-            href="https://github.com/CarlosHPS/studio-kit"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-foreground/60 hover:text-foreground/90 transition-colors"
-          >
-            GitHub
-          </a>
-          <!-- Toggle dark/light -->
-          <button
-            id="theme-toggle"
-            aria-label="Alternar tema"
-            class="flex items-center justify-center w-8 h-8 rounded-md text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 transition-colors"
-          >
-            <!-- Ícone sol (visível no dark) -->
-            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-            </svg>
-            <!-- Ícone lua (visível no light) -->
-            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
-              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-            </svg>
-          </button>
-        </nav>
-      </div>
-    </header>
+    <MegaNav />
 
     <slot />
 
@@ -69,26 +34,5 @@ const { title = "Studio Kit" } = Astro.props;
       </div>
     </footer>
 
-    <script>
-      const html = document.documentElement;
-      const btn = document.getElementById("theme-toggle");
-      const iconSun = document.getElementById("icon-sun");
-      const iconMoon = document.getElementById("icon-moon");
-
-      function applyTheme(isLight: boolean) {
-        html.classList.toggle("light", isLight);
-        iconSun?.classList.toggle("hidden", isLight);
-        iconMoon?.classList.toggle("hidden", !isLight);
-      }
-
-      // Estado inicial (alinhado com o inline script do <head>)
-      applyTheme(html.classList.contains("light"));
-
-      btn?.addEventListener("click", () => {
-        const nowLight = !html.classList.contains("light");
-        applyTheme(nowLight);
-        try { localStorage.setItem("theme", nowLight ? "light" : "dark"); } catch (_) {}
-      });
-    </script>
   </body>
 </html>

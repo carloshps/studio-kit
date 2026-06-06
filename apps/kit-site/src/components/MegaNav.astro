@@ -1,0 +1,427 @@
+---
+interface Props {
+  variant?: "default" | "sidebar"
+}
+const { variant = "default" } = Astro.props;
+---
+
+<header id="mega-nav" class="sticky top-0 z-50 border-b border-border/10 bg-background/95 backdrop-blur-sm">
+  <div class="mx-auto max-w-7xl px-6 h-14 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 shrink-0 group">
+      <span class="w-6 h-6 rounded bg-primary flex items-center justify-center shrink-0">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="4" height="4" rx="0.5" fill="currentColor" class="text-primary-foreground"/>
+          <rect x="7" y="1" width="4" height="4" rx="0.5" fill="currentColor" class="text-primary-foreground/60"/>
+          <rect x="1" y="7" width="4" height="4" rx="0.5" fill="currentColor" class="text-primary-foreground/60"/>
+          <rect x="7" y="7" width="4" height="4" rx="0.5" fill="currentColor" class="text-primary-foreground/30"/>
+        </svg>
+      </span>
+      <span class="text-sm font-bold text-foreground/90 group-hover:text-foreground transition-colors">Studio Kit</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden lg:flex items-center gap-1" role="navigation" aria-label="Navegação principal">
+
+      <!-- Fundamentos -->
+      <div class="relative" data-mega-group>
+        <a href="/fundamentos" class="mega-trigger flex items-center gap-1 px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 transition-colors rounded-md hover:bg-accent/10">
+          Fundamentos
+          <svg class="mega-chevron transition-transform duration-150" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4l4 4 4-4"/>
+          </svg>
+        </a>
+        <div class="mega-panel absolute top-full left-0 pt-1.5 z-50">
+          <div class="w-[22rem] rounded-xl border border-border/20 bg-background shadow-2xl p-4">
+            <div class="grid grid-cols-2 gap-x-4 gap-y-1">
+              <div>
+                <p class="px-2 mb-1.5 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Identidade</p>
+                <ul class="space-y-0.5">
+                  <li><a href="/fundamentos#cores" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Cores</a></li>
+                  <li><a href="/fundamentos#tipografia" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Tipografia</a></li>
+                  <li><a href="/fundamentos#marca" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Marca & Logo</a></li>
+                  <li><a href="/fundamentos#imagens" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Imagens</a></li>
+                </ul>
+              </div>
+              <div>
+                <p class="px-2 mb-1.5 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Tokens de UI</p>
+                <ul class="space-y-0.5">
+                  <li><a href="/fundamentos#espacamento" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Espaçamento</a></li>
+                  <li><a href="/fundamentos#radius" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Radius</a></li>
+                  <li><a href="/fundamentos#sombras" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Sombras</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Componentes -->
+      <div class="relative" data-mega-group>
+        <a href="/componentes" class="mega-trigger flex items-center gap-1 px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 transition-colors rounded-md hover:bg-accent/10">
+          Componentes
+          <svg class="mega-chevron transition-transform duration-150" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4l4 4 4-4"/>
+          </svg>
+        </a>
+        <div class="mega-panel absolute top-full left-1/2 -translate-x-1/2 pt-1.5 z-50">
+          <div class="w-[46rem] rounded-xl border border-border/20 bg-background shadow-2xl p-5">
+            <div class="grid grid-cols-3 gap-x-6 gap-y-1">
+              <!-- Ações & Display -->
+              <div>
+                <p class="px-2 mb-1.5 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Ações & Display</p>
+                <ul class="space-y-0.5">
+                  <li><a href="/componentes/button" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Button</a></li>
+                  <li><a href="/componentes/badge" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Badge</a></li>
+                  <li><a href="/componentes/card" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Card</a></li>
+                  <li><a href="/componentes/avatar" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Avatar <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/table" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Table <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/accordion" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Accordion <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                </ul>
+              </div>
+              <!-- Formulários -->
+              <div>
+                <p class="px-2 mb-1.5 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Formulários</p>
+                <ul class="space-y-0.5">
+                  <li><a href="/componentes/input" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Input</a></li>
+                  <li><a href="/componentes/label" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Label</a></li>
+                  <li><a href="/componentes/checkbox" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Checkbox <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/radio" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Radio <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/select" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Select <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/textarea" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Textarea <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                </ul>
+              </div>
+              <!-- Navegação & Feedback -->
+              <div>
+                <p class="px-2 mb-1.5 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Navegação & Feedback</p>
+                <ul class="space-y-0.5">
+                  <li><a href="/componentes/navbar" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Navbar</a></li>
+                  <li><a href="/componentes/tabs" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Tabs</a></li>
+                  <li><a href="/componentes/breadcrumb" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Breadcrumb <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/dropdown" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Dropdown <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/drawer" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Drawer <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/pagination" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Pagination <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/alert" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Alert <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/toast" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Toast <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/tooltip" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Tooltip <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/componentes/dialog" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Dialog</a></li>
+                  <li><a href="/componentes/skeleton" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Skeleton <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blocos -->
+      <div class="relative" data-mega-group>
+        <a href="/blocos" class="mega-trigger flex items-center gap-1 px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 transition-colors rounded-md hover:bg-accent/10">
+          Blocos
+          <svg class="mega-chevron transition-transform duration-150" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4l4 4 4-4"/>
+          </svg>
+        </a>
+        <div class="mega-panel absolute top-full left-0 pt-1.5 z-50">
+          <div class="w-[22rem] rounded-xl border border-border/20 bg-background shadow-2xl p-4">
+            <div class="grid grid-cols-2 gap-x-4 gap-y-1">
+              <div>
+                <p class="px-2 mb-1.5 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Estrutura</p>
+                <ul class="space-y-0.5">
+                  <li><a href="/blocos/hero" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Hero</a></li>
+                  <li><a href="/blocos/cta" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">CTA</a></li>
+                  <li><a href="/blocos/pricing" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Pricing</a></li>
+                  <li><a href="/blocos/footer" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Footer</a></li>
+                </ul>
+              </div>
+              <div>
+                <p class="px-2 mb-1.5 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Conversão</p>
+                <ul class="space-y-0.5">
+                  <li><a href="/blocos/faq" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">FAQ</a></li>
+                  <li><a href="/blocos/testimonial" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Testimonial</a></li>
+                  <li><a href="/blocos/lead-form" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Lead Form</a></li>
+                  <li><a href="/blocos/metric-block" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Metric Block</a></li>
+                  <li><a href="/blocos/modal" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Modal <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                  <li><a href="/blocos/login" class="flex items-center justify-between px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Login <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent/20 text-foreground/40 font-medium">novo</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Docs -->
+      <div class="relative" data-mega-group>
+        <a href="/docs" class="mega-trigger flex items-center gap-1 px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 transition-colors rounded-md hover:bg-accent/10">
+          Docs
+          <svg class="mega-chevron transition-transform duration-150" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4l4 4 4-4"/>
+          </svg>
+        </a>
+        <div class="mega-panel absolute top-full left-0 pt-1.5 z-50">
+          <div class="w-48 rounded-xl border border-border/20 bg-background shadow-2xl p-2">
+            <ul class="space-y-0.5">
+              <li><a href="/docs#comecando" class="block px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Começando</a></li>
+              <li><a href="/docs#config" class="block px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">components.json</a></li>
+              <li><a href="/docs#instalacao" class="block px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Instalação</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- GitHub -->
+      <a href="https://github.com/CarlosHPS/studio-kit" target="_blank" rel="noopener noreferrer"
+         class="px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 transition-colors rounded-md hover:bg-accent/10">
+        GitHub
+      </a>
+
+      <!-- Theme toggle (desktop) -->
+      <button id="theme-toggle" aria-label="Alternar tema"
+              class="flex items-center justify-center w-8 h-8 rounded-md text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 transition-colors">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile: toggle tema + hambúrguer -->
+    <div class="lg:hidden flex items-center gap-1">
+      <button id="theme-toggle" aria-label="Alternar tema"
+              class="flex items-center justify-center w-8 h-8 rounded-md text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 transition-colors">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+      </button>
+      {variant === "sidebar" ? (
+        <button id="sidebar-open" aria-label="Abrir menu"
+                class="p-1.5 rounded-md text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 transition-colors">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M2 4h12M2 8h12M2 12h12"/>
+          </svg>
+        </button>
+      ) : (
+        <button id="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false"
+                class="p-1.5 rounded-md text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 transition-colors">
+          <svg id="mobile-icon-open" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M2 4h12M2 8h12M2 12h12"/>
+          </svg>
+          <svg id="mobile-icon-close" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden">
+            <path d="M3 3l10 10M13 3L3 13"/>
+          </svg>
+        </button>
+      )}
+    </div>
+
+  </div>
+
+  <!-- Mobile menu (apenas no variant "default") -->
+  {variant === "default" && (
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-border/10 bg-background overflow-y-auto max-h-[calc(100vh-3.5rem)]">
+      <div class="px-4 py-3 space-y-1">
+
+        <!-- Fundamentos accordion -->
+        <div class="mobile-section">
+          <button class="mobile-section-btn w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors" aria-expanded="false">
+            Fundamentos
+            <svg class="mobile-section-chevron transition-transform duration-150" width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4l4 4 4-4"/>
+            </svg>
+          </button>
+          <div class="mobile-section-content hidden px-3 pb-2">
+            <div class="grid grid-cols-2 gap-x-2 pt-1">
+              <div>
+                <p class="px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Identidade</p>
+                <ul>
+                  <li><a href="/fundamentos#cores" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Cores</a></li>
+                  <li><a href="/fundamentos#tipografia" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Tipografia</a></li>
+                  <li><a href="/fundamentos#marca" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Marca & Logo</a></li>
+                  <li><a href="/fundamentos#imagens" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Imagens</a></li>
+                </ul>
+              </div>
+              <div>
+                <p class="px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Tokens</p>
+                <ul>
+                  <li><a href="/fundamentos#espacamento" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Espaçamento</a></li>
+                  <li><a href="/fundamentos#radius" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Radius</a></li>
+                  <li><a href="/fundamentos#sombras" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Sombras</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Componentes accordion -->
+        <div class="mobile-section">
+          <button class="mobile-section-btn w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors" aria-expanded="false">
+            Componentes
+            <svg class="mobile-section-chevron transition-transform duration-150" width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4l4 4 4-4"/>
+            </svg>
+          </button>
+          <div class="mobile-section-content hidden px-3 pb-2">
+            <div class="grid grid-cols-2 gap-x-2 pt-1">
+              <div>
+                <p class="px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Ações & Display</p>
+                <ul>
+                  <li><a href="/componentes/button" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Button</a></li>
+                  <li><a href="/componentes/badge" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Badge</a></li>
+                  <li><a href="/componentes/card" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Card</a></li>
+                  <li><a href="/componentes/avatar" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Avatar</a></li>
+                  <li><a href="/componentes/table" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Table</a></li>
+                  <li><a href="/componentes/accordion" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Accordion</a></li>
+                  <p class="px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-foreground/30 mt-2">Formulários</p>
+                  <li><a href="/componentes/input" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Input</a></li>
+                  <li><a href="/componentes/label" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Label</a></li>
+                  <li><a href="/componentes/checkbox" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Checkbox</a></li>
+                  <li><a href="/componentes/radio" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Radio</a></li>
+                  <li><a href="/componentes/select" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Select</a></li>
+                  <li><a href="/componentes/textarea" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Textarea</a></li>
+                </ul>
+              </div>
+              <div>
+                <p class="px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Navegação</p>
+                <ul>
+                  <li><a href="/componentes/navbar" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Navbar</a></li>
+                  <li><a href="/componentes/tabs" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Tabs</a></li>
+                  <li><a href="/componentes/breadcrumb" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Breadcrumb</a></li>
+                  <li><a href="/componentes/dropdown" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Dropdown</a></li>
+                  <li><a href="/componentes/drawer" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Drawer</a></li>
+                  <li><a href="/componentes/pagination" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Pagination</a></li>
+                  <p class="px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-foreground/30 mt-2">Feedback</p>
+                  <li><a href="/componentes/alert" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Alert</a></li>
+                  <li><a href="/componentes/toast" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Toast</a></li>
+                  <li><a href="/componentes/tooltip" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Tooltip</a></li>
+                  <li><a href="/componentes/dialog" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Dialog</a></li>
+                  <li><a href="/componentes/skeleton" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Skeleton</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blocos accordion -->
+        <div class="mobile-section">
+          <button class="mobile-section-btn w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors" aria-expanded="false">
+            Blocos
+            <svg class="mobile-section-chevron transition-transform duration-150" width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4l4 4 4-4"/>
+            </svg>
+          </button>
+          <div class="mobile-section-content hidden px-3 pb-2">
+            <div class="grid grid-cols-2 gap-x-2 pt-1">
+              <div>
+                <p class="px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Estrutura</p>
+                <ul>
+                  <li><a href="/blocos/hero" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Hero</a></li>
+                  <li><a href="/blocos/cta" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">CTA</a></li>
+                  <li><a href="/blocos/pricing" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Pricing</a></li>
+                  <li><a href="/blocos/footer" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Footer</a></li>
+                </ul>
+              </div>
+              <div>
+                <p class="px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-foreground/30">Conversão</p>
+                <ul>
+                  <li><a href="/blocos/faq" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">FAQ</a></li>
+                  <li><a href="/blocos/testimonial" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Testimonial</a></li>
+                  <li><a href="/blocos/lead-form" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Lead Form</a></li>
+                  <li><a href="/blocos/metric-block" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Metric Block</a></li>
+                  <li><a href="/blocos/modal" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Modal</a></li>
+                  <li><a href="/blocos/login" class="block px-2 py-1.5 text-sm text-foreground/60 hover:text-foreground/90 rounded-md transition-colors">Login</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Docs / GitHub -->
+        <div class="border-t border-border/10 pt-2 mt-1 flex items-center gap-1">
+          <a href="/docs" class="px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">Docs</a>
+          <a href="https://github.com/CarlosHPS/studio-kit" target="_blank" rel="noopener noreferrer"
+             class="px-3 py-2 text-sm text-foreground/60 hover:text-foreground/90 hover:bg-accent/10 rounded-md transition-colors">GitHub</a>
+        </div>
+
+      </div>
+    </div>
+  )}
+</header>
+
+<style>
+  .mega-panel {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease, visibility 120ms ease;
+  }
+  [data-mega-group]:hover .mega-panel {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  [data-mega-group]:hover .mega-chevron {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  // ── Theme toggle ──────────────────────────────────────────
+  const html = document.documentElement;
+
+  function applyTheme(isLight: boolean) {
+    html.classList.toggle("light", isLight);
+    document.querySelectorAll("#icon-sun").forEach(el => el.classList.toggle("hidden", isLight));
+    document.querySelectorAll("#icon-moon").forEach(el => el.classList.toggle("hidden", !isLight));
+  }
+
+  applyTheme(html.classList.contains("light"));
+
+  document.querySelectorAll("#theme-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const nowLight = !html.classList.contains("light");
+      applyTheme(nowLight);
+      try { localStorage.setItem("theme", nowLight ? "light" : "dark"); } catch (_) {}
+    });
+  });
+
+  // ── Mobile menu toggle ────────────────────────────────────
+  const mobileBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileIconOpen = document.getElementById("mobile-icon-open");
+  const mobileIconClose = document.getElementById("mobile-icon-close");
+
+  mobileBtn?.addEventListener("click", () => {
+    const isOpen = mobileMenu?.classList.toggle("hidden") === false;
+    mobileBtn.setAttribute("aria-expanded", String(isOpen));
+    mobileIconOpen?.classList.toggle("hidden", isOpen);
+    mobileIconClose?.classList.toggle("hidden", !isOpen);
+  });
+
+  // Fechar ao clicar em link dentro do menu mobile
+  mobileMenu?.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
+      mobileBtn?.setAttribute("aria-expanded", "false");
+      mobileIconOpen?.classList.remove("hidden");
+      mobileIconClose?.classList.add("hidden");
+    });
+  });
+
+  // ── Mobile accordion sections ─────────────────────────────
+  document.querySelectorAll(".mobile-section-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const section = btn.closest(".mobile-section");
+      const content = section?.querySelector(".mobile-section-content");
+      const chevron = btn.querySelector(".mobile-section-chevron");
+      const isOpen = content?.classList.toggle("hidden") === false;
+      btn.setAttribute("aria-expanded", String(isOpen));
+      if (chevron instanceof HTMLElement) {
+        chevron.style.transform = isOpen ? "rotate(180deg)" : "";
+      }
+    });
+  });
+</script>
