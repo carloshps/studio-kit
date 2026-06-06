@@ -516,29 +516,38 @@ if (!block) {
         <!-- MODAL demo -->
         {block.slug === "modal" && (
           <div>
-            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview — modal aberto sobre overlay</p>
-            <div class="relative rounded-xl border border-border/10 bg-card/30 p-8 overflow-hidden min-h-[340px]">
-              <!-- Overlay simulado -->
-              <div class="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-              <!-- Conteúdo do modal -->
-              <div class="relative mx-auto w-full max-w-lg rounded-xl border border-border/18 bg-card p-6 shadow-lg">
-                <button aria-label="Fechar" class="absolute right-4 top-4 rounded-sm opacity-40 hover:opacity-100 transition-opacity">
-                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-                <div class="mb-4 flex flex-col gap-1">
-                  <h3 class="text-lg font-semibold text-foreground/90">Confirmar publicação</h3>
-                  <p class="text-sm text-foreground/50">Esta ação tornará a página visível para todos os visitantes. Você pode reverter a qualquer momento.</p>
-                </div>
-                <div class="text-sm text-foreground/70">
-                  O conteúdo entra no ar imediatamente após a confirmação.
-                </div>
-                <div class="mt-6 flex justify-end gap-3">
-                  <button class="inline-flex items-center justify-center rounded-lg text-sm font-medium h-10 px-5 hover:bg-accent/10 hover:text-foreground transition-colors text-foreground/70">Cancelar</button>
-                  <button class="inline-flex items-center justify-center rounded-lg text-sm font-medium h-10 px-5 bg-primary text-primary-foreground hover:bg-primary/90 transition-opacity">Publicar</button>
-                </div>
-              </div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-10 flex justify-center">
+              <button
+                id="demo-modal-trigger"
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-border/25 bg-transparent px-5 h-10 text-sm font-medium text-foreground/70 hover:border-accent/40 hover:bg-accent/10 transition-colors"
+              >
+                Abrir modal
+              </button>
             </div>
-            <p class="text-xs text-foreground/30 text-center mt-3">Em produção, abre via <code class="font-mono">triggerLabel</code> ou controlado por <code class="font-mono">open</code> / <code class="font-mono">onOpenChange</code></p>
+
+            <!-- dialog nativo — gerencia foco e Esc nativamente -->
+            <dialog
+              id="demo-modal"
+              class="fixed left-1/2 top-1/2 z-50 m-0 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border/18 bg-card p-6 shadow-lg backdrop:bg-background/80 backdrop:backdrop-blur-sm open:flex open:flex-col"
+            >
+              <button id="demo-modal-close" aria-label="Fechar" class="absolute right-4 top-4 rounded-sm opacity-40 hover:opacity-100 transition-opacity">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+              <div class="mb-4 flex flex-col gap-1">
+                <h3 class="text-lg font-semibold text-foreground/90">Confirmar publicação</h3>
+                <p class="text-sm text-foreground/50">Esta ação tornará a página visível para todos os visitantes. Você pode reverter a qualquer momento.</p>
+              </div>
+              <p class="text-sm text-foreground/70">O conteúdo entra no ar imediatamente após a confirmação.</p>
+              <div class="mt-6 flex justify-end gap-3">
+                <button id="demo-modal-cancel" class="inline-flex items-center justify-center rounded-lg text-sm font-medium h-10 px-5 text-foreground/70 hover:bg-accent/10 transition-colors">Cancelar</button>
+                <button id="demo-modal-confirm" class="inline-flex items-center justify-center rounded-lg text-sm font-medium h-10 px-5 bg-primary text-primary-foreground hover:bg-primary/90 transition-opacity">Publicar</button>
+              </div>
+            </dialog>
+
+            <p class="text-xs text-foreground/30 text-center mt-3">Fecha por Esc, clique no overlay ou nos botões &mdash; acessível por padrão</p>
           </div>
         )}
 
@@ -633,6 +642,24 @@ if (!block) {
     )}
 
   </div>
+
+  <script>
+    const dialog  = document.getElementById("demo-modal") as HTMLDialogElement | null;
+    const trigger = document.getElementById("demo-modal-trigger");
+    const closeBtn = document.getElementById("demo-modal-close");
+    const cancelBtn = document.getElementById("demo-modal-cancel");
+    const confirmBtn = document.getElementById("demo-modal-confirm");
+
+    trigger?.addEventListener("click", () => dialog?.showModal());
+    closeBtn?.addEventListener("click", () => dialog?.close());
+    cancelBtn?.addEventListener("click", () => dialog?.close());
+    confirmBtn?.addEventListener("click", () => dialog?.close());
+
+    // fechar ao clicar no backdrop (clique no <dialog> fora do conteúdo)
+    dialog?.addEventListener("click", (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  </script>
 
   <script define:vars={{ source: block.source }}>
     const btn = document.getElementById("copy-btn");
