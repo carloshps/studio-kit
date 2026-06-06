@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-toast",
+  "type": "registry:lib",
+  "registryDependencies": [
+    "https://kit.carloshps.com.br/registry/toast.json"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-toast.ts",
+      "content": "import * as React from \"react\";\nimport type { ToastProps } from '@/components/ui/toast';\n\ntype ToastData = ToastProps & {\n  id: string;\n  title?: React.ReactNode;\n  description?: React.ReactNode;\n  action?: React.ReactElement;\n};\n\ntype State = { toasts: ToastData[] };\ntype Action =\n  | { type: \"ADD\"; toast: ToastData }\n  | { type: \"UPDATE\"; toast: Partial<ToastData> & { id: string } }\n  | { type: \"DISMISS\"; toastId?: string }\n  | { type: \"REMOVE\"; toastId?: string };\n\nconst TOAST_LIMIT = 3;\nconst TOAST_REMOVE_DELAY = 4000;\n\nlet count = 0;\nconst genId = () => (++count).toString();\n\nconst toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();\nlet listeners: ((state: State) => void)[] = [];\nlet memoryState: State = { toasts: [] };\n\nfunction addToRemoveQueue(toastId: string) {\n  if (toastTimeouts.has(toastId)) return;\n  const timeout = setTimeout(() => {\n    toastTimeouts.delete(toastId);\n    dispatch({ type: \"REMOVE\", toastId });\n  }, TOAST_REMOVE_DELAY);\n  toastTimeouts.set(toastId, timeout);\n}\n\nfunction reducer(state: State, action: Action): State {\n  switch (action.type) {\n    case \"ADD\":\n      return { toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT) };\n    case \"UPDATE\":\n      return { toasts: state.toasts.map(t => t.id === action.toast.id ? { ...t, ...action.toast } : t) };\n    case \"DISMISS\": {\n      const { toastId } = action;\n      if (toastId) addToRemoveQueue(toastId);\n      else state.toasts.forEach(t => addToRemoveQueue(t.id));\n      return { toasts: state.toasts.map(t => (!toastId || t.id === toastId) ? { ...t, open: false } : t) };\n    }\n    case \"REMOVE\":\n      return { toasts: action.toastId ? state.toasts.filter(t => t.id !== action.toastId) : [] };\n  }\n}\n\nfunction dispatch(action: Action) {\n  memoryState = reducer(memoryState, action);\n  listeners.forEach(l => l(memoryState));\n}\n\nfunction toast(props: Omit<ToastData, \"id\">) {\n  const id = genId();\n  const dismiss = () => dispatch({ type: \"DISMISS\", toastId: id });\n  dispatch({ type: \"ADD\", toast: { ...props, id, open: true, onOpenChange: (open) => { if (!open) dismiss(); } } });\n  return { id, dismiss, update: (p: Partial<ToastData>) => dispatch({ type: \"UPDATE\", toast: { ...p, id } }) };\n}\n\nfunction useToast() {\n  const [state, setState] = React.useState<State>(memoryState);\n  React.useEffect(() => {\n    listeners.push(setState);\n    return () => { listeners = listeners.filter(l => l !== setState); };\n  }, []);\n  return {\n    ...state,\n    toast,\n    dismiss: (toastId?: string) => dispatch({ type: \"DISMISS\", toastId }),\n  };\n}\n\nexport { useToast, toast };\n",
+      "type": "registry:lib",
+      "target": ""
+    }
+  ]
+}

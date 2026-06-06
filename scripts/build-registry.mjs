@@ -46,7 +46,11 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\.\/components\/select['"]/g, "from '@/components/ui/select'")
     .replace(/from ['"]\.\.\/components\/navbar['"]/g, "from '@/components/ui/navbar'")
     .replace(/from ['"]\.\.\/components\/dialog['"]/g, "from '@/components/ui/dialog'")
-    .replace(/from ['"]\.\.\/components\/tabs['"]/g, "from '@/components/ui/tabs'");
+    .replace(/from ['"]\.\.\/components\/tabs['"]/g, "from '@/components/ui/tabs'")
+    .replace(/from ['"]\.\/toast['"]/g, "from '@/components/ui/toast'")
+    .replace(/from ['"]\.\/alert['"]/g, "from '@/components/ui/alert'")
+    .replace(/from ['"]\.\/skeleton['"]/g, "from '@/components/ui/skeleton'")
+    .replace(/from ['"]\.\/tooltip['"]/g, "from '@/components/ui/tooltip'");
 }
 
 function readSrc(relPath) {
@@ -177,6 +181,41 @@ const MANIFEST = {
     installPath: "components/ui/tabs.tsx",
     dependencies: ["@radix-ui/react-tabs"],
     registryDeps: ["utils"],
+  },
+  alert: {
+    type: "registry:ui",
+    srcPath: "components/alert.tsx",
+    installPath: "components/ui/alert.tsx",
+    dependencies: ["class-variance-authority"],
+    registryDeps: ["utils"],
+  },
+  skeleton: {
+    type: "registry:ui",
+    srcPath: "components/skeleton.tsx",
+    installPath: "components/ui/skeleton.tsx",
+    dependencies: [],
+    registryDeps: ["utils"],
+  },
+  tooltip: {
+    type: "registry:ui",
+    srcPath: "components/tooltip.tsx",
+    installPath: "components/ui/tooltip.tsx",
+    dependencies: ["@radix-ui/react-tooltip"],
+    registryDeps: ["utils"],
+  },
+  toast: {
+    type: "registry:ui",
+    srcPath: "components/toast.tsx",
+    installPath: "components/ui/toast.tsx",
+    dependencies: ["@radix-ui/react-toast", "class-variance-authority"],
+    registryDeps: ["utils"],
+  },
+  "use-toast": {
+    type: "registry:lib",
+    srcPath: "components/use-toast.ts",
+    installPath: "hooks/use-toast.ts",
+    dependencies: [],
+    registryDeps: ["toast"],
   },
 
   // ── Blocos ────────────────────────────────────────────────────────
