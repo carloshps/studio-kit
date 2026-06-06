@@ -152,7 +152,16 @@ const components: ComponentDef[] = [
       { name: "className", type: "string", desc: "Classe extra no <nav> raiz" },
     ],
   },
-  { slug: "dropdown",   name: "Dropdown",   category: "Navegação", hasDemo: false, description: "Menu flutuante via Radix Dropdown Menu." },
+  {
+    slug: "dropdown", name: "Dropdown", category: "Navegação", hasDemo: true,
+    description: "Menu flutuante contextual via Radix Dropdown Menu. Composto por DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator e DropdownMenuShortcut.",
+    radix: "Radix Dropdown Menu",
+    props: [
+      { name: "open",         type: "boolean",                       desc: "Estado aberto (controlado)" },
+      { name: "onOpenChange", type: "(open: boolean) => void",       desc: "Callback ao abrir/fechar" },
+      { name: "modal",        type: "boolean", default: "true",      desc: "Se true, bloqueia interação com o fundo" },
+    ],
+  },
   { slug: "drawer",     name: "Drawer",     category: "Navegação", hasDemo: false, description: "Painel lateral deslizante via Radix Dialog (Sheet)." },
   {
     slug: "pagination", name: "Pagination", category: "Navegação", hasDemo: true,
@@ -584,6 +593,54 @@ if (!component) {
                 </nav>
               </div>
             </div>
+          </div>
+        )}
+
+        <!-- DROPDOWN demo -->
+        {component.slug === "dropdown" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview interativo</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex items-start justify-center min-h-[220px]">
+              <div class="relative inline-block" id="dropdown-demo">
+                <button
+                  id="dropdown-trigger"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                  class="inline-flex items-center gap-2 rounded-lg border border-border/18 bg-background/60 px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:border-accent/40 hover:text-foreground/95 focus:outline-none focus:ring-2 focus:ring-ring/30"
+                >
+                  Opções
+                  <svg id="dropdown-chevron" class="h-4 w-4 opacity-50 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div
+                  id="dropdown-menu"
+                  role="menu"
+                  class="hidden absolute left-0 z-50 mt-1.5 min-w-[10rem] overflow-hidden rounded-xl border border-border/15 bg-[#0a1929] p-1 shadow-card"
+                >
+                  <p class="px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-foreground/30">Conta</p>
+                  <button role="menuitem" class="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-foreground/70 transition-colors hover:bg-accent/15 hover:text-foreground/95 text-left">
+                    Perfil
+                    <span class="ml-auto text-xs tracking-widest text-foreground/25">⌘P</span>
+                  </button>
+                  <button role="menuitem" class="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-foreground/70 transition-colors hover:bg-accent/15 hover:text-foreground/95 text-left">
+                    Configurações
+                    <span class="ml-auto text-xs tracking-widest text-foreground/25">⌘,</span>
+                  </button>
+                  <div class="-mx-1 my-1 h-px bg-border/10"></div>
+                  <p class="px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-foreground/30">Projeto</p>
+                  <button role="menuitem" class="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-foreground/70 transition-colors hover:bg-accent/15 hover:text-foreground/95 text-left">
+                    Novo componente
+                  </button>
+                  <button role="menuitem" class="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-foreground/70 transition-colors hover:bg-accent/15 hover:text-foreground/95 text-left">
+                    Exportar registry
+                  </button>
+                  <div class="-mx-1 my-1 h-px bg-border/10"></div>
+                  <button role="menuitem" class="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-red-400/70 transition-colors hover:bg-red-500/10 hover:text-red-400 text-left">
+                    Sair
+                  </button>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30 mt-3">Demo interativa — clique no botão para abrir. Em produção usa Radix DropdownMenu com portal, animação e navegação por teclado.</p>
           </div>
         )}
 
@@ -1385,6 +1442,33 @@ if (!component) {
         selectTrigger.setAttribute("aria-expanded", "false");
         selectChevron?.classList.remove("rotate-180");
       }
+    });
+
+    // Dropdown demo interactivity
+    const ddTrigger  = document.getElementById("dropdown-trigger");
+    const ddMenu     = document.getElementById("dropdown-menu");
+    const ddChevron  = document.getElementById("dropdown-chevron");
+
+    ddTrigger?.addEventListener("click", () => {
+      const isOpen = ddMenu.classList.toggle("hidden") === false;
+      ddTrigger.setAttribute("aria-expanded", String(isOpen));
+      ddChevron?.classList.toggle("rotate-180", isOpen);
+    });
+
+    document.addEventListener("click", e => {
+      if (ddTrigger && !ddTrigger.contains(e.target) && !ddMenu?.contains(e.target)) {
+        ddMenu?.classList.add("hidden");
+        ddTrigger.setAttribute("aria-expanded", "false");
+        ddChevron?.classList.remove("rotate-180");
+      }
+    });
+
+    ddMenu?.querySelectorAll("[role=menuitem]").forEach(item => {
+      item.addEventListener("click", () => {
+        ddMenu.classList.add("hidden");
+        ddTrigger?.setAttribute("aria-expanded", "false");
+        ddChevron?.classList.remove("rotate-180");
+      });
     });
 
     // Pagination demo interactivity

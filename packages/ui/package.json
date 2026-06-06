@@ -23,6 +23,9 @@
     "./tooltip":     "./src/components/tooltip.tsx",
     "./toast":       "./src/components/toast.tsx",
     "./use-toast":   "./src/components/use-toast.ts",
+    "./breadcrumb":  "./src/components/breadcrumb.tsx",
+    "./pagination":  "./src/components/pagination.tsx",
+    "./dropdown":    "./src/components/dropdown.tsx",
     "./hero":        "./src/blocks/hero.tsx",
     "./cta-section": "./src/blocks/cta-section.tsx",
     "./metric-block":"./src/blocks/metric-block.tsx",
@@ -48,6 +51,7 @@
     "@radix-ui/react-select":       "^2.0.0",
     "@radix-ui/react-tooltip":      "^1.0.7",
     "@radix-ui/react-toast":        "^1.1.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
     "class-variance-authority":  "^0.7.0",
     "clsx":                      "^2.1.0",
     "tailwind-merge":            "^2.2.1"

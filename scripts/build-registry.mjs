@@ -52,7 +52,8 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\/skeleton['"]/g, "from '@/components/ui/skeleton'")
     .replace(/from ['"]\.\/tooltip['"]/g, "from '@/components/ui/tooltip'")
     .replace(/from ['"]\.\.\/components\/breadcrumb['"]/g, "from '@/components/ui/breadcrumb'")
-    .replace(/from ['"]\.\.\/components\/pagination['"]/g, "from '@/components/ui/pagination'");
+    .replace(/from ['"]\.\.\/components\/pagination['"]/g, "from '@/components/ui/pagination'")
+    .replace(/from ['"]\.\.\/components\/dropdown['"]/g, "from '@/components/ui/dropdown'");
 }
 
 function readSrc(relPath) {
@@ -196,6 +197,13 @@ const MANIFEST = {
     srcPath: "components/pagination.tsx",
     installPath: "components/ui/pagination.tsx",
     dependencies: [],
+    registryDeps: ["utils"],
+  },
+  dropdown: {
+    type: "registry:ui",
+    srcPath: "components/dropdown.tsx",
+    installPath: "components/ui/dropdown.tsx",
+    dependencies: ["@radix-ui/react-dropdown-menu"],
     registryDeps: ["utils"],
   },
   alert: {
