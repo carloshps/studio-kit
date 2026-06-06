@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "modal",
+  "type": "registry:block",
+  "registryDependencies": [
+    "utils",
+    "https://kit.carloshps.com.br/registry/button.json",
+    "https://kit.carloshps.com.br/registry/dialog.json"
+  ],
+  "dependencies": [
+    "@radix-ui/react-dialog"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "components/blocks/modal.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\nimport { Button } from '@/components/ui/button';\nimport {\n  Dialog,\n  DialogTrigger,\n  DialogContent,\n  DialogHeader,\n  DialogTitle,\n  DialogDescription,\n  DialogFooter,\n  DialogClose,\n} from '@/components/ui/dialog';\n\nexport interface ModalProps {\n  /** Texto do botão que abre o modal. Ignorado quando `open` é controlado. */\n  triggerLabel?: string;\n  /** Título exibido no topo do modal. */\n  title: string;\n  /** Texto de apoio abaixo do título. */\n  description?: string;\n  /** Conteúdo do corpo do modal. */\n  children?: React.ReactNode;\n  /** Texto do botão de confirmação. Omita para esconder. */\n  confirmLabel?: string;\n  /** Texto do botão de cancelar. */\n  cancelLabel?: string;\n  /** Callback ao confirmar. */\n  onConfirm?: () => void;\n  /** Estado controlado de abertura (opcional). */\n  open?: boolean;\n  /** Handler de mudança de estado quando controlado. */\n  onOpenChange?: (open: boolean) => void;\n  /** Classes adicionais para o conteúdo. */\n  className?: string;\n}\n\n/**\n * Modal — janela genérica baseada em Dialog (Radix).\n * Overlay escurecido com blur, fecha ao clicar fora ou tecla Esc,\n * foco preso e gerenciado automaticamente. Acessível por padrão.\n */\nexport function Modal({\n  triggerLabel,\n  title,\n  description,\n  children,\n  confirmLabel,\n  cancelLabel = \"Cancelar\",\n  onConfirm,\n  open,\n  onOpenChange,\n  className,\n}: ModalProps) {\n  return (\n    <Dialog open={open} onOpenChange={onOpenChange}>\n      {triggerLabel && (\n        <DialogTrigger asChild>\n          <Button variant=\"outline\">{triggerLabel}</Button>\n        </DialogTrigger>\n      )}\n      <DialogContent className={cn(className)}>\n        <DialogHeader>\n          <DialogTitle>{title}</DialogTitle>\n          {description && <DialogDescription>{description}</DialogDescription>}\n        </DialogHeader>\n\n        {children && <div className=\"text-sm text-foreground/70\">{children}</div>}\n\n        {(confirmLabel || cancelLabel) && (\n          <DialogFooter>\n            <DialogClose asChild>\n              <Button variant=\"ghost\">{cancelLabel}</Button>\n            </DialogClose>\n            {confirmLabel && (\n              <DialogClose asChild>\n                <Button variant=\"default\" onClick={onConfirm}>\n                  {confirmLabel}\n                </Button>\n              </DialogClose>\n            )}\n          </DialogFooter>\n        )}\n      </DialogContent>\n    </Dialog>\n  );\n}\n",
+      "type": "registry:block",
+      "target": ""
+    }
+  ]
+}

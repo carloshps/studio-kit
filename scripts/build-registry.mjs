@@ -307,6 +307,20 @@ const MANIFEST = {
     dependencies: [],
     registryDeps: ["utils"],
   },
+  modal: {
+    type: "registry:block",
+    srcPath: "blocks/modal.tsx",
+    installPath: "components/blocks/modal.tsx",
+    dependencies: ["@radix-ui/react-dialog"],
+    registryDeps: ["utils", "button", "dialog"],
+  },
+  login: {
+    type: "registry:block",
+    srcPath: "blocks/login.tsx",
+    installPath: "components/blocks/login.tsx",
+    dependencies: [],
+    registryDeps: ["utils", "button", "input", "label"],
+  },
 };
 
 // Itens de arquivo estático — gerados das fontes em packages/

@@ -34,7 +34,9 @@
     "./lead-form":   "./src/blocks/lead-form.tsx",
     "./faq":         "./src/blocks/faq.tsx",
     "./testimonial": "./src/blocks/testimonial.tsx",
-    "./footer":      "./src/blocks/footer.tsx"
+    "./footer":      "./src/blocks/footer.tsx",
+    "./modal":       "./src/blocks/modal.tsx",
+    "./login":       "./src/blocks/login.tsx"
   },
   "files": ["src"],
   "peerDependencies": {

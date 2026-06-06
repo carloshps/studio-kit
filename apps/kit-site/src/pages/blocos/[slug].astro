@@ -128,16 +128,37 @@ const blocks: BlockDef[] = [
   {
     slug: "modal",
     name: "Modal",
-    hasDemo: false,
+    hasDemo: true,
     source: "@studio/modal",
-    description: "Janela modal genérica baseada em Dialog. Overlay escurecido, fechar ao clicar fora ou tecla Esc, foco gerenciado automaticamente.",
+    description: "Janela modal genérica baseada em Dialog (Radix). Overlay escurecido com blur, fechar ao clicar fora ou tecla Esc, foco preso e gerenciado automaticamente. Acessível por padrão.",
+    props: [
+      { name: "title",        type: "string",                       desc: "Título no topo do modal (obrigatório)" },
+      { name: "triggerLabel", type: "string",                       desc: "Texto do botão que abre o modal" },
+      { name: "description",  type: "string",                       desc: "Texto de apoio abaixo do título" },
+      { name: "children",     type: "ReactNode",                    desc: "Conteúdo do corpo do modal" },
+      { name: "confirmLabel", type: "string",                       desc: "Texto do botão de confirmação (omita para esconder)" },
+      { name: "cancelLabel",  type: "string", default: "Cancelar",  desc: "Texto do botão de cancelar" },
+      { name: "onConfirm",    type: "() => void",                   desc: "Callback ao confirmar" },
+      { name: "open",         type: "boolean",                      desc: "Estado controlado de abertura (opcional)" },
+      { name: "onOpenChange", type: "(open: boolean) => void",      desc: "Handler de mudança quando controlado" },
+      { name: "className",    type: "string",                       desc: "Classes adicionais para o conteúdo" },
+    ],
   },
   {
     slug: "login",
     name: "Login",
-    hasDemo: false,
+    hasDemo: true,
     source: "@studio/login",
-    description: "Tela de autenticação/acesso. Card centralizado com campo e-mail, senha, botão de submit e link de recuperação.",
+    description: "Tela de autenticação. Card centralizado com campos de e-mail e senha, botão de acesso e link de recuperação. Gerencia estado de loading internamente quando onSubmit devolve uma Promise.",
+    props: [
+      { name: "title",      type: "string",   default: "Acesse sua conta", desc: "Título do card" },
+      { name: "subtitle",   type: "string",                                desc: "Texto de apoio abaixo do título" },
+      { name: "ctaLabel",   type: "string",   default: "Entrar",           desc: "Texto do botão de submit" },
+      { name: "forgotHref", type: "string",                                desc: "Link de recuperação de senha (omita para esconder)" },
+      { name: "footer",     type: "ReactNode",                             desc: "Rodapé (ex: link de cadastro)" },
+      { name: "onSubmit",   type: "(data) => void | Promise<void>",        desc: "Callback de envio com { email, password }" },
+      { name: "className",  type: "string",                                desc: "Classes adicionais" },
+    ],
   },
 ];
 
@@ -488,6 +509,69 @@ if (!block) {
                   </div>
                 </div>
               </footer>
+            </div>
+          </div>
+        )}
+
+        <!-- MODAL demo -->
+        {block.slug === "modal" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview — modal aberto sobre overlay</p>
+            <div class="relative rounded-xl border border-border/10 bg-card/30 p-8 overflow-hidden min-h-[340px]">
+              <!-- Overlay simulado -->
+              <div class="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+              <!-- Conteúdo do modal -->
+              <div class="relative mx-auto w-full max-w-lg rounded-xl border border-border/18 bg-card p-6 shadow-lg">
+                <button aria-label="Fechar" class="absolute right-4 top-4 rounded-sm opacity-40 hover:opacity-100 transition-opacity">
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+                <div class="mb-4 flex flex-col gap-1">
+                  <h3 class="text-lg font-semibold text-foreground/90">Confirmar publicação</h3>
+                  <p class="text-sm text-foreground/50">Esta ação tornará a página visível para todos os visitantes. Você pode reverter a qualquer momento.</p>
+                </div>
+                <div class="text-sm text-foreground/70">
+                  O conteúdo entra no ar imediatamente após a confirmação.
+                </div>
+                <div class="mt-6 flex justify-end gap-3">
+                  <button class="inline-flex items-center justify-center rounded-lg text-sm font-medium h-10 px-5 hover:bg-accent/10 hover:text-foreground transition-colors text-foreground/70">Cancelar</button>
+                  <button class="inline-flex items-center justify-center rounded-lg text-sm font-medium h-10 px-5 bg-primary text-primary-foreground hover:bg-primary/90 transition-opacity">Publicar</button>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30 text-center mt-3">Em produção, abre via <code class="font-mono">triggerLabel</code> ou controlado por <code class="font-mono">open</code> / <code class="font-mono">onOpenChange</code></p>
+          </div>
+        )}
+
+        <!-- LOGIN demo -->
+        {block.slug === "login" && (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Preview</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex justify-center">
+              <div class="w-full max-w-sm rounded-lg border border-border/25 bg-card/90 p-8 shadow-card">
+                <div class="mb-6">
+                  <h2 class="text-xl font-bold text-foreground/90">Acesse sua conta</h2>
+                  <p class="mt-1 text-sm text-foreground/50">Bom te ver de novo.</p>
+                </div>
+                <div class="flex flex-col gap-4">
+                  <div class="flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-foreground/70">E-mail</label>
+                    <input type="email" placeholder="voce@email.com" class="flex h-10 w-full rounded-lg border border-border/18 bg-background/60 px-4 text-sm text-foreground/90 placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-ring/30"/>
+                  </div>
+                  <div class="flex flex-col gap-1.5">
+                    <div class="flex items-center justify-between">
+                      <label class="text-sm font-medium text-foreground/70">Senha</label>
+                      <a href="#" class="text-xs text-primary/80 hover:text-primary transition-colors">Esqueceu a senha?</a>
+                    </div>
+                    <input type="password" placeholder="••••••••" class="flex h-10 w-full rounded-lg border border-border/18 bg-background/60 px-4 text-sm text-foreground/90 placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-ring/30"/>
+                  </div>
+                  <button class="mt-1 inline-flex items-center justify-center w-full rounded-lg text-sm font-medium h-12 bg-primary text-primary-foreground hover:bg-primary/90 transition-opacity">
+                    Entrar
+                  </button>
+                </div>
+                <div class="mt-6 text-center text-sm text-foreground/50">
+                  Não tem conta? <a href="#" class="text-primary/80 hover:text-primary transition-colors">Criar agora</a>
+                </div>
+              </div>
             </div>
           </div>
         )}

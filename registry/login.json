@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "login",
+  "type": "registry:block",
+  "registryDependencies": [
+    "utils",
+    "https://kit.carloshps.com.br/registry/button.json",
+    "https://kit.carloshps.com.br/registry/input.json",
+    "https://kit.carloshps.com.br/registry/label.json"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "components/blocks/login.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\nimport { Button } from '@/components/ui/button';\nimport { Input } from '@/components/ui/input';\nimport { Label } from '@/components/ui/label';\n\nexport interface LoginProps {\n  /** Título do card. */\n  title?: string;\n  /** Texto de apoio abaixo do título. */\n  subtitle?: string;\n  /** Texto do botão de submit. */\n  ctaLabel?: string;\n  /** Link da recuperação de senha. Omita para esconder. */\n  forgotHref?: string;\n  /** Conteúdo do rodapé (ex: link de cadastro). */\n  footer?: React.ReactNode;\n  /**\n   * Callback de envio. Recebe { email, password }.\n   * Retorne uma Promise para que o botão exiba estado de loading.\n   */\n  onSubmit?: (data: { email: string; password: string }) => void | Promise<void>;\n  className?: string;\n}\n\n/**\n * Login — tela de autenticação. Card centralizado com campos de e-mail e\n * senha, botão de acesso e link de recuperação. Gerencia estado de loading\n * internamente quando `onSubmit` devolve uma Promise.\n */\nexport function Login({\n  title = \"Acesse sua conta\",\n  subtitle,\n  ctaLabel = \"Entrar\",\n  forgotHref,\n  footer,\n  onSubmit,\n  className,\n}: LoginProps) {\n  const [loading, setLoading] = React.useState(false);\n\n  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {\n    e.preventDefault();\n    if (!onSubmit) return;\n    const data = Object.fromEntries(new FormData(e.currentTarget)) as {\n      email: string;\n      password: string;\n    };\n    try {\n      setLoading(true);\n      await onSubmit(data);\n    } finally {\n      setLoading(false);\n    }\n  }\n\n  return (\n    <div\n      className={cn(\n        \"w-full max-w-sm rounded-lg border border-border/25 bg-card/90 p-8 shadow-card\",\n        className\n      )}\n    >\n      <div className=\"mb-6\">\n        <h1 className=\"text-xl font-bold text-foreground/92\">{title}</h1>\n        {subtitle && <p className=\"mt-1 text-sm text-foreground/50\">{subtitle}</p>}\n      </div>\n\n      <form onSubmit={handleSubmit} className=\"flex flex-col gap-4\">\n        <div className=\"flex flex-col gap-1.5\">\n          <Label htmlFor=\"login-email\">E-mail</Label>\n          <Input\n            id=\"login-email\"\n            name=\"email\"\n            type=\"email\"\n            placeholder=\"voce@email.com\"\n            autoComplete=\"email\"\n            required\n          />\n        </div>\n\n        <div className=\"flex flex-col gap-1.5\">\n          <div className=\"flex items-center justify-between\">\n            <Label htmlFor=\"login-password\">Senha</Label>\n            {forgotHref && (\n              <a\n                href={forgotHref}\n                className=\"text-xs text-primary/80 hover:text-primary transition-colors\"\n              >\n                Esqueceu a senha?\n              </a>\n            )}\n          </div>\n          <Input\n            id=\"login-password\"\n            name=\"password\"\n            type=\"password\"\n            placeholder=\"••••••••\"\n            autoComplete=\"current-password\"\n            required\n          />\n        </div>\n\n        <Button type=\"submit\" variant=\"primary\" size=\"lg\" disabled={loading} className=\"mt-1\">\n          {loading ? \"Entrando…\" : ctaLabel}\n        </Button>\n      </form>\n\n      {footer && (\n        <div className=\"mt-6 text-center text-sm text-foreground/50\">{footer}</div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": ""
+    }
+  ]
+}
