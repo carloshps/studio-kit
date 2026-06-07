@@ -82,6 +82,15 @@ const components: ComponentDef[] = [
       { name: "className",    type: "string",  desc: "Classes adicionais no container" },
     ],
   },
+  {
+    slug: "separator", name: "Separator", category: "Data Display", hasDemo: true,
+    description: "Divisória horizontal ou vertical acessível via Radix Separator. Usa o token de borda da marca e suporta orientação e modo decorativo.",
+    radix: "Radix Separator",
+    props: [
+      { name: "orientation", type: "'horizontal' | 'vertical'", default: "'horizontal'", desc: "Direção da divisória" },
+      { name: "decorative",  type: "boolean", default: "true", desc: "Remove a semântica para leitores de tela" },
+    ],
+  },
 
   /* ── Data Input ──────────────────────────────────────────── */
   {
@@ -365,6 +374,29 @@ const calWeeks = Array.from({ length: calCells.length / 7 }, (_, i) =>
               </div>
             </div>
             <p class="text-xs text-foreground/30">Demo estática. Em produção usa <code class="font-mono">react-day-picker</code> (modos <code class="font-mono">single</code> / <code class="font-mono">multiple</code> / <code class="font-mono">range</code>) estilizado com <code class="font-mono">buttonVariants</code> e os tokens da marca.</p>
+          </div>
+        )}
+
+        <!-- SEPARATOR demo -->
+        {component.slug === "separator" && (
+          <div class="space-y-6">
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+              <div class="max-w-sm">
+                <div class="space-y-1">
+                  <h4 class="text-sm font-medium text-foreground/90">Studio Kit</h4>
+                  <p class="text-sm text-foreground/50">Design system do CarlosHPS Studio.</p>
+                </div>
+                <div class="my-4 h-px w-full shrink-0 bg-border"></div>
+                <div class="flex h-5 items-center gap-3 text-sm text-foreground/70">
+                  <span>Blog</span>
+                  <div class="h-full w-px shrink-0 bg-border"></div>
+                  <span>Docs</span>
+                  <div class="h-full w-px shrink-0 bg-border"></div>
+                  <span>Source</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30">Divisória <code class="font-mono">horizontal</code> e <code class="font-mono">vertical</code> sobre <code class="font-mono">Radix Separator</code>, no token <code class="font-mono">bg-border</code> da marca. Use <code class="font-mono">decorative</code> para ocultar de leitores de tela.</p>
           </div>
         )}
 

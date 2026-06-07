@@ -229,6 +229,13 @@ const MANIFEST = {
     dependencies: ["react-day-picker@8.10.1", "lucide-react"],
     registryDeps: ["utils", "button"],
   },
+  separator: {
+    type: "registry:ui",
+    srcPath: "components/separator.tsx",
+    installPath: "components/ui/separator.tsx",
+    dependencies: ["@radix-ui/react-separator"],
+    registryDeps: ["utils"],
+  },
   alert: {
     type: "registry:ui",
     srcPath: "components/alert.tsx",

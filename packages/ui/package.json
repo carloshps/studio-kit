@@ -29,6 +29,7 @@
     "./drawer": "./src/components/drawer.tsx",
     "./carousel": "./src/components/carousel.tsx",
     "./calendar": "./src/components/calendar.tsx",
+    "./separator": "./src/components/separator.tsx",
     "./hero": "./src/blocks/hero.tsx",
     "./cta-section": "./src/blocks/cta-section.tsx",
     "./metric-block": "./src/blocks/metric-block.tsx",

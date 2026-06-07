@@ -38,6 +38,7 @@ export const navigation: NavSection[] = [
       { name: "Table",     href: "/componentes/table",     badge: "novo" },
       { name: "Accordion", href: "/componentes/accordion", badge: "novo" },
       { name: "Carousel",  href: "/componentes/carousel",  badge: "novo" },
+      { name: "Separator", href: "/componentes/separator", badge: "novo" },
     ],
   },
   {
@@ -49,6 +50,7 @@ export const navigation: NavSection[] = [
       { name: "Radio",    href: "/componentes/radio",    badge: "novo" },
       { name: "Select",   href: "/componentes/select",   badge: "novo" },
       { name: "Textarea", href: "/componentes/textarea", badge: "novo" },
+      { name: "Calendar", href: "/componentes/calendar", badge: "novo" },
     ],
   },
   {
