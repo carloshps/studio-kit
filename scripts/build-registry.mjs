@@ -33,6 +33,7 @@ function rewriteImports(code) {
   return code
     .replace(/from ['"]\.\.\/lib\/utils['"]/g, "from '@/lib/utils'")
     .replace(/from ['"]\.\.\/components\/button['"]/g, "from '@/components/ui/button'")
+    .replace(/from ['"]\.\/button['"]/g, "from '@/components/ui/button'")
     .replace(/from ['"]\.\.\/components\/badge['"]/g, "from '@/components/ui/badge'")
     .replace(/from ['"]\.\.\/components\/card['"]/g, "from '@/components/ui/card'")
     .replace(/from ['"]\.\.\/components\/avatar['"]/g, "from '@/components/ui/avatar'")
@@ -220,6 +221,13 @@ const MANIFEST = {
     installPath: "components/ui/carousel.tsx",
     dependencies: [],
     registryDeps: ["utils"],
+  },
+  calendar: {
+    type: "registry:ui",
+    srcPath: "components/calendar.tsx",
+    installPath: "components/ui/calendar.tsx",
+    dependencies: ["react-day-picker@8.10.1", "lucide-react"],
+    registryDeps: ["utils", "button"],
   },
   alert: {
     type: "registry:ui",

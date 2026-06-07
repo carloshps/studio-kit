@@ -141,6 +141,18 @@ const components: ComponentDef[] = [
       { name: "placeholder", type: "string", desc: "Texto de placeholder" },
     ],
   },
+  {
+    slug: "calendar", name: "Calendar", category: "Data Input", hasDemo: true,
+    description: "Date picker sobre react-day-picker, estilizado com os tokens da marca e o buttonVariants do kit. Suporta os modos single, multiple e range.",
+    radix: "react-day-picker",
+    props: [
+      { name: "mode",           type: "'single'|'multiple'|'range'", default: "'single'", desc: "Estratégia de seleção" },
+      { name: "selected",       type: "Date | Date[] | DateRange",   desc: "Valor selecionado (modo controlado)" },
+      { name: "onSelect",       type: "(value) => void",             desc: "Callback ao selecionar" },
+      { name: "showOutsideDays", type: "boolean",                    default: "true", desc: "Exibe dias dos meses vizinhos" },
+      { name: "disabled",       type: "Matcher | Matcher[]",         desc: "Dias não selecionáveis" },
+    ],
+  },
 
   /* ── Navegação ───────────────────────────────────────────── */
   {
@@ -240,6 +252,24 @@ const component = components.find(c => c.slug === slug);
 if (!component) {
   return Astro.redirect("/componentes");
 }
+
+// Demo estática do Calendar — matriz de Junho/2026 (semana começa no domingo).
+const calYear = 2026, calMonth = 5, calToday = 7; // 5 = junho (0-indexed)
+const calFirstDow = new Date(calYear, calMonth, 1).getDay();          // 1 (segunda)
+const calDays = new Date(calYear, calMonth + 1, 0).getDate();         // 30
+const calPrevDays = new Date(calYear, calMonth, 0).getDate();         // 31 (maio)
+type CalCell = { label: number; outside: boolean; today: boolean };
+const calCells: CalCell[] = [];
+for (let i = 0; i < calFirstDow; i++)
+  calCells.push({ label: calPrevDays - calFirstDow + 1 + i, outside: true, today: false });
+for (let d = 1; d <= calDays; d++)
+  calCells.push({ label: d, outside: false, today: d === calToday });
+let calNext = 1;
+while (calCells.length % 7 !== 0)
+  calCells.push({ label: calNext++, outside: true, today: false });
+const calWeeks = Array.from({ length: calCells.length / 7 }, (_, i) =>
+  calCells.slice(i * 7, i * 7 + 7)
+);
 ---
 
 <StyleguideLayout title={component.name}>
@@ -293,6 +323,50 @@ if (!component) {
     {component.hasDemo && (
 
       <div class="space-y-8">
+
+        <!-- CALENDAR demo -->
+        {component.slug === "calendar" && (
+          <div class="space-y-6">
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex justify-center">
+              <div class="w-fit rounded-lg border border-border/15 bg-card/60 p-3">
+                <!-- caption + nav -->
+                <div class="relative flex items-center justify-center pb-2 pt-1">
+                  <button class="absolute left-1 inline-flex size-7 items-center justify-center rounded-lg border border-border/25 text-foreground/60 opacity-60 hover:opacity-100" aria-label="Mês anterior">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  </button>
+                  <span class="text-sm font-medium text-foreground/90">Junho 2026</span>
+                  <button class="absolute right-1 inline-flex size-7 items-center justify-center rounded-lg border border-border/25 text-foreground/60 opacity-60 hover:opacity-100" aria-label="Próximo mês">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                  </button>
+                </div>
+                <!-- dias da semana -->
+                <div class="flex">
+                  {["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"].map(d => (
+                    <div class="w-9 text-center text-[0.8rem] font-normal text-muted-foreground">{d}</div>
+                  ))}
+                </div>
+                <!-- semanas -->
+                {calWeeks.map(week => (
+                  <div class="mt-2 flex w-full">
+                    {week.map(cell => (
+                      <div class="flex size-9 items-center justify-center p-0 text-sm">
+                        <span class={[
+                          "inline-flex size-9 items-center justify-center rounded-lg font-normal",
+                          cell.today
+                            ? "bg-primary font-medium text-primary-foreground"
+                            : cell.outside
+                              ? "text-foreground/30"
+                              : "text-foreground/80 hover:bg-accent/10",
+                        ].join(" ")}>{cell.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30">Demo estática. Em produção usa <code class="font-mono">react-day-picker</code> (modos <code class="font-mono">single</code> / <code class="font-mono">multiple</code> / <code class="font-mono">range</code>) estilizado com <code class="font-mono">buttonVariants</code> e os tokens da marca.</p>
+          </div>
+        )}
 
         <!-- BUTTON demo -->
         {component.slug === "button" && (
