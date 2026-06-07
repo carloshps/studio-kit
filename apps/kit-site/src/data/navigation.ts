@@ -18,6 +18,7 @@ export const navigation: NavSection[] = [
       { name: "Espaçamento",     href: "/fundamentos#espacamento" },
       { name: "Radius",          href: "/fundamentos#radius" },
       { name: "Sombras",         href: "/fundamentos#sombras" },
+      { name: "Animações",       href: "/fundamentos#animacoes", badge: "novo" },
       { name: "Marca & Logo",    href: "/fundamentos#marca" },
       { name: "Imagens",         href: "/fundamentos#imagens" },
     ],
@@ -36,6 +37,7 @@ export const navigation: NavSection[] = [
       { name: "Avatar",    href: "/componentes/avatar",    badge: "novo" },
       { name: "Table",     href: "/componentes/table",     badge: "novo" },
       { name: "Accordion", href: "/componentes/accordion", badge: "novo" },
+      { name: "Carousel",  href: "/componentes/carousel",  badge: "novo" },
     ],
   },
   {

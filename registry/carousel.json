@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "carousel",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "utils"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/carousel.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\n\nexport interface CarouselProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"children\"> {\n  /** Itens exibidos em loop contínuo (logos, cards, depoimentos…). */\n  children: React.ReactNode;\n  /** Espaço entre itens, em px. */\n  gap?: number;\n  /** Pausa o movimento ao passar o mouse. */\n  pauseOnHover?: boolean;\n  /** Inverte a direção do movimento. */\n  reverse?: boolean;\n  /** Duração de um ciclo completo, em segundos (menor = mais rápido). */\n  speed?: number;\n}\n\n/**\n * Carrossel \"marquee\" — rolagem horizontal infinita e suave.\n * Os itens são duplicados para o loop ser perfeito; as bordas são\n * apagadas (marquee-mask) e o movimento respeita prefers-reduced-motion.\n */\nexport function Carousel({\n  children,\n  gap = 20,\n  pauseOnHover = true,\n  reverse = false,\n  speed = 40,\n  className,\n  ...props\n}: CarouselProps) {\n  const items = React.Children.toArray(children);\n\n  return (\n    <div className={cn(\"marquee-mask group w-full overflow-hidden\", className)} {...props}>\n      <div\n        className={cn(\n          \"flex w-max animate-marquee\",\n          pauseOnHover && \"group-hover:[animation-play-state:paused]\"\n        )}\n        style={{\n          gap: `${gap}px`,\n          animationDuration: `${speed}s`,\n          animationDirection: reverse ? \"reverse\" : \"normal\",\n        }}\n      >\n        {items.map((child, i) => (\n          <div key={`a-${i}`} className=\"shrink-0\">\n            {child}\n          </div>\n        ))}\n        {/* Segunda cópia — garante a continuidade no -50% do keyframe */}\n        {items.map((child, i) => (\n          <div key={`b-${i}`} className=\"shrink-0\" aria-hidden>\n            {child}\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

@@ -40,7 +40,7 @@ export function Hero({
         {titleHighlight ? (
           <>
             {title}{" "}
-            <span className="text-primary">{titleHighlight}</span>
+            <span className="hl">{titleHighlight}</span>
           </>
         ) : (
           title

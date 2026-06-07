@@ -200,6 +200,7 @@ import StyleguideLayout from "../layouts/StyleguideLayout.astro";
           { name: "card",    cls: "shadow-card",   token: "--shadow-card",   use: "Cards de conteúdo, painéis laterais" },
           { name: "metric",  cls: "shadow-metric", token: "--shadow-metric", use: "Cards de métricas, números em destaque" },
           { name: "glow",    cls: "shadow-glow",   token: "--shadow-glow",   use: "Botão primário hover, ícones em destaque" },
+          { name: "lift",    cls: "shadow-lift",   token: "--shadow-lift",   use: "Elevação + glow no hover de cards (hover-lift)" },
         ].map(s => (
           <div class="flex flex-col gap-3">
             <div class={`rounded-xl border border-border/10 bg-card/60 px-6 py-8 ${s.cls} flex items-center justify-center`}>
@@ -211,6 +212,99 @@ import StyleguideLayout from "../layouts/StyleguideLayout.astro";
             <p class="text-xs text-foreground/35 px-1">{s.use}</p>
           </div>
         ))}
+      </div>
+    </section>
+
+    <!-- ─── ANIMAÇÕES & EFEITOS ───────────────────────────────────────── -->
+    <section id="animacoes">
+      <h2 class="text-h2 text-foreground/90 mb-1">Animações & efeitos</h2>
+      <p class="text-caption text-foreground/40 mb-8">Microinterações da identidade Studio. Utilitários prontos — todos respeitam <code class="font-mono bg-primary/8 text-primary px-1.5 py-0.5 rounded text-[11px]">prefers-reduced-motion</code>.</p>
+
+      <div class="space-y-6">
+
+        <!-- Glow no título -->
+        <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+          <div class="flex items-start justify-between gap-4 flex-wrap mb-6">
+            <div>
+              <p class="text-sm font-semibold text-foreground/70">Destaque com glow</p>
+              <p class="text-xs text-foreground/40 mt-0.5">Gradiente azul-marca → accent recortado no texto, com glow suave.</p>
+            </div>
+            <code class="font-mono text-[11px] bg-primary/8 text-primary px-2 py-1 rounded">.hl</code>
+          </div>
+          <p class="text-2xl sm:text-3xl font-extrabold text-foreground/90 leading-tight">
+            Não entregamos templates. <span class="hl">Criamos presença.</span>
+          </p>
+        </div>
+
+        <!-- Hover lift -->
+        <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+          <div class="flex items-start justify-between gap-4 flex-wrap mb-6">
+            <div>
+              <p class="text-sm font-semibold text-foreground/70">Elevação no hover</p>
+              <p class="text-xs text-foreground/40 mt-0.5">Card sobe 4px e ganha glow. Passe o mouse nos cards abaixo.</p>
+            </div>
+            <code class="font-mono text-[11px] bg-primary/8 text-primary px-2 py-1 rounded">.hover-lift</code>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {["Presença", "Captação", "Marca"].map(t => (
+              <div class="hover-lift rounded-lg border border-border/25 bg-card/80 p-5 shadow-card">
+                <p class="text-sm font-semibold text-foreground/80">{t}</p>
+                <p class="text-xs text-foreground/40 mt-1">Passe o mouse para ver a elevação.</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Botão shine -->
+        <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+          <div class="flex items-start justify-between gap-4 flex-wrap mb-6">
+            <div>
+              <p class="text-sm font-semibold text-foreground/70">Brilho no botão + ícone</p>
+              <p class="text-xs text-foreground/40 mt-0.5">Lift sutil em todos os botões; <code class="font-mono">shine</code> adiciona o brilho que varre.</p>
+            </div>
+            <code class="font-mono text-[11px] bg-primary/8 text-primary px-2 py-1 rounded">.btn-shine</code>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <button class="btn-shine overflow-hidden relative inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium h-11 px-6 bg-primary text-primary-foreground transition-transform duration-200 hover:-translate-y-0.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Falar no WhatsApp
+            </button>
+            <button class="relative inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium h-11 px-6 border border-border/25 bg-transparent text-foreground/70 transition-transform duration-200 hover:-translate-y-0.5 hover:border-accent/40">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 17 14 19 21 12 17 5 21 7 14 2 9 9 9"/></svg>
+              Ver cases
+            </button>
+          </div>
+        </div>
+
+        <!-- Marquee -->
+        <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+          <div class="flex items-start justify-between gap-4 flex-wrap mb-6">
+            <div>
+              <p class="text-sm font-semibold text-foreground/70">Marquee contínuo</p>
+              <p class="text-xs text-foreground/40 mt-0.5">Rolagem infinita com fade nas bordas. Base do componente Carousel.</p>
+            </div>
+            <code class="font-mono text-[11px] bg-primary/8 text-primary px-2 py-1 rounded">animate-marquee</code>
+          </div>
+          <div class="marquee-mask w-full overflow-hidden">
+            <div class="flex w-max animate-marquee gap-3">
+              {[...Array(2)].flatMap(() => ["Núcleo", "Sorrir Bem", "VitalCare", "Movimento", "Clareza", "Equilíbrio"]).map(n => (
+                <div class="shrink-0 flex items-center justify-center h-12 px-6 rounded-lg border border-border/15 bg-card/60 text-sm font-semibold text-foreground/50">{n}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Reveal -->
+        <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+          <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
+            <div>
+              <p class="text-sm font-semibold text-foreground/70">Reveal na entrada</p>
+              <p class="text-xs text-foreground/40 mt-0.5">Fade + sobe ao surgir. Combine com IntersectionObserver para revelar no scroll.</p>
+            </div>
+            <code class="font-mono text-[11px] bg-primary/8 text-primary px-2 py-1 rounded">animate-reveal</code>
+          </div>
+        </div>
+
       </div>
     </section>
 

@@ -65,10 +65,32 @@ const studioPreset = {
         card:   "var(--shadow-card)",
         metric: "var(--shadow-metric)",
         glow:   "var(--shadow-glow)",
+        lift:   "var(--shadow-lift)",
       },
       backgroundImage: {
-        "gradient-avatar":  "linear-gradient(145deg, rgba(0,173,207,0.18) 0%, rgba(8,20,36,0.80) 100%)",
-        "gradient-result":  "linear-gradient(160deg, rgba(0,80,140,0.45) 0%, rgba(0,30,70,0.70) 100%)",
+        "gradient-avatar":    "linear-gradient(145deg, rgba(0,173,207,0.18) 0%, rgba(8,20,36,0.80) 100%)",
+        "gradient-result":    "linear-gradient(160deg, rgba(0,80,140,0.45) 0%, rgba(0,30,70,0.70) 100%)",
+        // Destaque de título: azul-marca → accent (clip em texto). --primary-deep é themeable.
+        "gradient-highlight": "linear-gradient(125deg, rgb(var(--primary-deep)) 0%, rgb(var(--accent)) 100%)",
+      },
+      keyframes: {
+        marquee: {
+          "0%":   { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        reveal: {
+          "0%":   { opacity: "0", transform: "translateY(16px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "0.55" },
+          "50%":      { opacity: "1" },
+        },
+      },
+      animation: {
+        marquee:      "marquee 40s linear infinite",
+        reveal:       "reveal 0.7s cubic-bezier(0.22,1,0.36,1) forwards",
+        "glow-pulse": "glow-pulse 2.6s ease-in-out infinite",
       },
       borderColor: {
         DEFAULT:    "rgb(var(--border) / 0.18)",

@@ -70,6 +70,18 @@ const components: ComponentDef[] = [
       { name: "defaultValue", type: "string",  desc: "Item aberto por padrão (não controlado)" },
     ],
   },
+  {
+    slug: "carousel", name: "Carousel", category: "Data Display", hasDemo: true,
+    description: "Carrossel 'marquee' — rolagem horizontal infinita e suave para logos, depoimentos ou cards. Itens duplicados para loop perfeito, bordas em fade, pausa no hover e respeito a prefers-reduced-motion.",
+    props: [
+      { name: "children",     type: "ReactNode",              desc: "Itens exibidos em loop (obrigatório)" },
+      { name: "gap",          type: "number",  default: "20", desc: "Espaço entre itens, em px" },
+      { name: "speed",        type: "number",  default: "40", desc: "Duração de um ciclo, em s (menor = mais rápido)" },
+      { name: "pauseOnHover", type: "boolean", default: "true",  desc: "Pausa o movimento ao passar o mouse" },
+      { name: "reverse",      type: "boolean", default: "false", desc: "Inverte a direção do movimento" },
+      { name: "className",    type: "string",  desc: "Classes adicionais no container" },
+    ],
+  },
 
   /* ── Data Input ──────────────────────────────────────────── */
   {
@@ -1024,6 +1036,49 @@ if (!component) {
               ))}
             </div>
             <p class="text-xs text-foreground/30 mt-3">Demo interativa — clique para expandir. Em produção usa Radix Accordion com animação CSS e acessibilidade completa.</p>
+          </div>
+        )}
+
+        <!-- CAROUSEL demo -->
+        {component.slug === "carousel" && (
+          <div class="space-y-8">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Logos — loop infinito (pausa no hover)</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+                <div class="marquee-mask group w-full overflow-hidden">
+                  <div class="flex w-max animate-marquee gap-5 group-hover:[animation-play-state:paused]">
+                    {[...["Núcleo", "Sorrir Bem", "VitalCare", "Movimento", "Clareza", "Equilíbrio"], ...["Núcleo", "Sorrir Bem", "VitalCare", "Movimento", "Clareza", "Equilíbrio"]].map(name => (
+                      <div class="shrink-0 flex items-center justify-center h-16 px-8 rounded-lg border border-border/15 bg-card/60 text-sm font-semibold text-foreground/55">
+                        {name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Cards — direção invertida, mais lento</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+                <div class="marquee-mask group w-full overflow-hidden">
+                  <div class="flex w-max animate-marquee gap-4 [animation-direction:reverse] [animation-duration:55s] group-hover:[animation-play-state:paused]">
+                    {[...Array(2)].flatMap(() => [
+                      { q: "Os agendamentos aumentaram no primeiro mês.", a: "Dra. Fernanda" },
+                      { q: "Transmite confiança antes da consulta.", a: "Dr. Rafael" },
+                      { q: "Superou tudo o que eu esperava.", a: "Ana Carla" },
+                      { q: "Finalmente uma presença à altura.", a: "Studio Núcleo" },
+                    ]).map(t => (
+                      <figure class="shrink-0 w-72 flex flex-col gap-3 rounded-lg border border-border/20 bg-card/70 p-5">
+                        <blockquote class="text-sm text-foreground/70 leading-relaxed">&ldquo;{t.q}&rdquo;</blockquote>
+                        <figcaption class="text-xs font-semibold text-foreground/45">{t.a}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-foreground/30">Movimento contínuo via <code class="font-mono">animate-marquee</code>; bordas em fade com <code class="font-mono">marquee-mask</code>. Pausa no hover e respeita <code class="font-mono">prefers-reduced-motion</code>.</p>
           </div>
         )}
 

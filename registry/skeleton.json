@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "components/ui/skeleton.tsx",
-      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\n\nfunction Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      className={cn(\n        \"animate-pulse rounded-md bg-white/6\",\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Skeleton };\n",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\n\nfunction Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      className={cn(\n        \"animate-pulse rounded-md bg-foreground/10\",\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Skeleton };\n",
       "type": "registry:ui",
       "target": ""
     }

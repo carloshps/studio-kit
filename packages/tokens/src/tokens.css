@@ -81,6 +81,11 @@
   --shadow-card:   0 8px 32px rgba(0,5,14,0.50), 0 0 0 1px rgba(0,173,207,0.06);
   --shadow-metric: 0 8px 24px rgba(0,5,14,0.45);
   --shadow-glow:   0 0 16px rgba(0,173,207,0.40);
+  /* Glow de elevação no hover de cards (consumido por .hover-lift e shadow-lift) */
+  --shadow-lift:   0 18px 40px rgba(0,5,14,0.55), 0 0 0 1px rgba(0,173,207,0.10), 0 0 24px rgba(0,173,207,0.10);
+
+  /* Azul-marca profundo — origem do gradiente de destaque (.hl). Themeable. */
+  --primary-deep:  0 115 176;          /* #0073B0 */
 
   /* Tipografia — TROCAR @import + --font-sans para a fonte do cliente */
   --font-sans: 'Manrope', system-ui, sans-serif;
@@ -115,6 +120,8 @@
   --shadow-card:   0 4px 16px rgba(8,20,36,0.08), 0 0 0 1px rgba(8,20,36,0.05);
   --shadow-metric: 0 4px 12px rgba(8,20,36,0.06);
   --shadow-glow:   0 0 16px rgba(0,173,207,0.30);
+  /* Light: elevação mais suave, navy em vez de preto */
+  --shadow-lift:   0 16px 36px rgba(8,20,36,0.14), 0 0 0 1px rgba(0,173,207,0.10), 0 0 20px rgba(0,173,207,0.08);
 }
 
 /* ─── Base ───────────────────────────────────────────────────── */
@@ -129,4 +136,78 @@ body {
   color: rgb(var(--foreground) / 0.92);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   EFEITOS & ANIMAÇÕES
+   Utilitários reutilizáveis (kit e sites-cliente). Keyframes de
+   marquee/reveal vivem no tailwind-preset (animate-marquee/reveal).
+   ───────────────────────────────────────────────────────────── */
+
+/* Destaque de título — gradiente azul-marca → accent + glow suave.
+   Uso: <span class="hl">texto</span> dentro do heading. */
+.hl {
+  background-image: linear-gradient(125deg, rgb(var(--primary-deep)) 0%, rgb(var(--accent)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* o glow segue a forma do texto recortado */
+  filter: drop-shadow(0 0 12px rgba(0,173,207,0.35));
+}
+
+/* Card com elevação + glow no hover.
+   Uso: adicione a classe "hover-lift" no container do card. */
+.hover-lift {
+  position: relative;
+  transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+.hover-lift::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--shadow-lift);
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.22,1,0.36,1);
+  pointer-events: none;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+.hover-lift:hover::after {
+  opacity: 1;
+}
+
+/* Brilho que varre o botão no hover (sheen).
+   Uso: container com "btn-shine" (precisa de position+overflow-hidden). */
+.btn-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.btn-shine:hover::before {
+  left: 120%;
+}
+
+/* Marquee — apaga as bordas para o loop parecer infinito.
+   Pareia com a classe Tailwind animate-marquee no track. */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+/* Respeito a quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift,
+  .hover-lift:hover { transform: none; }
+  .animate-marquee,
+  .animate-reveal,
+  .btn-shine::before { animation: none !important; transition: none !important; }
+  .animate-reveal { opacity: 1 !important; transform: none !important; }
 }

@@ -229,7 +229,7 @@ if (!block) {
                   </span>
                   <h1 class="max-w-2xl text-3xl sm:text-4xl font-extrabold leading-tight text-foreground/90">
                     Sua presença digital com
-                    <span class="text-primary"> direção e resultado</span>
+                    <span class="hl"> direção e resultado</span>
                   </h1>
                   <p class="mt-4 max-w-lg text-base text-foreground/50 leading-relaxed">
                     Presença profissional para profissionais de saúde e bem-estar que querem ser encontrados e lembrados.
@@ -282,7 +282,7 @@ if (!block) {
               <div class="grid gap-4 sm:grid-cols-3">
 
                 <!-- Card básico -->
-                <div class="relative flex flex-col rounded-lg border border-border/25 bg-card/90 p-7 shadow-card">
+                <div class="hover-lift relative flex flex-col rounded-lg border border-border/25 bg-card/90 p-7 shadow-card">
                   <div class="flex items-start justify-between gap-2">
                     <h3 class="text-base font-semibold text-foreground/90">Presença</h3>
                   </div>
@@ -305,7 +305,7 @@ if (!block) {
                 </div>
 
                 <!-- Card highlight -->
-                <div class="relative flex flex-col rounded-lg border border-accent/40 bg-card/90 p-7 shadow-hero">
+                <div class="hover-lift relative flex flex-col rounded-lg border border-accent/40 bg-card/90 p-7 shadow-hero">
                   <span class="absolute inset-x-0 top-0 h-0.5 rounded-t-lg bg-primary"></span>
                   <div class="flex items-start justify-between gap-2">
                     <h3 class="text-base font-semibold text-foreground/90">Contínua</h3>
@@ -330,7 +330,7 @@ if (!block) {
                 </div>
 
                 <!-- Card enterprise -->
-                <div class="relative flex flex-col rounded-lg border border-border/25 bg-card/90 p-7 shadow-card">
+                <div class="hover-lift relative flex flex-col rounded-lg border border-border/25 bg-card/90 p-7 shadow-card">
                   <div class="flex items-start justify-between gap-2">
                     <h3 class="text-base font-semibold text-foreground/90">Clínica</h3>
                   </div>
@@ -406,7 +406,7 @@ if (!block) {
                   { quote: "Finalmente uma presença que combina com o meu trabalho. Os pacientes comentam que o site transmite confiança antes mesmo da consulta.", author: "Dr. Rafael Mota", role: "Fisioterapeuta" },
                   { quote: "Carlos entendeu minha proposta antes de eu terminar de explicar. O resultado superou muito o que eu esperava.", author: "Ana Carla Braga", role: "Psicóloga" },
                 ].map(item => (
-                  <figure class="flex flex-col gap-4 rounded-lg border border-border/25 bg-card/90 p-6 shadow-card">
+                  <figure class="hover-lift flex flex-col gap-4 rounded-lg border border-border/25 bg-card/90 p-6 shadow-card">
                     <blockquote class="text-sm text-foreground/70 leading-relaxed">
                       &ldquo;{item.quote}&rdquo;
                     </blockquote>
@@ -461,7 +461,7 @@ if (!block) {
                   { value: "47",   label: "Projetos",          desc: "Sites lançados desde 2021" },
                   { value: "12h",  label: "Tempo médio",       desc: "Para proposta após briefing" },
                 ].map(m => (
-                  <div class="flex flex-col gap-1 rounded-lg border border-border/25 bg-card/90 p-5 shadow-metric">
+                  <div class="hover-lift flex flex-col gap-1 rounded-lg border border-border/25 bg-card/90 p-5 shadow-metric">
                     <span class="text-3xl font-extrabold text-primary" style="text-shadow:0 0 16px rgba(0,173,207,0.40)">{m.value}</span>
                     <span class="text-sm font-semibold text-foreground/90">{m.label}</span>
                     <span class="text-xs text-foreground/45 leading-snug">{m.desc}</span>

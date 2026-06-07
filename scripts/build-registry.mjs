@@ -214,6 +214,13 @@ const MANIFEST = {
     dependencies: ["@radix-ui/react-dialog"],
     registryDeps: ["utils"],
   },
+  carousel: {
+    type: "registry:ui",
+    srcPath: "components/carousel.tsx",
+    installPath: "components/ui/carousel.tsx",
+    dependencies: [],
+    registryDeps: ["utils"],
+  },
   alert: {
     type: "registry:ui",
     srcPath: "components/alert.tsx",

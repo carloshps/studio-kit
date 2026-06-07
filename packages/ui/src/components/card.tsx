@@ -1,12 +1,23 @@
 import * as React from "react";
 import { cn } from "../lib/utils";
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Eleva o card com translate + glow ao passar o mouse. */
+  interactive?: boolean;
+  /** Destaque visual — borda accent, barra superior e sombra hero. */
+  featured?: boolean;
+}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, interactive = false, featured = false, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
-        "rounded-lg border border-border/25 bg-card/90 shadow-card",
+        "rounded-lg border bg-card/90 shadow-card",
+        featured
+          ? "relative border-accent/40 bg-primary/[0.06] shadow-hero before:absolute before:inset-x-0 before:top-0 before:h-0.5 before:rounded-t-lg before:bg-primary"
+          : "border-border/25",
+        interactive && "hover-lift",
         className
       )}
       {...props}

@@ -27,6 +27,7 @@
     "./pagination":  "./src/components/pagination.tsx",
     "./dropdown":    "./src/components/dropdown.tsx",
     "./drawer":      "./src/components/drawer.tsx",
+    "./carousel":    "./src/components/carousel.tsx",
     "./hero":        "./src/blocks/hero.tsx",
     "./cta-section": "./src/blocks/cta-section.tsx",
     "./metric-block":"./src/blocks/metric-block.tsx",
