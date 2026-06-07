@@ -153,17 +153,53 @@ git.exe   ssh.exe   node.exe   pnpm   (em ...\Git\ e no caminho do Node)
 
 ---
 
-## 7. Comandos do dia a dia
+## 7. GitHub CLI (`gh`) — instalação e uso
+
+Instalado em 2026-06-06 via `winget install --id GitHub.cli`.
+Autenticado com `gh auth login` (conta `carloshps`, protocolo SSH, token no keyring).
+
+### Validar autenticação
+```powershell
+gh auth status
+# Esperado: "✓ Logged in to github.com account carloshps"
+```
+
+### Autenticar novamente (se necessário)
+```powershell
+gh auth login
+# What account? → GitHub.com
+# Preferred protocol? → SSH
+# Use existing SSH key? → ~/.ssh/github_personal.pub
+# How to authenticate? → Login with a web browser
+```
+
+### Acompanhamento do deploy
+```powershell
+gh run list --limit 5             # últimos 5 runs do Actions
+gh run watch                      # acompanha o run em andamento ao vivo
+gh run view --log-failed          # exibe só o log do step que falhou
+gh run list --repo carloshps/studio-kit --limit 5   # explícito, de qualquer diretório
+```
+
+> **Nota sobre "cancelled":** o workflow tem `concurrency` configurado — se dois
+> pushes chegam em sequência, o run do primeiro é cancelado e o segundo roda com
+> o repo já atualizado. O run cancelado **não representa perda de deploy**: o
+> run seguinte que conclui com `success` fez rsync do repo inteiro.
+
+---
+
+## 8. Comandos do dia a dia
 
 ```bash
 # fluxo normal
 git add -A
 git commit -m "feat: ..."
-git push                       # dispara o deploy automático
+git push                          # dispara o deploy automático
 
-# conferir deploy (se tiver o gh CLI instalado)
-gh run list --limit 3
-gh run watch
+# acompanhar deploy
+gh run watch                      # ao vivo
+gh run list --limit 5             # histórico
+gh run view --log-failed          # diagnóstico de falha
 
 # acesso manual à VPS
 ssh studio-vps
