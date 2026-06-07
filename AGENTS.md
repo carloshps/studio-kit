@@ -47,6 +47,8 @@ O registry fica disponível em `https://kit.carloshps.com.br` (Caddy + Let's Enc
 ## Como adicionar um componente ao registry
 
 1. Escreva o `.tsx` em `packages/ui/src/components/` (base) ou `packages/ui/src/blocks/` (bloco)
+   - **Sem `"use client"`** (Astro, não Next) e imports **relativos** (`../lib/utils`, `./button`)
+   - Adicione o subpath em `exports` no `packages/ui/package.json`
 2. Adicione a entrada no objeto `MANIFEST` em `scripts/build-registry.mjs`:
    ```js
    "meu-componente": {
@@ -57,8 +59,18 @@ O registry fica disponível em `https://kit.carloshps.com.br` (Caddy + Let's Enc
      registryDeps: ["utils"],      // outros itens do registry de que depende
    }
    ```
+   - Se o componente importar um **irmão** (ex.: `./button`), adicione uma regra em `rewriteImports()` no mesmo arquivo (`./button` → `@/components/ui/button`)
 3. `pnpm build:registry` — gera `registry/meu-componente.json`
-4. Commit + push — deploy automático em ~2 min
+
+**Atualizar a navegação — 4 lugares (NÃO esquecer, senão o componente fica órfão):**
+
+4. **Showroom** — em `apps/kit-site/src/pages/componentes/[slug].astro`: entrada no array `components` (slug, nome, categoria, props) **+** um bloco de demo `{component.slug === "meu-componente" && (...)}`
+5. **Sidebar** — em `apps/kit-site/src/data/navigation.ts`: item na seção da categoria
+6. **Megamenu** — em `apps/kit-site/src/components/MegaNav.astro`, em **DOIS** lugares (o arquivo é hardcoded, não lê o `navigation.ts`):
+   - nav **desktop** (`.mega-panel` de Componentes)
+   - menu **mobile** (`#mobile-menu`, mesma seção)
+7. `pnpm --filter kit-site build` — valida os tipos do showroom e a rota nova
+8. Commit + push — deploy automático em ~2 min (há ~10-20s de **502** durante o rebuild do container; é esperado)
 
 ## Decisões arquiteturais
 
