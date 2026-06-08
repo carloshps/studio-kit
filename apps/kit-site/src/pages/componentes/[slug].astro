@@ -163,6 +163,18 @@ const components: ComponentDef[] = [
     ],
   },
 
+  {
+    slug: "switch", name: "Switch", category: "Data Input", hasDemo: true,
+    description: "Alternância on/off acessível via Radix Switch. Suporta estado controlado e não controlado, com thumb deslizante e ring no foco.",
+    radix: "Radix Switch",
+    props: [
+      { name: "checked",         type: "boolean", desc: "Estado ligado (modo controlado)" },
+      { name: "defaultChecked",  type: "boolean", default: "false", desc: "Estado inicial (não controlado)" },
+      { name: "onCheckedChange", type: "(checked: boolean) => void", desc: "Callback ao alternar" },
+      { name: "disabled",        type: "boolean", default: "false", desc: "Estado desabilitado" },
+    ],
+  },
+
   /* ── Navegação ───────────────────────────────────────────── */
   {
     slug: "navbar", name: "Navbar", category: "Navegação", hasDemo: true,
@@ -212,6 +224,16 @@ const components: ComponentDef[] = [
       { name: "isActive", type: "boolean", default: "false", desc: "Marca o PaginationLink como página atual" },
     ],
   },
+  {
+    slug: "sidebar", name: "Sidebar", category: "Navegação", hasDemo: true,
+    description: "Barra lateral de navegação colapsável e autocontida. Composta por SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarSeparator, SidebarTrigger e SidebarInset. No mobile vira overlay; no desktop, colapsa a largura.",
+    props: [
+      { name: "defaultOpen",  type: "boolean", default: "true", desc: "Estado inicial (SidebarProvider, não controlado)" },
+      { name: "open",         type: "boolean", desc: "Estado aberto (SidebarProvider, controlado)" },
+      { name: "onOpenChange", type: "(open: boolean) => void", desc: "Callback ao abrir/fechar" },
+      { name: "isActive",     type: "boolean", default: "false", desc: "Marca o SidebarMenuButton como item ativo" },
+    ],
+  },
 
   /* ── Feedback ────────────────────────────────────────────── */
   {
@@ -251,6 +273,33 @@ const components: ComponentDef[] = [
     description: "Placeholder animado com pulse para conteúdo carregando. Recebe qualquer className para controlar tamanho e forma.",
     props: [
       { name: "className", type: "string", desc: "Controla largura, altura e border-radius (ex: h-4 w-32 rounded-full)" },
+    ],
+  },
+  {
+    slug: "progress", name: "Progress", category: "Feedback", hasDemo: true,
+    description: "Barra de progresso determinada acessível via Radix Progress. O indicador é animado via translateX conforme o value (0–100).",
+    radix: "Radix Progress",
+    props: [
+      { name: "value",     type: "number", desc: "Percentual preenchido (0–100)" },
+      { name: "className", type: "string", desc: "Classes adicionais no trilho (altura, cor)" },
+    ],
+  },
+  {
+    slug: "spinner", name: "Spinner", category: "Feedback", hasDemo: true,
+    description: "Indicador de carregamento indeterminado. Ícone Loader2 (lucide) com animate-spin e 3 tamanhos via size. Herda a cor do texto (text-current).",
+    props: [
+      { name: "size",      type: "'sm'|'default'|'lg'", default: "'default'", desc: "Tamanho do spinner" },
+      { name: "className", type: "string", desc: "Classes adicionais (cor, tamanho custom)" },
+    ],
+  },
+  {
+    slug: "sonner", name: "Sonner", category: "Feedback", hasDemo: true,
+    description: "Sistema de toasts empilháveis sobre a lib sonner. Renderize o <Toaster /> uma vez na raiz e dispare com toast() — success, error, promise e mais. O tema acompanha a classe .light do <html> e as cores usam os tokens da marca.",
+    radix: "sonner",
+    props: [
+      { name: "position",  type: "'top-right'|'bottom-right'|...", default: "'bottom-right'", desc: "Canto onde os toasts aparecem" },
+      { name: "richColors", type: "boolean", default: "false", desc: "Cores semânticas por tipo de toast" },
+      { name: "closeButton", type: "boolean", default: "false", desc: "Exibe botão de fechar em cada toast" },
     ],
   },
 ];
@@ -1464,6 +1513,222 @@ const calWeeks = Array.from({ length: calCells.length / 7 }, (_, i) =>
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        <!-- SWITCH demo -->
+        {component.slug === "switch" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Estados</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap items-center gap-8">
+                <div class="flex flex-col items-center gap-2">
+                  <span class="inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 border-transparent bg-accent/25 px-0.5">
+                    <span class="block h-5 w-5 rounded-full bg-background shadow-lg"></span>
+                  </span>
+                  <span class="text-xs text-foreground/40">Off</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                  <span class="inline-flex h-6 w-11 shrink-0 items-center justify-end rounded-full border-2 border-transparent bg-primary px-0.5">
+                    <span class="block h-5 w-5 rounded-full bg-background shadow-lg"></span>
+                  </span>
+                  <span class="text-xs text-foreground/40">On</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 opacity-50">
+                  <span class="inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 border-transparent bg-accent/25 px-0.5">
+                    <span class="block h-5 w-5 rounded-full bg-background shadow-lg"></span>
+                  </span>
+                  <span class="text-xs text-foreground/40">Desabilitado</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Com label</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 max-w-sm space-y-4">
+                <label class="flex items-center justify-between gap-4 cursor-pointer">
+                  <span class="text-sm text-foreground/70">Notificações por e-mail</span>
+                  <span class="inline-flex h-6 w-11 shrink-0 items-center justify-end rounded-full border-2 border-transparent bg-primary px-0.5">
+                    <span class="block h-5 w-5 rounded-full bg-background shadow-lg"></span>
+                  </span>
+                </label>
+                <label class="flex items-center justify-between gap-4 cursor-pointer">
+                  <span class="text-sm text-foreground/70">Modo compacto</span>
+                  <span class="inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 border-transparent bg-accent/25 px-0.5">
+                    <span class="block h-5 w-5 rounded-full bg-background shadow-lg"></span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30">Alternância sobre <code class="font-mono text-primary/70">Radix Switch</code> — acessível por teclado, com <code class="font-mono">data-[state=checked]</code> nos tokens da marca.</p>
+          </div>
+        )}
+
+        <!-- PROGRESS demo -->
+        {component.slug === "progress" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Valores</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 space-y-6 max-w-md">
+                {[25, 50, 75, 100].map(v => (
+                  <div class="space-y-1.5">
+                    <div class="flex items-center justify-between text-xs text-foreground/45">
+                      <span>Progresso</span>
+                      <span class="font-mono">{v}%</span>
+                    </div>
+                    <div class="relative h-2 w-full overflow-hidden rounded-full bg-accent/20">
+                      <div class="h-full bg-primary transition-transform duration-500 ease-out" style={`width: ${v}%`}></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30">Barra determinada sobre <code class="font-mono text-primary/70">Radix Progress</code>. O indicador anima via <code class="font-mono">translateX</code> conforme o <code class="font-mono">value</code>.</p>
+          </div>
+        )}
+
+        <!-- SPINNER demo -->
+        {component.slug === "spinner" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Tamanhos</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap items-center gap-10 text-primary">
+                {[
+                  { label: "sm", cls: "h-4 w-4" },
+                  { label: "default", cls: "h-5 w-5" },
+                  { label: "lg", cls: "h-6 w-6" },
+                ].map(s => (
+                  <div class="flex flex-col items-center gap-2">
+                    <svg class={`animate-spin ${s.cls}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="status" aria-label="Carregando">
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                    </svg>
+                    <span class="text-xs text-foreground/40 font-mono">{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Em contexto</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex flex-wrap items-center gap-4">
+                <button class="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground opacity-80" disabled>
+                  <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                  Salvando…
+                </button>
+                <div class="inline-flex items-center gap-2 text-sm text-foreground/50">
+                  <svg class="animate-spin h-4 w-4 text-foreground/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                  Carregando dados
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30">Ícone <code class="font-mono text-primary/70">Loader2</code> (lucide) com <code class="font-mono">animate-spin</code>; herda a cor via <code class="font-mono">text-current</code>.</p>
+          </div>
+        )}
+
+        <!-- SONNER demo -->
+        {component.slug === "sonner" && (
+          <div class="space-y-6">
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Anatomia dos toasts</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-8 space-y-3 max-w-md">
+              <div class="flex items-start gap-3 rounded-lg border border-border/20 bg-card p-4 shadow-lg">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-foreground/90">Alterações salvas</p>
+                  <p class="text-xs text-foreground/55">Seu perfil foi atualizado com sucesso.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 rounded-lg border border-border/20 bg-card p-4 shadow-lg">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-foreground/90">Falha ao publicar</p>
+                  <p class="text-xs text-foreground/55">Verifique sua conexão e tente novamente.</p>
+                </div>
+                <button class="shrink-0 rounded border border-border/25 px-2.5 py-1 text-xs font-medium text-foreground/70 hover:bg-accent/10 transition-colors">Tentar</button>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Uso</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-6">
+                <pre class="text-xs font-mono text-foreground/45 leading-relaxed overflow-x-auto whitespace-pre">{`import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+
+// 1. Renderize uma vez na raiz da app
+<Toaster richColors closeButton />
+
+// 2. Dispare de qualquer lugar
+toast.success("Alterações salvas");
+toast.error("Falha ao publicar");
+toast.promise(salvar(), {
+  loading: "Salvando…",
+  success: "Pronto!",
+  error: "Algo deu errado",
+});`}</pre>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30">Wrapper sobre a lib <code class="font-mono text-primary/70">sonner</code> — o tema acompanha a classe <code class="font-mono">.light</code> do <code class="font-mono">&lt;html&gt;</code> e as cores usam os tokens da marca.</p>
+          </div>
+        )}
+
+        <!-- SIDEBAR demo -->
+        {component.slug === "sidebar" && (
+          <div class="space-y-6">
+            <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Layout</p>
+            <div class="rounded-xl border border-border/10 bg-card/30 p-3">
+              <div class="flex h-[360px] overflow-hidden rounded-lg border border-border/15 bg-background">
+                <!-- Sidebar -->
+                <aside class="flex w-60 shrink-0 flex-col border-r border-border/15 bg-card/40">
+                  <div class="flex items-center gap-2 p-3">
+                    <span class="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="7" y="1" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.6"/><rect x="1" y="7" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.6"/><rect x="7" y="7" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.3"/></svg>
+                    </span>
+                    <span class="text-sm font-bold text-foreground/90">Studio</span>
+                  </div>
+                  <div class="mx-2 my-1 h-px bg-border/40"></div>
+                  <div class="flex flex-1 flex-col gap-1 overflow-auto p-3">
+                    <p class="px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-foreground/30">Plataforma</p>
+                    <a href="#" class="flex items-center gap-2.5 rounded-lg bg-accent/15 px-2.5 py-2 text-sm font-medium text-foreground/90">
+                      <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                      Dashboard
+                    </a>
+                    <a href="#" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-foreground/60 hover:bg-accent/10 hover:text-foreground/90 transition-colors">
+                      <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                      Projetos
+                    </a>
+                    <a href="#" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-foreground/60 hover:bg-accent/10 hover:text-foreground/90 transition-colors">
+                      <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
+                      Equipe
+                    </a>
+                    <div class="mx-2 my-1 h-px bg-border/40"></div>
+                    <p class="px-2 py-1 text-[10px] font-semibold uppercase tracking-widest text-foreground/30">Conta</p>
+                    <a href="#" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-foreground/60 hover:bg-accent/10 hover:text-foreground/90 transition-colors">
+                      <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                      Configurações
+                    </a>
+                  </div>
+                  <div class="mt-auto flex items-center gap-2.5 p-3">
+                    <span class="grid size-7 place-items-center rounded-full bg-accent/20 text-xs font-medium text-foreground/70">CS</span>
+                    <div class="leading-tight">
+                      <p class="text-xs font-medium text-foreground/80">Carlos</p>
+                      <p class="text-[10px] text-foreground/40">carlos@studio</p>
+                    </div>
+                  </div>
+                </aside>
+                <!-- Inset -->
+                <main class="flex flex-1 flex-col">
+                  <header class="flex h-12 items-center gap-2 border-b border-border/15 px-4">
+                    <span class="grid size-8 place-items-center rounded-md text-foreground/60 hover:bg-accent/10" aria-hidden>
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+                    </span>
+                    <span class="text-sm font-medium text-foreground/70">Dashboard</span>
+                  </header>
+                  <div class="flex-1 p-4">
+                    <div class="grid h-full grid-cols-2 gap-3">
+                      <div class="rounded-lg border border-border/10 bg-card/40"></div>
+                      <div class="rounded-lg border border-border/10 bg-card/40"></div>
+                    </div>
+                  </div>
+                </main>
+              </div>
+            </div>
+            <p class="text-xs text-foreground/30">Demo estática do layout. Em produção é autocontida (sem dependências): <code class="font-mono text-primary/70">SidebarProvider</code> controla aberto/fechado, <code class="font-mono">SidebarTrigger</code> alterna, e no mobile vira overlay deslizante.</p>
           </div>
         )}
 

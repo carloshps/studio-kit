@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "utils"
+  ],
+  "dependencies": [
+    "class-variance-authority",
+    "lucide-react"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/spinner.tsx",
+      "content": "import * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { Loader2 } from \"lucide-react\";\n\nimport { cn } from '@/lib/utils';\n\nconst spinnerVariants = cva(\"animate-spin text-current\", {\n  variants: {\n    size: {\n      sm: \"size-4\",\n      default: \"size-5\",\n      lg: \"size-6\",\n    },\n  },\n  defaultVariants: { size: \"default\" },\n});\n\ninterface SpinnerProps\n  extends React.SVGAttributes<SVGSVGElement>,\n    VariantProps<typeof spinnerVariants> {}\n\n/**\n * Spinner — indicador de carregamento indeterminado.\n * Ícone `Loader2` (lucide) com `animate-spin`; 3 tamanhos via `size`.\n */\nfunction Spinner({ className, size, ...props }: SpinnerProps) {\n  return (\n    <Loader2\n      role=\"status\"\n      aria-label=\"Carregando\"\n      className={cn(spinnerVariants({ size }), className)}\n      {...props}\n    />\n  );\n}\n\nexport { Spinner };\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

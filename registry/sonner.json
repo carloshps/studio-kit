@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sonner",
+  "type": "registry:ui",
+  "registryDependencies": [],
+  "dependencies": [
+    "sonner"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/sonner.tsx",
+      "content": "import * as React from \"react\";\nimport { Toaster as Sonner, type ToasterProps } from \"sonner\";\n\n/**\n * Toaster (sonner) — sistema de toasts empilháveis via a lib `sonner`.\n * O tema acompanha a classe `.light` no <html> (sem next-themes), e as\n * cores usam os tokens da marca. Renderize uma vez na raiz da app e\n * dispare com `toast()` importado de `sonner`.\n */\nconst Toaster = ({ ...props }: ToasterProps) => {\n  const [theme, setTheme] = React.useState<\"light\" | \"dark\">(\"dark\");\n\n  React.useEffect(() => {\n    const root = document.documentElement;\n    const sync = () =>\n      setTheme(root.classList.contains(\"light\") ? \"light\" : \"dark\");\n    sync();\n    const observer = new MutationObserver(sync);\n    observer.observe(root, { attributes: true, attributeFilter: [\"class\"] });\n    return () => observer.disconnect();\n  }, []);\n\n  return (\n    <Sonner\n      theme={theme}\n      className=\"toaster group\"\n      toastOptions={{\n        classNames: {\n          toast:\n            \"group toast group-[.toaster]:bg-card group-[.toaster]:text-foreground/90 group-[.toaster]:border group-[.toaster]:border-border/20 group-[.toaster]:rounded-lg group-[.toaster]:shadow-lg\",\n          description: \"group-[.toast]:text-foreground/60\",\n          actionButton:\n            \"group-[.toast]:bg-primary group-[.toast]:text-primary-foreground\",\n          cancelButton:\n            \"group-[.toast]:bg-accent/20 group-[.toast]:text-foreground/70\",\n        },\n      }}\n      {...props}\n    />\n  );\n};\n\nexport { Toaster };\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

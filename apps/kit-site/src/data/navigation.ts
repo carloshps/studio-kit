@@ -51,6 +51,7 @@ export const navigation: NavSection[] = [
       { name: "Select",   href: "/componentes/select",   badge: "novo" },
       { name: "Textarea", href: "/componentes/textarea", badge: "novo" },
       { name: "Calendar", href: "/componentes/calendar", badge: "novo" },
+      { name: "Switch",   href: "/componentes/switch",   badge: "novo" },
     ],
   },
   {
@@ -62,6 +63,7 @@ export const navigation: NavSection[] = [
       { name: "Dropdown",    href: "/componentes/dropdown",   badge: "novo" },
       { name: "Drawer",      href: "/componentes/drawer",     badge: "novo" },
       { name: "Pagination",  href: "/componentes/pagination", badge: "novo" },
+      { name: "Sidebar",     href: "/componentes/sidebar",    badge: "novo" },
     ],
   },
   {
@@ -72,6 +74,9 @@ export const navigation: NavSection[] = [
       { name: "Tooltip",  href: "/componentes/tooltip",  badge: "novo" },
       { name: "Dialog",   href: "/componentes/dialog" },
       { name: "Skeleton", href: "/componentes/skeleton", badge: "novo" },
+      { name: "Progress", href: "/componentes/progress", badge: "novo" },
+      { name: "Spinner",  href: "/componentes/spinner",  badge: "novo" },
+      { name: "Sonner",   href: "/componentes/sonner",   badge: "novo" },
     ],
   },
   {
