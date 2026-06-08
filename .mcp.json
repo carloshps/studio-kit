@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "shadcn": {
-      "command": "pnpm",
-      "args": ["dlx", "shadcn@latest", "mcp"]
+      "command": "cmd",
+      "args": ["/c", "pnpm", "dlx", "shadcn@latest", "mcp"]
     }
   }
 }
