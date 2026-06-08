@@ -31,7 +31,13 @@ jobs:
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy
           chmod 600 ~/.ssh/deploy
-          ssh-keyscan -p 22 "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+          echo "Testando conectividade TCP na porta 22..."
+          if ! timeout 10 bash -c "</dev/tcp/${{ secrets.VPS_HOST }}/22" 2>/dev/null; then
+            echo "::warning::Porta 22 não respondeu — ssh-keyscan pode falhar"
+          fi
+          # ssh-keyscan não deve derrubar o job (bash -e); erros ficam visíveis no log.
+          ssh-keyscan -p 22 "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts || \
+            echo "::warning::ssh-keyscan retornou erro — seguindo com StrictHostKeyChecking=no"
 
       - name: Sincronizar código com a VPS
         run: |
@@ -41,12 +47,12 @@ jobs:
             --exclude='**/node_modules' \
             --exclude='dist' \
             --exclude='**/dist' \
-            -e "ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes" \
+            -e "ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
             ./ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/kit-site/source/"
 
       - name: Rebuild e restart na VPS
         run: |
-          ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes \
+          ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new \
             "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
             'cd /opt/kit-site/source \
               && docker compose -p kit-site down 2>/dev/null || true \
