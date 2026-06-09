@@ -14,6 +14,7 @@
     "./textarea": "./src/components/textarea.tsx",
     "./checkbox": "./src/components/checkbox.tsx",
     "./radio": "./src/components/radio.tsx",
+    "./choice-card": "./src/components/choice-card.tsx",
     "./select": "./src/components/select.tsx",
     "./navbar": "./src/components/navbar.tsx",
     "./dialog": "./src/components/dialog.tsx",

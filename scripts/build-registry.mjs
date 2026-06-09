@@ -162,6 +162,13 @@ const MANIFEST = {
     dependencies: ["@radix-ui/react-radio-group"],
     registryDeps: ["utils"],
   },
+  "choice-card": {
+    type: "registry:ui",
+    srcPath: "components/choice-card.tsx",
+    installPath: "components/ui/choice-card.tsx",
+    dependencies: ["@radix-ui/react-radio-group", "lucide-react"],
+    registryDeps: ["utils"],
+  },
   select: {
     type: "registry:ui",
     srcPath: "components/select.tsx",

@@ -322,6 +322,20 @@ const components: ComponentDef[] = [
       { name: "className", type: "string",               desc: "Classes adicionais no container" },
     ],
   },
+
+  /* ── Data Input (cont.) ──────────────────────────────────── */
+  {
+    slug: "choice-card", name: "Choice Card", category: "Data Input", hasDemo: true,
+    description: "Escolha única estilo Typeform: cada opção é um cartão clicável com badge de letra, título e descrição. Construído sobre Radix RadioGroup — herda navegação por setas e semântica de radiogroup.",
+    props: [
+      { name: "value",        type: "string",                desc: "ChoiceCardGroup: valor selecionado (controlado)" },
+      { name: "onValueChange", type: "(value: string) => void", desc: "ChoiceCardGroup: callback de seleção" },
+      { name: "optionKey",    type: "string",                desc: "ChoiceCard: letra/atalho no badge (ex.: \"A\")" },
+      { name: "label",        type: "ReactNode",             desc: "ChoiceCard: título da opção" },
+      { name: "description",  type: "ReactNode",             desc: "ChoiceCard: texto auxiliar (opcional)" },
+      { name: "icon",         type: "ReactNode",             desc: "ChoiceCard: ícone que substitui o badge da letra" },
+    ],
+  },
 ];
 
 const { slug } = Astro.params;
@@ -1826,6 +1840,36 @@ toast.promise(salvar(), {
                     </li>
                   ))}
                 </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- CHOICE CARD demo -->
+        {component.slug === "choice-card" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Qual cenário descreve melhor o seu momento hoje?</p>
+              <div class="mx-auto grid max-w-xl gap-3">
+                {[
+                  { key: "A", label: "Estou começando", desc: "Preciso de uma presença profissional desde o início.", on: false },
+                  { key: "B", label: "Quero gerar contatos", desc: "Transformar interesse em conversa ou agendamento.", on: true },
+                  { key: "C", label: "Minha presença ficou para trás", desc: "Já tenho algo, mas não representa mais o meu nível.", on: false },
+                  { key: "D", label: "Quero usar IA / automação", desc: "Uma solução mais inteligente no meu negócio.", on: false },
+                ].map(opt => (
+                  <div class={`group relative flex w-full items-center gap-4 rounded-xl border px-4 py-3.5 text-left transition-all ${opt.on ? "border-primary bg-primary/[0.06] shadow-[0_0_0_1px_rgb(var(--primary)/0.6)]" : "border-border/20 bg-card/40 hover:border-border/40 hover:bg-card/70"}`}>
+                    <span class={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border text-sm font-bold transition-colors ${opt.on ? "border-primary/60 bg-primary/15 text-primary" : "border-border/25 bg-background text-foreground/55"}`}>{opt.key}</span>
+                    <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+                      <span class="text-sm font-semibold leading-snug text-foreground/90">{opt.label}</span>
+                      <span class="text-xs leading-relaxed text-foreground/50">{opt.desc}</span>
+                    </span>
+                    {opt.on && (
+                      <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-background">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3" aria-hidden><path d="M20 6 9 17l-5-5"/></svg>
+                      </span>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
