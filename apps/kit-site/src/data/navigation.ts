@@ -80,6 +80,13 @@ export const navigation: NavSection[] = [
     ],
   },
   {
+    title: "Componentes — CRM",
+    items: [
+      { name: "Timeline",   href: "/componentes/timeline",   badge: "novo" },
+      { name: "Asset List", href: "/componentes/asset-list", badge: "novo" },
+    ],
+  },
+  {
     title: "Blocos",
     items: [
       { name: "Hero",         href: "/blocos/hero" },

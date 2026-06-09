@@ -55,7 +55,10 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\.\/components\/breadcrumb['"]/g, "from '@/components/ui/breadcrumb'")
     .replace(/from ['"]\.\.\/components\/pagination['"]/g, "from '@/components/ui/pagination'")
     .replace(/from ['"]\.\.\/components\/dropdown['"]/g, "from '@/components/ui/dropdown'")
-    .replace(/from ['"]\.\.\/components\/drawer['"]/g, "from '@/components/ui/drawer'");
+    .replace(/from ['"]\.\.\/components\/drawer['"]/g, "from '@/components/ui/drawer'")
+    .replace(/from ['"]\.\/badge['"]/g, "from '@/components/ui/badge'")
+    .replace(/from ['"]\.\/timeline['"]/g, "from '@/components/ui/timeline'")
+    .replace(/from ['"]\.\/asset-list['"]/g, "from '@/components/ui/asset-list'");
 }
 
 function readSrc(relPath) {
@@ -305,6 +308,22 @@ const MANIFEST = {
     installPath: "hooks/use-toast.ts",
     dependencies: [],
     registryDeps: ["toast"],
+  },
+
+  // ── CRM ──────────────────────────────────────────────────────────
+  timeline: {
+    type: "registry:ui",
+    srcPath: "components/timeline.tsx",
+    installPath: "components/ui/timeline.tsx",
+    dependencies: [],
+    registryDeps: ["utils"],
+  },
+  "asset-list": {
+    type: "registry:ui",
+    srcPath: "components/asset-list.tsx",
+    installPath: "components/ui/asset-list.tsx",
+    dependencies: [],
+    registryDeps: ["utils", "badge"],
   },
 
   // ── Blocos ────────────────────────────────────────────────────────
