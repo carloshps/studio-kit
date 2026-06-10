@@ -77,6 +77,7 @@ export const navigation: NavSection[] = [
       { name: "Skeleton", href: "/componentes/skeleton", badge: "novo" },
       { name: "Progress", href: "/componentes/progress", badge: "novo" },
       { name: "Spinner",  href: "/componentes/spinner",  badge: "novo" },
+      { name: "Orb",      href: "/componentes/orb",      badge: "novo" },
       { name: "Sonner",   href: "/componentes/sonner",   badge: "novo" },
     ],
   },

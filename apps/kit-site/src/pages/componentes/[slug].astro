@@ -293,6 +293,16 @@ const components: ComponentDef[] = [
     ],
   },
   {
+    slug: "orb", name: "Orb", category: "Feedback", hasDemo: true,
+    description: "Indicador de processamento em camadas animadas. Comunica trabalho em andamento sem o ruído de um spinner giratório: anel estático + anel expansor (ping) + núcleo pulsante. Respeita prefers-reduced-motion.",
+    props: [
+      { name: "size",       type: "'sm'|'md'|'lg'",  default: "'md'",   desc: "Tamanho do orbe (sm 36px, md 56px, lg 80px)" },
+      { name: "durationMs", type: "number",           default: "2000",   desc: "Duração das animações em milissegundos" },
+      { name: "animate",    type: "boolean",          default: "true",   desc: "Desativa as animações mantendo a forma visual" },
+      { name: "className",  type: "string",           default: "",       desc: "Classes adicionais no container" },
+    ],
+  },
+  {
     slug: "sonner", name: "Sonner", category: "Feedback", hasDemo: true,
     description: "Sistema de toasts empilháveis sobre a lib sonner. Renderize o <Toaster /> uma vez na raiz e dispare com toast() — success, error, promise e mais. O tema acompanha a classe .light do <html> e as cores usam os tokens da marca.",
     radix: "sonner",
@@ -1654,6 +1664,66 @@ const calWeeks = Array.from({ length: calCells.length / 7 }, (_, i) =>
               </div>
             </div>
             <p class="text-xs text-foreground/30">Ícone <code class="font-mono text-primary/70">Loader2</code> (lucide) com <code class="font-mono">animate-spin</code>; herda a cor via <code class="font-mono">text-current</code>.</p>
+          </div>
+        )}
+
+        <!-- ORB demo -->
+        {component.slug === "orb" && (
+          <div class="space-y-6">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Tamanhos</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-10 flex flex-wrap items-center justify-center gap-12">
+                {[
+                  { label: "sm",  root: "h-9 w-9",   ring: "-inset-1.5", core: "inset-[4px]" },
+                  { label: "md",  root: "h-14 w-14",  ring: "-inset-2",   core: "inset-[6px]" },
+                  { label: "lg",  root: "h-20 w-20",  ring: "-inset-3",   core: "inset-[9px]" },
+                ].map(s => (
+                  <div class="flex flex-col items-center gap-4">
+                    <div class={`relative shrink-0 rounded-full ${s.root}`} aria-hidden="true">
+                      <span class="absolute inset-0 rounded-full border border-primary/30"></span>
+                      <span class={`absolute ${s.ring} rounded-full border border-primary/15 motion-safe:animate-ping`} style="animation-duration:2s"></span>
+                      <span class={`absolute ${s.core} rounded-full bg-primary/20 motion-safe:animate-pulse`} style="animation-duration:2s"></span>
+                    </div>
+                    <span class="text-xs text-foreground/40 font-mono">{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Em contexto — teatro de análise</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8">
+                <div class="mx-auto flex max-w-xs flex-col items-center gap-6 text-center">
+                  <div class="relative h-14 w-14 shrink-0 rounded-full" aria-hidden="true">
+                    <span class="absolute inset-0 rounded-full border border-primary/30"></span>
+                    <span class="absolute -inset-2 rounded-full border border-primary/15 motion-safe:animate-ping" style="animation-duration:2s"></span>
+                    <span class="absolute inset-[6px] rounded-full bg-primary/20 motion-safe:animate-pulse" style="animation-duration:2s"></span>
+                  </div>
+                  <p class="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-primary/70">Analisando seu momento</p>
+                  <div class="w-full space-y-4">
+                    {["Li com atenção tudo o que você me contou.", "Conectei o seu momento com o que costumo ver no mercado.", "Já sei por onde a nossa conversa deve começar."].map(msg => (
+                      <div>
+                        <p class="mb-2 text-base font-semibold leading-snug tracking-tight text-foreground/85">{msg}</p>
+                        <span class="block h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-foreground/25 mb-4">Estático (animate=false)</p>
+              <div class="rounded-xl border border-border/10 bg-card/30 p-8 flex items-center justify-center">
+                <div class="relative h-14 w-14 shrink-0 rounded-full" aria-hidden="true">
+                  <span class="absolute inset-0 rounded-full border border-primary/30"></span>
+                  <span class="absolute -inset-2 rounded-full border border-primary/15 opacity-40"></span>
+                  <span class="absolute inset-[6px] rounded-full bg-primary/20"></span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-foreground/30">Animações suprimidas automaticamente quando <code class="font-mono text-primary/70">prefers-reduced-motion: reduce</code> está ativo (via classe Tailwind <code class="font-mono">motion-safe:</code>).</p>
           </div>
         )}
 

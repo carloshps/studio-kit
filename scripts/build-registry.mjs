@@ -58,7 +58,8 @@ function rewriteImports(code) {
     .replace(/from ['"]\.\.\/components\/drawer['"]/g, "from '@/components/ui/drawer'")
     .replace(/from ['"]\.\/badge['"]/g, "from '@/components/ui/badge'")
     .replace(/from ['"]\.\/timeline['"]/g, "from '@/components/ui/timeline'")
-    .replace(/from ['"]\.\/asset-list['"]/g, "from '@/components/ui/asset-list'");
+    .replace(/from ['"]\.\/asset-list['"]/g, "from '@/components/ui/asset-list'")
+    .replace(/from ['"]\.\/orb['"]/g, "from '@/components/ui/orb'");
 }
 
 function readSrc(relPath) {
@@ -331,6 +332,13 @@ const MANIFEST = {
     installPath: "components/ui/asset-list.tsx",
     dependencies: [],
     registryDeps: ["utils", "badge"],
+  },
+  orb: {
+    type: "registry:ui",
+    srcPath: "components/orb.tsx",
+    installPath: "components/ui/orb.tsx",
+    dependencies: [],
+    registryDeps: ["utils"],
   },
 
   // ── Blocos ────────────────────────────────────────────────────────

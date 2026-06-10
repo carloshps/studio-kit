@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "orb",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "utils"
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/orb.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from '@/lib/utils';\n\n/**\n * Orb — indicador de processamento em camadas animadas.\n *\n * Inspirado no \"teatro de análise\" do onboarding do Studio: comunica\n * trabalho em andamento sem o ruído visual de um spinner giratório.\n *\n * Três camadas sobrepostas:\n *   1. Anel estático externo — delimitador de espaço\n *   2. Anel expansor (animate-ping) — pulso de \"ondas saindo\"\n *   3. Núcleo pulsante (animate-pulse) — miolo que respira\n *\n * Cada camada usa a cor semântica `primary` via Tailwind, então herda\n * automaticamente o tema dark/light do Studio Kit.\n *\n * Uso básico:\n *   <Orb />\n *\n * Com tamanho customizado:\n *   <Orb size=\"lg\" />\n *\n * Desativando animações (ex.: estado pausado):\n *   <Orb animate={false} />\n *\n * Embrulhado num container com label acessível:\n *   <div role=\"status\" aria-label=\"Processando…\">\n *     <Orb />\n *   </div>\n *\n * @remarks\n * A animação é automaticamente suprimida quando o sistema operacional\n * tem `prefers-reduced-motion: reduce` ativado (via classe Tailwind\n * `motion-safe:`). Nesse caso o Orb fica estático mas visível.\n *\n * Timing padrão: 2s em ambas as animações — compatível com o `showAnalysis`\n * do modal-onboarding.js do Studio (delays [0, 900, 1750]ms / total 5s).\n */\n\nexport type OrbSize = \"sm\" | \"md\" | \"lg\";\n\nexport interface OrbProps {\n  /** Tamanho do orbe. Padrão: \"md\" (56 × 56 px). */\n  size?: OrbSize;\n  /** Duração das animações em milissegundos. Padrão: 2000. */\n  durationMs?: number;\n  /** Desativa as animações mantendo a forma visual. */\n  animate?: boolean;\n  className?: string;\n}\n\nconst SIZE: Record<OrbSize, { root: string; ring: string; core: string }> = {\n  sm: {\n    root: \"h-9 w-9\",\n    ring: \"-inset-1.5\",\n    core: \"inset-[4px]\",\n  },\n  md: {\n    root: \"h-14 w-14\",\n    ring: \"-inset-2\",\n    core: \"inset-[6px]\",\n  },\n  lg: {\n    root: \"h-20 w-20\",\n    ring: \"-inset-3\",\n    core: \"inset-[9px]\",\n  },\n};\n\nconst Orb = React.forwardRef<HTMLDivElement, OrbProps>(\n  (\n    { size = \"md\", durationMs = 2000, animate = true, className, ...props },\n    ref\n  ) => {\n    const s = SIZE[size];\n    const duration = `${durationMs}ms`;\n\n    return (\n      <div\n        ref={ref}\n        aria-hidden=\"true\"\n        className={cn(\"relative shrink-0 rounded-full\", s.root, className)}\n        {...props}\n      >\n        {/* Anel estático externo */}\n        <span className=\"absolute inset-0 rounded-full border border-primary/30\" />\n\n        {/* Anel expansor — ondas saindo */}\n        <span\n          className={cn(\n            \"absolute rounded-full border border-primary/15\",\n            s.ring,\n            animate && \"motion-safe:animate-ping\"\n          )}\n          style={{ animationDuration: duration }}\n        />\n\n        {/* Núcleo pulsante — miolo que respira */}\n        <span\n          className={cn(\n            \"absolute rounded-full bg-primary/20\",\n            s.core,\n            animate && \"motion-safe:animate-pulse\"\n          )}\n          style={{ animationDuration: duration }}\n        />\n      </div>\n    );\n  }\n);\nOrb.displayName = \"Orb\";\n\nexport { Orb };\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

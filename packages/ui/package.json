@@ -45,7 +45,8 @@
     "./testimonial": "./src/blocks/testimonial.tsx",
     "./footer": "./src/blocks/footer.tsx",
     "./modal": "./src/blocks/modal.tsx",
-    "./login": "./src/blocks/login.tsx"
+    "./login": "./src/blocks/login.tsx",
+    "./orb": "./src/components/orb.tsx"
   },
   "files": [
     "src"
